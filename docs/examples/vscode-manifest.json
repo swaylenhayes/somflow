@@ -1,0 +1,1839 @@
+{
+  "image_width": 1920,
+  "image_height": 1080,
+  "element_count": 151,
+  "elements": [
+    {
+      "som_id": 1,
+      "label": "computer monitor",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 1074,
+        "height": 589
+      },
+      "confidence": 0.5,
+      "source": "florence2"
+    },
+    {
+      "som_id": 2,
+      "label": "mobile phone",
+      "bbox": {
+        "x": 1026,
+        "y": 0,
+        "width": 893,
+        "height": 589
+      },
+      "confidence": 0.5,
+      "source": "florence2"
+    },
+    {
+      "som_id": 3,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 41,
+        "y": 2,
+        "width": 39,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 4,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 136,
+        "y": 2,
+        "width": 30,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 5,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 181,
+        "y": 2,
+        "width": 61,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 6,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 256,
+        "y": 2,
+        "width": 36,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 7,
+      "label": "Go",
+      "bbox": {
+        "x": 309,
+        "y": 2,
+        "width": 19,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 8,
+      "label": "Window",
+      "bbox": {
+        "x": 463,
+        "y": 2,
+        "width": 53,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 9,
+      "label": "Help",
+      "bbox": {
+        "x": 530,
+        "y": 2,
+        "width": 33,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 10,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1805,
+        "y": 2,
+        "width": 27,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 11,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1613,
+        "y": 44,
+        "width": 92,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 12,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1758,
+        "y": 44,
+        "width": 92,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 13,
+      "label": "Q devenv",
+      "bbox": {
+        "x": 708,
+        "y": 47,
+        "width": 64,
+        "height": 14
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 14,
+      "label": "08",
+      "bbox": {
+        "x": 1356,
+        "y": 47,
+        "width": 19,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 15,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1064,
+        "y": 62,
+        "width": 149,
+        "height": 42
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 16,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 53,
+        "y": 73,
+        "width": 77,
+        "height": 28
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 17,
+      "label": "rectangle",
+      "bbox": {
+        "x": 390,
+        "y": 77,
+        "width": 14,
+        "height": 24
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 18,
+      "label": "* Settings",
+      "bbox": {
+        "x": 309,
+        "y": 82,
+        "width": 72,
+        "height": 18
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 19,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 61,
+        "y": 83,
+        "width": 64,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 20,
+      "label": "\u2192 Claude Code X",
+      "bbox": {
+        "x": 1079,
+        "y": 83,
+        "width": 122,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 21,
+      "label": "Ma Execution-Pla",
+      "bbox": {
+        "x": 1222,
+        "y": 83,
+        "width": 108,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 22,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1551,
+        "y": 86,
+        "width": 16,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 23,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1654,
+        "y": 86,
+        "width": 262,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 24,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 47,
+        "y": 111,
+        "width": 103,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 25,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1079,
+        "y": 116,
+        "width": 156,
+        "height": 25
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 26,
+      "label": "Past Conversations v",
+      "bbox": {
+        "x": 1088,
+        "y": 119,
+        "width": 139,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 27,
+      "label": "Search settings",
+      "bbox": {
+        "x": 323,
+        "y": 128,
+        "width": 97,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 28,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1509,
+        "y": 129,
+        "width": 390,
+        "height": 866
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 29,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 47,
+        "y": 133,
+        "width": 66,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 30,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1815,
+        "y": 140,
+        "width": 83,
+        "height": 35
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 31,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1825,
+        "y": 144,
+        "width": 69,
+        "height": 20
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 32,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 255,
+        "y": 149,
+        "width": 29,
+        "height": 29
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 33,
+      "label": "* Claude Code",
+      "bbox": {
+        "x": 1208,
+        "y": 158,
+        "width": 125,
+        "height": 23
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 34,
+      "label": "User",
+      "bbox": {
+        "x": 323,
+        "y": 167,
+        "width": 33,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 35,
+      "label": "Workspace",
+      "bbox": {
+        "x": 368,
+        "y": 167,
+        "width": 72,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 36,
+      "label": "Last synced: 0 secs ago",
+      "bbox": {
+        "x": 898,
+        "y": 167,
+        "width": 153,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 37,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 100,
+        "y": 178,
+        "width": 86,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 38,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1749,
+        "y": 188,
+        "width": 49,
+        "height": 66
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 39,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 103,
+        "y": 200,
+        "width": 58,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 40,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1561,
+        "y": 205,
+        "width": 70,
+        "height": 32
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 41,
+      "label": "Commonly Used",
+      "bbox": {
+        "x": 348,
+        "y": 209,
+        "width": 108,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 42,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1560,
+        "y": 211,
+        "width": 69,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 43,
+      "label": "Commonly Used",
+      "bbox": {
+        "x": 533,
+        "y": 214,
+        "width": 198,
+        "height": 28
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 44,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 106,
+        "y": 223,
+        "width": 133,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 45,
+      "label": "> Text Editor",
+      "bbox": {
+        "x": 332,
+        "y": 231,
+        "width": 83,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 46,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 114,
+        "y": 245,
+        "width": 147,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 47,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1560,
+        "y": 247,
+        "width": 61,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 48,
+      "label": "> Workbench",
+      "bbox": {
+        "x": 332,
+        "y": 253,
+        "width": 89,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 49,
+      "label": "Editor: Default Formatter (Modified in JSON > User)",
+      "bbox": {
+        "x": 533,
+        "y": 261,
+        "width": 326,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 50,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 114,
+        "y": 267,
+        "width": 108,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 51,
+      "label": "> Window",
+      "bbox": {
+        "x": 332,
+        "y": 276,
+        "width": 69,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 52,
+      "label": "Defines a default formatter which takes precedence over all other formatter",
+      "bbox": {
+        "x": 533,
+        "y": 284,
+        "width": 460,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 53,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 114,
+        "y": 293,
+        "width": 119,
+        "height": 8
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 54,
+      "label": "> Features",
+      "bbox": {
+        "x": 332,
+        "y": 298,
+        "width": 72,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 55,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 301,
+        "width": 41,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 56,
+      "label": "settings. Must be the identifier of an extension contributing a formatter.",
+      "bbox": {
+        "x": 530,
+        "y": 303,
+        "width": 440,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 57,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 113,
+        "y": 309,
+        "width": 84,
+        "height": 17
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 58,
+      "label": "> Application",
+      "bbox": {
+        "x": 332,
+        "y": 320,
+        "width": 89,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 59,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1900,
+        "y": 320,
+        "width": 16,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 60,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 114,
+        "y": 332,
+        "width": 64,
+        "height": 16
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 61,
+      "label": "None",
+      "bbox": {
+        "x": 538,
+        "y": 334,
+        "width": 36,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 62,
+      "label": "> Security",
+      "bbox": {
+        "x": 331,
+        "y": 339,
+        "width": 71,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 63,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1557,
+        "y": 343,
+        "width": 47,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 64,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 168,
+        "y": 350,
+        "width": 111,
+        "height": 29
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 65,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 103,
+        "y": 354,
+        "width": 159,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 66,
+      "label": "> Extensions",
+      "bbox": {
+        "x": 332,
+        "y": 362,
+        "width": 83,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 67,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 103,
+        "y": 376,
+        "width": 53,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 68,
+      "label": "Editor: Font Family (Also modified elsewhere)",
+      "bbox": {
+        "x": 533,
+        "y": 385,
+        "width": 284,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 69,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 393,
+        "width": 44,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 70,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 94,
+        "y": 399,
+        "width": 89,
+        "height": 14
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 71,
+      "label": "Controls the font family.",
+      "bbox": {
+        "x": 533,
+        "y": 409,
+        "width": 147,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 72,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 168,
+        "y": 410,
+        "width": 71,
+        "height": 51
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 73,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 114,
+        "y": 421,
+        "width": 114,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 74,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1900,
+        "y": 432,
+        "width": 16,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 75,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 435,
+        "width": 256,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 76,
+      "label": "JetBrains Mono, JetBrainsMono Nerd Font Mono, Menlo, Monaco...",
+      "bbox": {
+        "x": 538,
+        "y": 440,
+        "width": 407,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 77,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 94,
+        "y": 443,
+        "width": 80,
+        "height": 14
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 78,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 114,
+        "y": 446,
+        "width": 54,
+        "height": 55
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 79,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 473,
+        "width": 259,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 80,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 94,
+        "y": 485,
+        "width": 86,
+        "height": 14
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 81,
+      "label": "computer monitor",
+      "bbox": {
+        "x": 0,
+        "y": 490,
+        "width": 1074,
+        "height": 589
+      },
+      "confidence": 0.5,
+      "source": "florence2"
+    },
+    {
+      "som_id": 82,
+      "label": "Editor: Font Size (Also modified in Markdown > User)",
+      "bbox": {
+        "x": 530,
+        "y": 490,
+        "width": 334,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 83,
+      "label": "computer monitor",
+      "bbox": {
+        "x": 1026,
+        "y": 490,
+        "width": 893,
+        "height": 589
+      },
+      "confidence": 0.5,
+      "source": "florence2"
+    },
+    {
+      "som_id": 84,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 86,
+        "y": 507,
+        "width": 89,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 85,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 512,
+        "width": 217,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 86,
+      "label": "Controls the font size in pixels.",
+      "bbox": {
+        "x": 533,
+        "y": 515,
+        "width": 189,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 87,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 86,
+        "y": 530,
+        "width": 184,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 88,
+      "label": "rectangle",
+      "bbox": {
+        "x": 529,
+        "y": 533,
+        "width": 212,
+        "height": 45
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 89,
+      "label": "16",
+      "bbox": {
+        "x": 538,
+        "y": 546,
+        "width": 19,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 90,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1900,
+        "y": 546,
+        "width": 16,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 91,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 86,
+        "y": 552,
+        "width": 128,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 92,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 552,
+        "width": 262,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 93,
+      "label": "AR",
+      "bbox": {
+        "x": 1241,
+        "y": 555,
+        "width": 58,
+        "height": 41
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 94,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 86,
+        "y": 574,
+        "width": 100,
+        "height": 14
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 95,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1517,
+        "y": 590,
+        "width": 261,
+        "height": 29
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 96,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 594,
+        "width": 253,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 97,
+      "label": "Editor: Format On Paste",
+      "bbox": {
+        "x": 533,
+        "y": 596,
+        "width": 153,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 98,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 61,
+        "y": 597,
+        "width": 106,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 99,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 69,
+        "y": 616,
+        "width": 150,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 100,
+      "label": "Highlight any text and press Option K to",
+      "bbox": {
+        "x": 1141,
+        "y": 616,
+        "width": 259,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 101,
+      "label": "Controls whether the editor should automatically format the pasted content. A",
+      "bbox": {
+        "x": 558,
+        "y": 621,
+        "width": 477,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 102,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 632,
+        "width": 256,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 103,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 86,
+        "y": 639,
+        "width": 195,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 104,
+      "label": "chat about it",
+      "bbox": {
+        "x": 1230,
+        "y": 639,
+        "width": 80,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 105,
+      "label": "formatter must be available and the formatter should be able to format a",
+      "bbox": {
+        "x": 558,
+        "y": 641,
+        "width": 443,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 106,
+      "label": "range in a document.",
+      "bbox": {
+        "x": 560,
+        "y": 658,
+        "width": 128,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 107,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 86,
+        "y": 661,
+        "width": 170,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 108,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 672,
+        "width": 226,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 109,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 688,
+        "width": 69,
+        "height": 6
+      },
+      "confidence": 0.30000001192092896,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 110,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 706,
+        "width": 50,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 111,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1515,
+        "y": 709,
+        "width": 200,
+        "height": 28
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 112,
+      "label": "Editor: Format On Save",
+      "bbox": {
+        "x": 533,
+        "y": 714,
+        "width": 150,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 113,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 714,
+        "width": 186,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 114,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 728,
+        "width": 64,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 115,
+      "label": "Format a file on save. A formatter must be available and the editor must not",
+      "bbox": {
+        "x": 558,
+        "y": 736,
+        "width": 460,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 116,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 750,
+        "width": 53,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 117,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 753,
+        "width": 259,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 118,
+      "label": "be shutting down. When Files: Auto Save is set to afterDelay, the file will",
+      "bbox": {
+        "x": 558,
+        "y": 756,
+        "width": 454,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 119,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 255,
+        "y": 766,
+        "width": 28,
+        "height": 28
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 120,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1900,
+        "y": 770,
+        "width": 16,
+        "height": 11
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 121,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 773,
+        "width": 100,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 122,
+      "label": "only be formatted when saved explicitly.",
+      "bbox": {
+        "x": 558,
+        "y": 773,
+        "width": 248,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 123,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 792,
+        "width": 259,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 124,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 798,
+        "width": 92,
+        "height": 8
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 125,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 820,
+        "width": 156,
+        "height": 8
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 126,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1903,
+        "y": 826,
+        "width": 13,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 127,
+      "label": "Editor: Mouse Wheel Zoom",
+      "bbox": {
+        "x": 533,
+        "y": 828,
+        "width": 173,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 128,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 833,
+        "width": 262,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 129,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 100,
+        "y": 842,
+        "width": 128,
+        "height": 5
+      },
+      "confidence": 0.30000001192092896,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 130,
+      "label": "Zoom the font of the editor when using mouse wheel and holding Cd.",
+      "bbox": {
+        "x": 558,
+        "y": 853,
+        "width": 432,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 131,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 100,
+        "y": 859,
+        "width": 58,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 132,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1523,
+        "y": 872,
+        "width": 242,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 133,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 881,
+        "width": 55,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 134,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 904,
+        "width": 44,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 135,
+      "label": "Editor: Tab Size (Modified elsewhere)",
+      "bbox": {
+        "x": 533,
+        "y": 909,
+        "width": 234,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 136,
+      "label": "The number of spaces a tab is equal to. This setting is overridden based on the file",
+      "bbox": {
+        "x": 533,
+        "y": 931,
+        "width": 502,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 137,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1553,
+        "y": 945,
+        "width": 136,
+        "height": 33
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 138,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 948,
+        "width": 128,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 139,
+      "label": "contents when Editor: Detect Indentation is on.",
+      "bbox": {
+        "x": 533,
+        "y": 951,
+        "width": 287,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 140,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1562,
+        "y": 951,
+        "width": 117,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 141,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1880,
+        "y": 957,
+        "width": 36,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 142,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 152,
+        "y": 971,
+        "width": 70,
+        "height": 39
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 143,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 973,
+        "width": 150,
+        "height": 8
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 144,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 990,
+        "width": 125,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 145,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 97,
+        "y": 1015,
+        "width": 150,
+        "height": 8
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 146,
+      "label": "Editor: Word Wrap (Modified elsewhere)",
+      "bbox": {
+        "x": 533,
+        "y": 1032,
+        "width": 253,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 147,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 94,
+        "y": 1035,
+        "width": 145,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 148,
+      "label": "\u2022 Prefer the Terminal experience? Switch back in Settings. X",
+      "bbox": {
+        "x": 1093,
+        "y": 1043,
+        "width": 348,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 149,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 1470,
+        "y": 1049,
+        "width": 200,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 150,
+      "label": "[redacted]",
+      "bbox": {
+        "x": 80,
+        "y": 1054,
+        "width": 64,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 151,
+      "label": "Controls how lines should wrap.",
+      "bbox": {
+        "x": 533,
+        "y": 1057,
+        "width": 195,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    }
+  ],
+  "timing_ms": {
+    "vision_ms": 1040.1,
+    "image_width": 1920,
+    "image_height": 1080,
+    "vision_time_ms": 994.4,
+    "text_count": 129,
+    "rect_count": 31,
+    "split_x": 1051,
+    "split_y": 540,
+    "split_x_clean": true,
+    "split_y_clean": false,
+    "florence_total_ms": 2033.3,
+    "florence_backend": "mlx",
+    "florence_per_quadrant_ms": [
+      564.2,
+      150.1,
+      153.4,
+      151.5
+    ]
+  }
+}
