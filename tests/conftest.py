@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Pytest configuration and shared fixtures."""
 
 from pathlib import Path

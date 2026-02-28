@@ -12,7 +12,7 @@ Usage:
 import sys
 from pathlib import Path
 
-from somflow import run_pipeline, Detection
+from somflow import run_pipeline
 
 
 def main():

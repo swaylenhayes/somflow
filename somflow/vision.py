@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Apple Vision text + rectangle detection via Swift subprocess."""
 
 from __future__ import annotations

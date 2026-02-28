@@ -1,5 +1,5 @@
 #!/usr/bin/env swift
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Apple Vision text + rectangle detection tool.
 // Outputs JSON detections to stdout, timing to stderr.
 

@@ -54,18 +54,20 @@ End-to-end on a 1920x1080 VS Code screenshot (~151 UI elements detected):
 ## Quick Start
 
 ```bash
-# Clone
-git clone https://github.com/swaylenhayes/somflow.git
-cd somflow
-
-# Install
-uv pip install -e ".[dev]"
+# Install from PyPI
+pip install somflow
 
 # Run on a screenshot
 somflow screenshot.png --output-dir out/
+```
 
-# Or directly
-python detect.py screenshot.png -o out/
+### Development Setup
+
+```bash
+git clone https://github.com/swaylenhayes/somflow.git
+cd somflow
+uv pip install -e ".[dev]"
+uv run pytest  # 55 fast tests
 ```
 
 ### Output
