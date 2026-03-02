@@ -23,6 +23,10 @@ _docs/
 CLAUDE.md
 docs/plans/
 docs/interagent-somflow/
+docs/interagent-uitag/
+docs/current-state.md
+docs/uitag-launch-steps.md
+docs/f1.3-coreml-acceleration.md
 .sediment/
 
 # Worktrees

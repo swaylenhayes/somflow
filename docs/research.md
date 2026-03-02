@@ -80,25 +80,27 @@ Default is accurate. Use `--fast` when text label quality is less important than
 
 ## Performance Profile
 
-Measured on M2 Max (96GB) with 1920x1080 VS Code screenshot:
+Measured on M2 Max (96GB) with 1920x1080 VS Code screenshot (~151 detections, 3-run average, warm cache, 2026-03-02):
 
-| Stage | Time | Notes |
-|-------|------|-------|
-| Apple Vision (accurate) | 980ms | ANE, no GPU contention |
-| Apple Vision (fast) | 189ms | 5x faster, quality tradeoff |
-| Object-aware split | <1ms | CPU only, trivial |
-| Florence-2 (4 quadrants) | ~600ms | ~148ms/quadrant, sequential (optimized MLX) |
-| Merge + dedup | <1ms | CPU only |
-| SoM annotation | <10ms | Pillow drawing |
-| Manifest generation | <1ms | JSON serialization |
-| **Total (accurate)** | **~1600ms** | |
-| **Total (fast)** | **~800ms** | |
+| Stage | Accurate | Fast | Notes |
+|-------|----------|------|-------|
+| Apple Vision | 977ms | 213ms | ANE, no GPU contention |
+| Object-aware split | <1ms | <1ms | CPU only, trivial |
+| Florence-2 (4 quadrants) | ~1542ms | ~1452ms | ~222ms/quad inference + ~600ms overhead |
+| Merge + dedup | <1ms | <1ms | CPU only |
+| SoM annotation | <1ms | <1ms | Pillow drawing |
+| Manifest generation | <1ms | <1ms | JSON serialization |
+| **Total** | **~2551ms** | **~1695ms** | |
 
-**Pre-optimization baseline** (v0.1.0): Florence-2 ran at ~800ms/quadrant (~3200ms total). MLX optimizations (pre-saved temp files, warm inference) achieved a 4.9x speedup.
+Florence-2 total time includes per-quadrant inference (~222ms each) plus overhead from temp file I/O required by mlx_vlm's file-based API, coordinate translation, and image preparation (~600ms total).
+
+**Pre-optimization baseline** (v0.1.0): Florence-2 ran at ~800ms/quadrant (~3200ms total). MLX optimizations (pre-saved temp files, warm inference) achieved significant speedup in raw inference time.
+
+For detailed benchmarks including backend comparison and optimization notes, see [Performance](performance.md).
 
 ### Bottleneck
 
-Florence-2 inference at ~148ms per quadrant is now well-optimized. CoreML backend is available (`--backend coreml`) and offloads to the ANE, which is beneficial under GPU contention but slightly slower (~186ms/quadrant) on an idle GPU.
+Florence-2 inference at ~222ms per quadrant is well-optimized. The ~600ms overhead (temp file I/O) is the next optimization target. CoreML backend is available (`--backend coreml`) and offloads the vision encoder to the ANE, which is beneficial under GPU contention but slightly slower on an idle GPU.
 
 ### Co-hosting Validation
 

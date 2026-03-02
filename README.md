@@ -6,7 +6,7 @@ A Set-of-Mark (SoM) detection pipeline for macOS that transforms screenshots int
 
 ![uitag output — 151 UI elements detected on a 1920x1080 screenshot](https://raw.githubusercontent.com/swaylenhayes/uitag/main/docs/examples/vscode-som.png)
 
-*151 numbered elements detected in ~0.8s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
+*151 numbered elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
 
 ## Why This Exists
 
@@ -27,13 +27,13 @@ Screenshot (1920x1080)
     v
 [1] Apple Vision (Swift binary)
     |  VNRecognizeTextRequest + VNDetectRectanglesRequest
-    |  ~189ms (fast) / ~980ms (accurate)
+    |  ~213ms (fast) / ~977ms (accurate)
     v
 [2] Object-Aware Tiling
     |  Split into 4 quadrants, cut lines avoid bounding boxes
     v
 [3] Florence-2 (mlx_vlm, per quadrant)
-    |  <OD> detection on each tile, ~160ms/quadrant
+    |  <OD> detection on each tile, ~220ms/quadrant
     v
 [4] Merge + Deduplicate
     |  IoU-based overlap removal, source priority ranking
@@ -48,8 +48,8 @@ Output: annotated.png + manifest.json
 ```
 
 End-to-end on a 1920x1080 VS Code screenshot (~151 UI elements detected):
-- **~0.8s** with fast OCR (Florence-2 ~650ms + Vision ~189ms)
-- **~1.6s** with accurate OCR (Florence-2 ~650ms + Vision ~980ms)
+- **~1.7s** with fast OCR (Florence-2 ~1.5s + Vision ~213ms)
+- **~2.6s** with accurate OCR (Florence-2 ~1.5s + Vision ~977ms)
 
 ## Quick Start
 
@@ -112,6 +112,14 @@ Options:
   --backend BACKEND       Detection backend: auto (default), coreml, mlx
 ```
 
+## Documentation
+
+- [API Reference](docs/api.md) — Functions, types, and manifest schema
+- [Performance](docs/performance.md) — Benchmarks and optimization tips
+- [Troubleshooting](docs/troubleshooting.md) — Common issues and FAQ
+- [Research Background](docs/research.md) — Model selection and benchmark methodology
+- [Contributing](CONTRIBUTING.md) — Setup and PR guidelines
+
 ## Requirements
 
 - **macOS** (Apple Vision Framework is macOS-only)
@@ -123,7 +131,7 @@ Options:
 
 uitag supports pluggable detection backends via the `DetectionBackend` protocol:
 
-- **MLX** (default) — Florence-2 inference on GPU via Metal. ~160ms per quadrant on M2 Max.
+- **MLX** (default) — Florence-2 inference on GPU via Metal. ~220ms per quadrant on M2 Max.
 - **CoreML** — DaViT vision encoder on Apple Neural Engine, decoder on GPU. Useful when GPU is contended by other workloads. Requires a converted model (`python tools/convert_davit_coreml.py`).
 
 ```bash
