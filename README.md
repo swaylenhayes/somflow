@@ -4,20 +4,21 @@
 
 A Set-of-Mark (SoM) detection pipeline for macOS that transforms screenshots into structured, annotated element maps. Built for Apple Silicon using Apple Vision Framework and Florence-2 on MLX.
 
-![uitag output — 151 UI elements detected on a 1920x1080 screenshot](https://raw.githubusercontent.com/swaylenhayes/uitag/main/docs/examples/vscode-som.png)
+![uitag before and after — macOS screenshot transformed into 153 tagged UI elements](https://raw.githubusercontent.com/swaylenhayes/uitag/main/docs/examples/hero-before-after.png)
 
-*151 numbered elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
+*153 elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
 
 ## Why This Exists
 
-Vision language models under 10B parameters cannot reliably detect individual UI elements on complex professional screenshots. They collapse to a single full-screen bounding box. This was validated empirically across Florence-2, PTA-1, and other MIT-licensed detection models during a [benchmark of 14+ models](docs/research.md#model-selection).
+We needed a vision model that could find every button, label, and icon on a macOS screenshot — so an agent could click on them. We surveyed 14 detection models. The best ones (Screen2AX, OmniParser) were AGPL — unusable for MIT distribution. The MIT-licensed options under 10B parameters — Florence-2, PTA-1, and others — all produced the same failure: a single bounding box covering the entire screen.
 
-uitag solves this by combining two complementary detection systems and preprocessing the image before any VLM ever sees it:
+We tried 7 configurations of frequency and repetition penalties. Prompt engineering. Resolution reduction. Nothing fixed it. This isn't a tuning problem — it's a model capacity limitation.
 
-- **Apple Vision Framework** detects text labels and rectangular UI elements natively on the ANE — effectively free
-- **Florence-2** detects non-text elements (icons, buttons, images) via open-vocabulary detection on tiled image quadrants
+Then we noticed something: the same models detect reliably on cropped regions.
 
-The result is a numbered element map (SoM annotation) and a structured JSON manifest that downstream agents can consume directly.
+That's the core insight. uitag doesn't force a small model to see a complex desktop. It tiles the screenshot into quadrants first — with cut lines placed to avoid bisecting UI elements — and runs detection on each tile separately. Apple Vision handles text and rectangles natively on the ANE (fast, free, no model download). Florence-2 catches everything else — icons, buttons, images — at 159MB on Metal.
+
+The result: 151 elements detected on a VS Code screenshot in ~1.7 seconds. A numbered element map and a JSON manifest that any downstream agent can consume directly. [Full research methodology →](docs/research.md)
 
 ## Pipeline Architecture
 
