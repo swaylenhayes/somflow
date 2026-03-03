@@ -16,6 +16,19 @@ from uitag.run import run_pipeline
 
 
 def main():
+    # Smart dispatch: subcommands handled before argparse
+    if len(sys.argv) > 1 and sys.argv[1] == "batch":
+        from uitag.batch_cli import batch_main
+
+        batch_main(sys.argv[2:])
+        return
+
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        from uitag.bench_cli import benchmark_main
+
+        benchmark_main(sys.argv[2:])
+        return
+
     parser = argparse.ArgumentParser(description="uitag Detection Pipeline")
     parser.add_argument("image", help="Path to screenshot")
     parser.add_argument("--output-dir", "-o", default=".", help="Output directory")
@@ -36,6 +49,13 @@ def main():
     args = parser.parse_args()
 
     image_path = args.image
+
+    # Directory hint: suggest batch command
+    if Path(image_path).is_dir():
+        print(f"Error: {image_path} is a directory.", file=sys.stderr)
+        print(f"  Did you mean: uitag batch {image_path}", file=sys.stderr)
+        sys.exit(1)
+
     if not Path(image_path).exists():
         print(f"Error: Image not found: {image_path}", file=sys.stderr)
         sys.exit(1)
