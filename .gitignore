@@ -37,3 +37,7 @@ tools/vision-detect
 
 # CoreML models (generated, large)
 models/
+
+# Environment variables
+.env
+.env.*
