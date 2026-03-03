@@ -33,7 +33,10 @@ uitag screenshot.png --output-dir out/
 # Fast mode
 uitag screenshot.png --output-dir out/ --fast
 
-# Backend comparison (MLX vs CoreML)
+# Full pipeline benchmark (per-stage timing)
+uitag benchmark screenshot.png --runs 3
+
+# Backend comparison (MLX vs CoreML, developer tool)
 uv run python tools/quick_benchmark.py screenshot.png
 ```
 
@@ -153,4 +156,4 @@ The pre-compiled Swift binary for Apple Vision saves ~230ms of JIT startup compa
 | Need faster results, text quality not critical | `--fast` |
 | GPU busy with other work (ML training, rendering) | `--backend coreml` |
 | First run on a new machine | Expect model download; second run will reflect true performance |
-| Benchmarking | Use `tools/quick_benchmark.py` for backend comparison; run 3+ times for stable numbers |
+| Benchmarking | Use `uitag benchmark` for full pipeline timing; `tools/quick_benchmark.py` for backend comparison |

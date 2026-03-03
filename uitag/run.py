@@ -49,7 +49,9 @@ def run_pipeline(
     timing.update(vision_timing)
 
     # Stage 2: Object-aware tiling
+    t0 = time.perf_counter()
     quads, split_info = split_object_aware(img, vision_dets, overlap_px=overlap_px)
+    timing["tiling_ms"] = round((time.perf_counter() - t0) * 1000, 1)
     timing["split_x"] = split_info.split_x
     timing["split_y"] = split_info.split_y
     timing["split_x_clean"] = split_info.x_clean
@@ -76,7 +78,9 @@ def run_pipeline(
 
     # Stage 4: Merge + deduplicate
     all_dets = vision_dets + florence_dets
+    t0 = time.perf_counter()
     merged = merge_detections(all_dets, iou_threshold=iou_threshold)
+    timing["merge_ms"] = round((time.perf_counter() - t0) * 1000, 1)
 
     # Build result
     result = PipelineResult(
@@ -87,9 +91,13 @@ def run_pipeline(
     )
 
     # Stage 5: Annotate
+    t0 = time.perf_counter()
     annotated = render_som(img, merged)
+    timing["annotate_ms"] = round((time.perf_counter() - t0) * 1000, 1)
 
     # Stage 6: Manifest
+    t0 = time.perf_counter()
     manifest = generate_manifest(result)
+    timing["manifest_ms"] = round((time.perf_counter() - t0) * 1000, 1)
 
     return result, annotated, manifest
