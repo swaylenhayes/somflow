@@ -40,21 +40,15 @@ uitag benchmark <image>         Measure per-stage pipeline timing
 
 ## Why This Exists
 
-### The problem
-We needed a vision model that could find every button, label, and icon on a macOS screenshot — to enable agent interactivity. 
+We needed a vision model that could find every button, label, and icon on a macOS screenshot — to make screenshots machine-readable. We surveyed 14 detection models. The best ones (Screen2AX, OmniParser) were AGPL — unusable for MIT distribution. The MIT-licensed options under 10B parameters — Florence-2, PTA-1, and others — all produced the same failure: a single bounding box covering the entire screen.
 
-### No feasible solutions existed
-We surveyed 14 detection models. The best ones (Screen2AX, OmniParser) were AGPL — unusable for MIT distribution. The MIT-licensed options under 10B parameters — Florence-2, PTA-1, and others — all produced the same failure: a single bounding box covering the entire screen.
+We tried 7 configurations of frequency and repetition penalties. Prompt engineering. Resolution reduction. Nothing fixed it. This isn't a tuning problem — it's a model capacity limitation.
 
-We tried 7 configurations of frequency and repetition penalties. Prompt engineering. Resolution reduction. Nothing fixed it. So it wasn't a tuning problem. Was it a model capacity limitation?
-
-### The research breakthrough
 Then we noticed something: the same models detect reliably on cropped regions.
 
 💡 **That's the core insight.** uitag doesn't force a small model to see a complex desktop. It tiles the screenshot into quadrants first — with cut lines placed to avoid bisecting UI elements — and runs detection on each tile separately. Apple Vision handles text and rectangles natively on the ANE (fast, free, no model download). Florence-2 catches everything else — icons, buttons, images — at 159MB on Metal.
 
-### The result
-151 elements detected on a VS Code screenshot in ~1.7 seconds. A numbered element map and a JSON manifest that any downstream agent can consume directly. [Full research methodology →](docs/research.md)
+Where every model we tested returned 1 bounding box, uitag returns 151 — in 1.7 seconds, fully open-source under MIT. [Full research methodology →](docs/research.md)
 
 ## Pipeline Architecture
 
