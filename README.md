@@ -46,9 +46,9 @@ We tried 7 configurations of frequency and repetition penalties. Prompt engineer
 
 Then we noticed something: the same models detect reliably on cropped regions.
 
-💡 **That's the core insight.** uitag doesn't force a small model to see a complex desktop. It tiles the screenshot into quadrants first — with cut lines placed to avoid bisecting UI elements — and runs detection on each tile separately. Apple Vision handles text and rectangles natively on the ANE (fast, free, no model download). Florence-2 catches everything else — icons, buttons, images — at 159MB on Metal.
+That's the core insight. uitag doesn't force a small model to see a complex desktop. It tiles the screenshot into quadrants first — with cut lines placed to avoid bisecting UI elements — and runs detection on each tile separately. Apple Vision handles text and rectangles natively on the ANE (fast, free, no model download). Florence-2 catches everything else — icons, buttons, images — at 159MB on Metal.
 
-Where every model we tested returned 1 bounding box, uitag returns 151 — in 1.7 seconds, fully open-source under MIT. [Full research methodology →](docs/research.md)
+⚡ **Every model we tested returned 1 bounding box. uitag returns 151 — in 1.7 seconds, fully open-source under MIT.** [Full research methodology →](docs/research.md)
 
 ## Pipeline Architecture
 
