@@ -1,6 +1,6 @@
 # uitag — Flywheel Launch Roadmap
 
-_Last updated: 2026-03-02_
+_Last updated: 2026-03-03_
 _Status: Sprints 1-3 complete. Post-launch features (batch, benchmark) shipped in v0.3.1._
 
 ---
@@ -106,6 +106,7 @@ Shipped after the initial flywheel sprints:
 - [x] **Per-stage timing instrumentation** — All 6 pipeline stages timed in manifest output (v0.3.1)
 - [x] **API reference docs** — `docs/api.md` with functions, types, manifest schema
 - [x] **Performance docs** — `docs/performance.md` with stage breakdown, backend comparison
+- [ ] **VHS CLI demo GIF** — Animated terminal recording (`docs/assets/demo.tape`) showing `uitag` single image + batch commands. Tape file ready, needs PII-safe screenshots to record. Embedded in README Quick Start.
 - [ ] **Pipeline architecture visual** — Replace ASCII diagram in README with a proper visual (SVG or image). The ASCII version works but doesn't convey the pipeline flow as clearly as a diagram would for first-time visitors.
 
 ---

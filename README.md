@@ -20,6 +20,8 @@ uitag screenshot.png -o out/
 uitag batch screenshots/ -o out/
 ```
 
+![uitag CLI demo — single image and batch processing](docs/assets/demo.gif)
+
 Two files per image: `screenshot-som.png` (annotated) + `screenshot-manifest.json` (structured data).
 
 ## Commands
