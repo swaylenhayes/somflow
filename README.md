@@ -4,9 +4,9 @@
 
 A Set-of-Mark (SoM) detection pipeline for macOS that transforms screenshots into structured, annotated element maps. Built for Apple Silicon using Apple Vision Framework and Florence-2 on MLX.
 
-![uitag before and after — macOS screenshot transformed into 153 tagged UI elements](https://raw.githubusercontent.com/swaylenhayes/uitag/main/docs/examples/hero-before-after.png)
+![uitag demo — 229 UI elements detected in 2.4s on a VS Code screenshot](docs/assets/demo-composite-upper-right-10s.gif)
 
-*153 elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
+*229 elements detected in 2.4s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
 
 ## Quick Start
 
@@ -20,9 +20,7 @@ uitag screenshot.png -o out/
 uitag batch screenshots/ -o out/
 ```
 
-![uitag CLI demo — single image and batch processing](docs/assets/demo.gif)
-
-Two files per image: `screenshot-som.png` (annotated) + `screenshot-manifest.json` (structured data).
+Two files per image: `screenshot-uitag.png` (annotated) + `screenshot-uitag-manifest.json` (structured data).
 
 ## Commands
 
