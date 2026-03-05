@@ -50,43 +50,16 @@ That's the core insight. uitag doesn't force a small model to see a complex desk
 
 ⚡ **Every model we tested returned 1 bounding box. uitag returns 151 — in 1.7 seconds, fully open-source under MIT.** [Full research methodology →](docs/research.md)
 
-![uitag output — 151 tagged UI elements on a VS Code screenshot](docs/examples/hero-after.png)
-
-*151 elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
 
 ## Pipeline Architecture
 
-```
-Screenshot (1920x1080)
-    |
-    v
-[1] Apple Vision (Swift binary)
-    |  VNRecognizeTextRequest + VNDetectRectanglesRequest
-    |  ~213ms (fast) / ~977ms (accurate)
-    v
-[2] Object-Aware Tiling
-    |  Split into 4 quadrants, cut lines avoid bounding boxes
-    v
-[3] Florence-2 (mlx_vlm, per quadrant)
-    |  <OD> detection on each tile, ~220ms/quadrant
-    v
-[4] Merge + Deduplicate
-    |  IoU-based overlap removal, source priority ranking
-    v
-[5] SoM Annotation
-    |  Numbered markers + colored bounding boxes
-    v
-[6] JSON Manifest
-    |  Element list with coordinates, labels, sources, timing
-    v
-Output: annotated.png + manifest.json
-```
+| Pipeline Stage | Process Flow Description |
+| :--- | :--- |
+| ![system architecture uitag](docs/assets/uitag-architecture-diagram.jpg)|* [1] VNRecognizeTextRequest + VNDetectRectanglesRequest<br> * [3] \<OD\> detection on each tile<br> * [4] IoU-based overlap removal, source priority ranking, numbered markers + colored bounding boxes<br> * [5] manifest includes element list with coordinates, labels, sources, timing |
 
-End-to-end on a 1920x1080 VS Code screenshot (~151 UI elements detected):
-- **~1.7s** with fast OCR (Florence-2 ~1.5s + Vision ~213ms)
-- **~2.6s** with accurate OCR (Florence-2 ~1.5s + Vision ~977ms)
 
 ## Output Format
+### JSON
 
 ```json
 {
@@ -112,6 +85,9 @@ End-to-end on a 1920x1080 VS Code screenshot (~151 UI elements detected):
   }
 }
 ```
+### Annotated Image
+![uitag output — 151 tagged UI elements on a VS Code screenshot](docs/examples/hero-after.png)
+*151 elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
 
 ## Documentation
 
@@ -134,6 +110,7 @@ uitag supports pluggable detection backends via the `DetectionBackend` protocol:
 
 - **MLX** (default) — Florence-2 inference on GPU via Metal. ~220ms per quadrant on M2 Max.
 - **CoreML** — DaViT vision encoder on Apple Neural Engine, decoder on GPU. Useful when GPU is contended by other workloads. Requires a converted model (`python tools/convert_davit_coreml.py`).
+
 
 ## Development
 
