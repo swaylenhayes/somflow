@@ -1,8 +1,6 @@
 """Tests for patch JSON application."""
 
-import json
 import pytest
-from PIL import Image
 
 from uitag.types import Detection
 

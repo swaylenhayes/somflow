@@ -1,7 +1,6 @@
 """Tests for patch and render CLI subcommands."""
 
 import json
-import pytest
 from PIL import Image
 
 from uitag.types import Detection
@@ -88,15 +87,17 @@ def test_patch_cli_produces_output(tmp_path):
     patch_path = _write_patch(tmp_path, [{"som_id": 1, "label": "new"}])
 
     out_dir = tmp_path / "out"
-    patch_main([
-        str(img_path),
-        "--manifest",
-        str(manifest_path),
-        "--patch",
-        str(patch_path),
-        "-o",
-        str(out_dir),
-    ])
+    patch_main(
+        [
+            str(img_path),
+            "--manifest",
+            str(manifest_path),
+            "--patch",
+            str(patch_path),
+            "-o",
+            str(out_dir),
+        ]
+    )
 
     assert (out_dir / "test-uitag.png").exists()
     assert (out_dir / "test-uitag-manifest.json").exists()
@@ -114,12 +115,14 @@ def test_render_cli_produces_output(tmp_path):
     manifest_path = _write_manifest(tmp_path, dets, 200, 200)
 
     out_dir = tmp_path / "out"
-    render_main([
-        str(img_path),
-        "--manifest",
-        str(manifest_path),
-        "-o",
-        str(out_dir),
-    ])
+    render_main(
+        [
+            str(img_path),
+            "--manifest",
+            str(manifest_path),
+            "-o",
+            str(out_dir),
+        ]
+    )
 
     assert (out_dir / "test-uitag.png").exists()

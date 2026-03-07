@@ -109,6 +109,7 @@ def test_run_pipeline_accepts_rescan_params():
     from uitag.run import run_pipeline
 
     import inspect
+
     sig = inspect.signature(run_pipeline)
     assert "rescan" in sig.parameters
     assert "rescan_threshold" in sig.parameters

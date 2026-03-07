@@ -97,11 +97,16 @@ def test_format_summary():
     from uitag.batch_cli import format_summary
 
     summary = format_summary(
-        succeeded=4, failed=1, total_seconds=9.5, output_dir="output/"
+        succeeded=4,
+        failed=1,
+        total_detections=42,
+        total_seconds=9.5,
+        output_dir="output/",
     )
-    assert "4 succeeded" in summary
+    assert "42 detections" in summary
     assert "1 failed" in summary
     assert "9.5s" in summary
+    assert "4 images" in summary
 
 
 def test_format_summary_no_failures():
@@ -109,9 +114,14 @@ def test_format_summary_no_failures():
     from uitag.batch_cli import format_summary
 
     summary = format_summary(
-        succeeded=3, failed=0, total_seconds=5.2, output_dir="out/"
+        succeeded=3,
+        failed=0,
+        total_detections=30,
+        total_seconds=5.2,
+        output_dir="out/",
     )
-    assert "3 succeeded" in summary
+    assert "30 detections" in summary
+    assert "3 images" in summary
     assert "failed" not in summary
 
 

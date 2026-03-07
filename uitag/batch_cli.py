@@ -135,7 +135,9 @@ def batch_main(argv: list[str] | None = None) -> None:
 
     # Warm the backend import before starting timer
     info = backend.info()
-    source_label = args.path[0].rstrip("/") if len(args.path) == 1 else f"{len(args.path)} paths"
+    source_label = (
+        args.path[0].rstrip("/") if len(args.path) == 1 else f"{len(args.path)} paths"
+    )
     print(f"Running pipeline on: {len(image_paths)} images in {source_label}/")
     print(f"Backend: {info.name} ({info.device}) | OCR mode: {ocr_mode}\n")
 
