@@ -8,6 +8,18 @@ A Set-of-Mark (SoM) detection pipeline for macOS that transforms screenshots int
 
 *229 elements detected in 2.4s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-229-manifest.json)*
 
+## Why This Exists
+
+We needed a vision model that could find every button, label, and icon on a macOS screenshot — to make screenshots machine-readable. We surveyed 14 detection models. The best ones (Screen2AX, OmniParser) were AGPL — unusable for MIT distribution. The MIT-licensed options under 10B parameters — Florence-2, PTA-1, and others — all produced the same failure: a single bounding box covering the entire screen.
+
+We tried 7 configurations of frequency and repetition penalties. Prompt engineering. Resolution reduction. Nothing fixed it. This isn't a tuning problem — it's a model capacity limitation.
+
+Then we noticed something: the same models detect reliably on cropped regions.
+
+That's the core insight. uitag doesn't force a small model to see a complex desktop. It tiles the screenshot into quadrants first — with cut lines placed to avoid bisecting UI elements — and runs detection on each tile separately. Apple Vision handles text and rectangles natively on the ANE (fast, free, no model download). Florence-2 catches everything else — icons, buttons, images — at 159MB on Metal.
+
+⚡ **Every model we tested returned 1 bounding box. uitag returns 151 — in 1.7 seconds, fully open-source under MIT.** [Full research methodology →](docs/research.md)
+
 ## Quick Start
 
 ```bash
@@ -76,26 +88,6 @@ Patch file format:
 }
 ```
 
-## Why This Exists
-
-We needed a vision model that could find every button, label, and icon on a macOS screenshot — to make screenshots machine-readable. We surveyed 14 detection models. The best ones (Screen2AX, OmniParser) were AGPL — unusable for MIT distribution. The MIT-licensed options under 10B parameters — Florence-2, PTA-1, and others — all produced the same failure: a single bounding box covering the entire screen.
-
-We tried 7 configurations of frequency and repetition penalties. Prompt engineering. Resolution reduction. Nothing fixed it. This isn't a tuning problem — it's a model capacity limitation.
-
-Then we noticed something: the same models detect reliably on cropped regions.
-
-That's the core insight. uitag doesn't force a small model to see a complex desktop. It tiles the screenshot into quadrants first — with cut lines placed to avoid bisecting UI elements — and runs detection on each tile separately. Apple Vision handles text and rectangles natively on the ANE (fast, free, no model download). Florence-2 catches everything else — icons, buttons, images — at 159MB on Metal.
-
-⚡ **Every model we tested returned 1 bounding box. uitag returns 151 — in 1.7 seconds, fully open-source under MIT.** [Full research methodology →](docs/research.md)
-
-
-## Pipeline Architecture
-
-| Pipeline Stage | Process Flow Description |
-| :--- | :--- |
-| ![system architecture uitag](docs/assets/uitag-architecture-diagram.jpg)|* [1] VNRecognizeTextRequest + VNDetectRectanglesRequest<br> * [3] \<OD\> detection on each tile<br> * [4] IoU-based overlap removal, source priority ranking, numbered markers + colored bounding boxes<br> * [5] manifest includes element list with coordinates, labels, sources, timing |
-
-
 ## Output Format
 ### JSON
 
@@ -126,6 +118,12 @@ That's the core insight. uitag doesn't force a small model to see a complex desk
 ### Annotated Image
 ![uitag output — 151 tagged UI elements on a VS Code screenshot](docs/examples/hero-after.png)
 *151 elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
+
+## Pipeline Architecture
+
+| Pipeline Stage | Process Flow Description |
+| :--- | :--- |
+| ![system architecture uitag](docs/assets/uitag-architecture-diagram.jpg)|* [1] VNRecognizeTextRequest + VNDetectRectanglesRequest<br> * [3] \<OD\> detection on each tile<br> * [4] IoU-based overlap removal, source priority ranking, numbered markers + colored bounding boxes<br> * [5] manifest includes element list with coordinates, labels, sources, timing |
 
 ## Tips
 
