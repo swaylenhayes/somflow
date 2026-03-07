@@ -40,12 +40,13 @@ func visionRectToPixel(
 // MARK: - Main
 
 guard CommandLine.arguments.count >= 2 else {
-    fputs("Usage: vision-detect <image-path> [--fast]\n", stderr)
+    fputs("Usage: vision-detect <image-path> [--fast] [--no-lang-correction]\n", stderr)
     exit(1)
 }
 
 let imagePath = CommandLine.arguments[1]
 let useFastMode = CommandLine.arguments.contains("--fast")
+let noLangCorrection = CommandLine.arguments.contains("--no-lang-correction")
 
 guard let nsImage = NSImage(contentsOfFile: imagePath) else {
     fputs("Error: could not load image at \(imagePath)\n", stderr)
@@ -69,7 +70,7 @@ let startTime = CFAbsoluteTimeGetCurrent()
 
 let textRequest = VNRecognizeTextRequest()
 textRequest.recognitionLevel = useFastMode ? .fast : .accurate
-textRequest.usesLanguageCorrection = !useFastMode
+textRequest.usesLanguageCorrection = useFastMode ? false : !noLangCorrection
 
 // MARK: - Rectangle Detection
 

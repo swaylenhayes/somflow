@@ -26,12 +26,15 @@ _SWIFT_SOURCE = _PKG_TOOLS / "vision-detect.swift"
 def run_vision_detect(
     image_path: str | Path,
     recognition_level: str = "accurate",
+    use_lang_correction: bool = True,
 ) -> tuple[list[Detection], dict]:
     """Run Apple Vision detection on an image.
 
     Args:
         image_path: Absolute or relative path to the input image.
         recognition_level: ``"accurate"`` (default) or ``"fast"``.
+        use_lang_correction: Enable language correction (default True).
+            Set to False for code/regex/symbol text.
 
     Returns:
         Tuple of (detections, timing_info) where timing_info contains
@@ -57,6 +60,9 @@ def run_vision_detect(
 
     if recognition_level == "fast":
         cmd.append("--fast")
+
+    if not use_lang_correction:
+        cmd.append("--no-lang-correction")
 
     result = subprocess.run(
         cmd,

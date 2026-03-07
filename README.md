@@ -27,6 +27,8 @@ Two files per image: `screenshot-uitag.png` (annotated) + `screenshot-uitag-mani
 ```
 uitag <image>                   Tag a single screenshot
 uitag batch <dir> -o <out>      Batch process all images in a directory
+uitag patch <image> -m <manifest> -p <patch>   Re-annotate with corrections
+uitag render <image> -m <manifest>             Render from existing manifest
 uitag benchmark <image>         Measure per-stage pipeline timing
 ```
 
@@ -35,7 +37,41 @@ uitag benchmark <image>         Measure per-stage pipeline timing
 ```
 -o, --output-dir DIR    Output directory (default: current dir or uitag-output/)
 --fast                  Use fast OCR (5x faster, noisier text)
+--rescan                Re-scan low-confidence text at higher resolution
 --backend BACKEND       Detection backend: auto (default), coreml, mlx
+```
+
+### OCR Rescan
+
+Low-confidence text detections are flagged automatically. Use `--rescan` to re-OCR them with a multi-crop ensemble:
+
+```bash
+uitag screenshot.png --rescan          # rescan all low-confidence text
+uitag screenshot.png --rescan 7,27     # rescan specific elements by SOM ID
+```
+
+Rescan crops each element at 5 padding values and selects the best reading, with language correction disabled for code/regex accuracy. See [research details](docs/research/ocr-rescan-experiments.md).
+
+### Patch & Render
+
+Re-annotate images from modified manifests without re-running detection:
+
+```bash
+# Apply corrections from a patch file
+uitag patch screenshot.png -m manifest.json -p corrections.json -o out/
+
+# Render annotations from an existing manifest
+uitag render screenshot.png -m manifest.json -o out/
+```
+
+Patch file format:
+```json
+{
+  "patches": [
+    {"som_id": 7, "label": "corrected text"},
+    {"som_id": 12, "hide": true}
+  ]
+}
 ```
 
 ## Why This Exists
@@ -89,12 +125,18 @@ That's the core insight. uitag doesn't force a small model to see a complex desk
 ![uitag output — 151 tagged UI elements on a VS Code screenshot](docs/examples/hero-after.png)
 *151 elements detected in ~1.7s — text labels (Apple Vision), rectangles, icons, and buttons (Florence-2). [Full manifest JSON →](docs/examples/vscode-manifest.json)*
 
+## Tips
+
+- **Use light mode for best OCR accuracy.** Apple Vision produces measurably better results on light mode screenshots, especially for special characters in code, regex patterns, and variable names. In testing, a backslash character (`\`) that was unrecoverable in dark mode across all techniques was correctly read in light mode. [Full research findings →](docs/research/ocr-rescan-experiments.md)
+- **Use `--rescan` for code-heavy UIs.** If your screenshot contains regex, variable names, or other non-prose text, `--rescan` re-checks low-confidence elements with language correction disabled — preventing Apple Vision from "correcting" `Local_Trigger` to `Local Trigger` or `[\w_]+` to garbled text.
+
 ## Documentation
 
 - [API Reference](docs/api.md) — Functions, types, and manifest schema
 - [Performance](docs/performance.md) — Benchmarks and optimization tips
 - [Troubleshooting](docs/troubleshooting.md) — Common issues and FAQ
 - [Research Background](docs/research.md) — Model selection and benchmark methodology
+- [OCR Rescan Research](docs/research/ocr-rescan-experiments.md) — Light/dark mode analysis and crop boundary experiments
 - [Contributing](CONTRIBUTING.md) — Setup and PR guidelines
 
 ## Requirements
@@ -118,10 +160,10 @@ uitag supports pluggable detection backends via the `DetectionBackend` protocol:
 git clone https://github.com/swaylenhayes/uitag.git
 cd uitag
 uv pip install -e ".[dev]"
-uv run pytest  # 76 fast tests (11 skipped without --run-slow)
+uv run pytest  # 94 fast tests (11 skipped without --run-slow)
 ```
 
-87 tests covering: location token parsing, quadrant splitting, IoU computation, merge deduplication, SoM rendering, manifest generation, schema validation, Apple Vision integration, backend protocol, backend selection, encoder bridge conversion, batch processing, and benchmark formatting.
+105 tests covering: location token parsing, quadrant splitting, IoU computation, merge deduplication, SoM rendering, manifest generation, schema validation, Apple Vision integration, backend protocol, backend selection, encoder bridge conversion, batch processing, benchmark formatting, OCR rescan, and patch/render re-annotation.
 
 <details>
 <summary>📋 <strong>Research Background</strong></summary>

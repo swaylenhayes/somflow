@@ -1,7 +1,7 @@
 # uitag — Roadmap
 
-_Last updated: 2026-03-03_
-_Status: Sprints 1-3 complete. Post-launch features (batch, benchmark) shipped in v0.3.1._
+_Last updated: 2026-03-08_
+_Status: Sprints 1-3 complete. v0.3.1 shipped (batch, benchmark). v0.4.0 ready (rescan, patch, render)._
 
 ---
 
@@ -18,6 +18,7 @@ _Status: Sprints 1-3 complete. Post-launch features (batch, benchmark) shipped i
 | Backend abstraction | Complete | MLX default + CoreML option, `--backend` flag |
 | JSON manifest | Stable | Structured output consumed by downstream tools |
 | Research docs | Documented | Object-aware tiling, Florence-2 tiling discovery, 14-model benchmark |
+| Annotation rendering | Improved | Markers outside bboxes, contrast-aware text colors (2026-03-06) |
 
 ---
 
@@ -60,11 +61,80 @@ _Status: Sprints 1-3 complete. Post-launch features (batch, benchmark) shipped i
 - [x] **VHS CLI demo GIF** — Animated terminal recording embedded in README Quick Start
 - [x] **Bundled benchmark images** — Dark (VS Code) + light (LM Studio) reference screenshots, `uitag benchmark` runs both by default
 
+### Annotation & CLI Improvements (2026-03-06)
+
+- [x] **Marker repositioning** — SoM numbered circles positioned outside bbox (above-left) to avoid occluding UI text
+- [x] **Contrast-aware text** — Marker text auto-switches black/white based on background luminance (yellow, orange, cyan get black text)
+- [x] **Resolved output paths** — CLI prints absolute paths instead of `./` for output location
+- [x] **Diff render prototype** — 9 iterations of instruction overlay rendering, documented in `docs/diff-render-spec.md`
+- [x] **PDF companion prototype** — Selectable text PDF alongside instruction images
+
 ---
 
-## Up Next
+## Completed — v0.4.0
+
+### Feature A: Multi-Crop Ensemble OCR Rescan
+
+**Spec:** `docs/specs/multi-scale-ocr-rescan.md` | **Research:** `docs/research/ocr-rescan-experiments.md` | **Release:** `docs/releases/v0.4.0.md`
+
+- [x] Implement multi-crop ensemble re-OCR pipeline stage (`uitag/rescan.py`)
+- [x] Add `--no-lang-correction` flag to Swift binary
+- [x] Add `--rescan` and `--rescan <ids>` CLI flags
+- [x] Add low-confidence callout to default CLI output
+- [x] Confidence threshold set to 0.8
+- [x] 8-phase experiment validating approach (crop sensitivity, context, light/dark mode)
+- [x] Light mode OCR advantage documented in README and research
+- [ ] Determine verbose vs. non-verbose output behavior (TBD)
+- [ ] Determine batch output format for low-confidence elements (TBD)
+
+### Feature B: Patch JSON Input (Re-Annotation)
+
+**Spec:** `docs/specs/patch-json-input.md` | **Release:** `docs/releases/v0.4.0.md`
+
+- [x] Define and validate patch JSON schema (`uitag/patch.py`)
+- [x] Implement `uitag patch` subcommand (`uitag/patch_cli.py`)
+- [x] Implement `uitag render` subcommand (manifest-to-image, no detection)
+- [x] Output naming: `{stem}-uitag.png` + `{stem}-uitag-manifest.json`
+- [x] Partial patches: unpatched elements pass through unchanged
+
+---
+
+## Up Next — P1
 
 - [ ] **Pipeline architecture visual** — Replace ASCII diagram in README with SVG/image
+- [ ] **OCR correction baseline** — Minimal deterministic heuristics for common OCR confusions in UI text (see `docs/ocr-correction-strategy.md`)
+
+---
+
+## Up Next — Validation
+
+- [ ] **Dense UI testing** — Test diff render with many changes in a small area
+- [x] **Light mode validation** — Light mode produces measurably better OCR for special characters (v0.4.0 research)
+- [x] **Dark mode validation** — Dark mode baseline established; thin characters (`\`) unrecoverable in some positions (v0.4.0 research)
+- [ ] **Broader screenshot testing** — IDE, settings UIs, web apps in both light/dark mode
+- [ ] **Large callout count** — Test stacking/overlap with 5+ callout boxes
+- [ ] **Long values** — Test truncation or wrapping for very long field values
+- [ ] **Dark mode detection** — CLI hint when dark mode screenshots may benefit from light mode recapture
+
+---
+
+## Handed Off to Agent Layer
+
+| Item | Why | Handoff doc |
+|------|-----|-------------|
+| PDF user-guidance generation | Requires contextual judgment, narrative, layout decisions | `docs/specs/pdf-generation-handoff.md` |
+| LLM post-correction calls | Requires inference, model selection, cost management | `docs/ocr-correction-strategy.md` |
+| Multi-step correction orchestration | Requires decision-making about when to rescan, escalate | `docs/ocr-correction-strategy.md` |
+
+---
+
+## Under Debate
+
+| Item | Question | See |
+|------|----------|-----|
+| Curated domain dictionaries | UITag core, premium package, or agent layer? | `docs/ocr-correction-strategy.md` |
+| Comprehensive regex patterns | Same boundary question | `docs/ocr-correction-strategy.md` |
+| Who maintains curated data? | Open-source community, paid service, or agent? | `docs/ocr-correction-strategy.md` |
 
 ---
 

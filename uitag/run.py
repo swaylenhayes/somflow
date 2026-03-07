@@ -19,6 +19,9 @@ def run_pipeline(
     iou_threshold: float = 0.5,
     recognition_level: str = "accurate",
     backend=None,
+    rescan: bool = False,
+    rescan_threshold: float = 0.8,
+    rescan_ids: list[int] | None = None,
 ) -> tuple[PipelineResult, Image.Image, str]:
     """Run the full detection pipeline on a screenshot.
 
@@ -81,6 +84,22 @@ def run_pipeline(
     t0 = time.perf_counter()
     merged = merge_detections(all_dets, iou_threshold=iou_threshold)
     timing["merge_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+
+    # Stage 4b: Rescan (optional)
+    if rescan:
+        from uitag.rescan import rescan_low_confidence
+
+        t0 = time.perf_counter()
+        merged, rescan_stats = rescan_low_confidence(
+            merged,
+            img,
+            threshold=rescan_threshold,
+            som_ids=rescan_ids,
+            return_stats=True,
+        )
+        timing["rescan_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+        timing["rescan_count"] = rescan_stats["rescanned"]
+        timing["rescan_improved"] = rescan_stats["improved"]
 
     # Build result
     result = PipelineResult(
