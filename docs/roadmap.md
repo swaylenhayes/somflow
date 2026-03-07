@@ -1,7 +1,7 @@
 # uitag — Roadmap
 
-_Last updated: 2026-03-08_
-_Status: Sprints 1-3 complete. v0.3.1 shipped (batch, benchmark). v0.4.1 current (rescan, patch, render, CLI UX polish)._
+_Last updated: 2026-03-07_
+_Status: v0.4.1 current. Roadmap reframed around downstream integration quality (see Reframe Notes below)._
 
 ---
 
@@ -9,73 +9,91 @@ _Status: Sprints 1-3 complete. v0.3.1 shipped (batch, benchmark). v0.4.1 current
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Detection pipeline | Stable | 1920x1080 → 151 detections in ~1s (fast OCR + optimized MLX) |
-| README | Up to date | Architecture, quick start, performance, research background |
-| CLI | Working | `uitag`, `uitag batch`, `uitag benchmark` |
-| MIT license | Done | No AGPL contamination |
-| Test suite | 87 tests | Fast/slow split, all passing |
-| pyproject.toml | Complete | Metadata, deps, entry points, optional groups |
+| Detection pipeline | Stable | 1920x1080 → 151 detections in ~2.5s accurate, ~1.7s fast |
+| CLI | v0.4.1 | `uitag`, `uitag batch`, `uitag benchmark`, `uitag patch`, `uitag render` |
+| OCR rescan | Shipped | Multi-crop ensemble, interactive prompt, `-rescan` suffix, special-char guard |
 | Backend abstraction | Complete | MLX default + CoreML option, `--backend` flag |
-| JSON manifest | Stable | Structured output consumed by downstream tools |
-| Research docs | Documented | Object-aware tiling, Florence-2 tiling discovery, 14-model benchmark |
-| Annotation rendering | Improved | Markers outside bboxes, contrast-aware text colors (2026-03-06) |
+| JSON manifest | Stable | Schema frozen through v0.4.x — public API contract for downstream tools |
+| Python library API | Exported | `from uitag import run_pipeline` — supports rescan, backend selection |
+| Annotation rendering | v0.4.1 | Markers outside bboxes, contrast-aware text, dark gold replaces yellow |
+| Test suite | 81 passing | 1 pre-existing failure (`test_batch_cli.py`) |
+| MIT license | Done | No AGPL contamination |
+
+---
+
+## Reframe Notes (2026-03-07)
+
+> **Why the roadmap changed:** A downstream integration audit revealed three findings that shifted priorities:
+>
+> 1. **Label accuracy is the highest-leverage improvement.** Downstream tools that consume the manifest render every `label` field directly into prompts. OCR errors in labels propagate through every downstream step. The OCR correction baseline — previously equal-weighted with README polish — is now the top priority because it directly improves the data that flows through every downstream module.
+>
+> 2. **The manifest schema is sufficient and frozen.** Downstream consumers use `image_width`, `image_height`, `element_count`, `som_id`, `label`, `bbox`, and `source`. No new fields are needed. This means uitag's roadmap should focus on making existing fields more accurate (especially `label`), not on schema expansion.
+>
+> 3. **Repeated-call performance matters.** Automated workflows that call uitag after each interaction step accumulate overhead quickly. At 15 steps × ~2.5s = ~37.5s detection overhead. The ~600ms temp file I/O waste per call (mlx_vlm API limitation) becomes 9 seconds of pure waste over a session. This moves I/O optimization from "parked" to "do when repeated-call use cases emerge."
+>
+> 4. **Rescan has no downstream consumer yet.** No downstream tool currently branches on `confidence`. The rescan feature is currently CLI-only quality-of-life. Further rescan investment is deferred until downstream tools begin using confidence values.
+>
+> The reframe prioritizes: **detect accurately → test confidently → optimize for repeated calls**. README polish and validation edge cases are deferred.
+
+---
+
+## Tier 1 — Do Now
+
+_Theme: improve what downstream tools actually consume, build detection quality confidence._
+
+- [ ] **Broader screenshot testing** — Run pipeline on IDE, settings UIs, web apps in both light/dark mode. Establish a detection quality baseline with documented expected vs. actual element counts. The v0.4.1 spot-check found detection inconsistencies across different captures of the same UI — we need to understand the variance before the next feature cycle.
+- [ ] **OCR correction baseline** — Minimal deterministic heuristics for common OCR confusions in UI text (`l`→`I`, Cyrillic `Т`→`T`, `w`→`W`). The v0.4.1 spot-check and rescan testing surfaced exactly these failure modes. This directly improves the `label` field that downstream tools feed into prompts. See `docs/ocr-correction-strategy.md`.
+- [ ] **Fix `test_batch_cli.py`** — `test_format_summary` and `test_format_summary_no_failures` fail due to missing `total_detections` parameter. Pre-existing, straightforward fix. Broken tests erode suite confidence.
+
+---
+
+## Tier 2 — Do When Repeated-Call Use Cases Emerge
+
+_Theme: prepare for repeated-call integration._
+
+- [ ] **Temp file I/O optimization** — Eliminate ~600ms overhead from mlx_vlm's file-based API (save 4 temp PNGs, load them back). Over 15 repeated verification calls, this wastes ~9 seconds. Evaluate: can mlx_vlm accept PIL images directly? Can we memory-map the temp files? Is there a streaming interface?
+- [ ] **`crop_region` parameter** — Add optional `crop_region` tuple to `run_pipeline()` for sub-image detection with automatic coordinate offset. Useful when callers outgrow the caller-side PIL crop workaround. Not building proactively — wait for demand.
+- [ ] **Manifest stability doc** — Explicitly document the schema freeze for v0.4.x in `docs/api.md`. Downstream consumers depend on this contract. Any breaking change requires a versioned migration.
+
+---
+
+## Tier 3 — Defer
+
+_Not blocking anything. Resume when triggered._
+
+| Item | Why deferred | Resume trigger |
+|------|-------------|----------------|
+| Pipeline architecture visual | README polish, not functional | User/community request |
+| Dense UI testing | Validation edge case | After Tier 1 baseline established |
+| Large callout count testing | Validation edge case | After Tier 1 baseline established |
+| Long value truncation testing | Validation edge case | After Tier 1 baseline established |
+| Further rescan sophistication | No downstream consumer reads confidence yet | Downstream tools begin using confidence values |
+| Verbose vs. non-verbose output behavior | Low-priority CLI polish | User request |
+| Batch output format for low-confidence elements | Low-priority CLI polish | Batch usage patterns emerge |
 
 ---
 
 ## Completed Work
 
-### Sprint 1: CI + Documentation (2026-02-27)
+### v0.4.1 (2026-03-07)
 
-- [x] **S1.1:** GitHub Actions CI — `.github/workflows/test.yml`, Python 3.10/3.11/3.12, badge in README
-- [x] **S1.2:** Example output — hero image + redacted manifest in `docs/examples/`
-- [x] **S1.3:** README refresh — perf numbers, CI badge, hero image, backend docs
-- [x] **S1.4:** Pre-commit config — ruff check + format, codebase normalized
+**Release:** `docs/releases/v0.4.1.md`
 
-### Sprint 2: Distribution (2026-02-27)
+- [x] Rescan special-character guard — prevents high-confidence sanitized text from replacing correct low-confidence readings
+- [x] CLI UX overhaul — bold orange low-confidence header, `[id] CONF 0.xx "output"` format, interactive rescan prompt
+- [x] `-rescan` output filename suffix — preserves standard outputs alongside rescan outputs
+- [x] Dark gold bbox color — replaces yellow `(255,255,0)` with `(200,170,0)` for light-mode visibility
+- [x] Dark mode detection hint — fires when avg brightness < 100 and low-confidence detections exist
+- [x] README reorder — Why This Exists above Quick Start, Output Format after commands
+- [x] `__init__.py` version synced to 0.4.1
 
-- [x] **S2.1:** PyPI publish — v0.2.2 live on PyPI + TestPyPI, trusted publishers (OIDC), tag-triggered workflow
-- [x] **S2.2:** GitHub Release — [v0.2.0](https://github.com/swaylenhayes/uitag/releases) published
-- [x] **S2.3:** Issue templates — bug report + feature request (YAML forms)
+### v0.4.0 (2026-03-06)
 
-### Sprint 3: Contributor Experience (2026-02-27)
+**Release:** `docs/releases/v0.4.0.md`
 
-- [x] **S3.1:** CONTRIBUTING.md — setup, architecture overview, PR workflow
-- [x] **S3.2:** Integration examples — `examples/use_as_library.py` + `examples/custom_backend.py`
-- [x] **S3.3:** Manifest JSON Schema — `uitag/schema.json` (Draft 2020-12) + 5 validation tests
+#### Feature A: Multi-Crop Ensemble OCR Rescan
 
-### Post-Sprint Fixes (2026-02-27)
-
-- [x] Pip install fix — Swift source bundled in package (`uitag/tools/`)
-- [x] `run_pipeline` exported from `__init__.py`
-- [x] README Quick Start leads with `pip install uitag`
-- [x] Apache-2.0 SPDX headers → MIT (5 files)
-- [x] Stale perf numbers updated in `docs/research.md`
-
-### v0.3.x Features
-
-- [x] **Batch CLI** (`uitag batch <dir>`) — Process folders of screenshots in one command (v0.3.1)
-- [x] **Benchmark CLI** (`uitag benchmark`) — Per-stage timing with stats across N runs, bundled reference images (v0.3.1)
-- [x] **Per-stage timing instrumentation** — All 6 pipeline stages timed in manifest output (v0.3.1)
-- [x] **API reference docs** — `docs/api.md` with functions, types, manifest schema
-- [x] **Performance docs** — `docs/performance.md` with stage breakdown, backend comparison
-- [x] **VHS CLI demo GIF** — Animated terminal recording embedded in README Quick Start
-- [x] **Bundled benchmark images** — Dark (VS Code) + light (LM Studio) reference screenshots, `uitag benchmark` runs both by default
-
-### Annotation & CLI Improvements (2026-03-06)
-
-- [x] **Marker repositioning** — SoM numbered circles positioned outside bbox (above-left) to avoid occluding UI text
-- [x] **Contrast-aware text** — Marker text auto-switches black/white based on background luminance (yellow, orange, cyan get black text)
-- [x] **Resolved output paths** — CLI prints absolute paths instead of `./` for output location
-- [x] **Diff render prototype** — 9 iterations of instruction overlay rendering, documented in `docs/diff-render-spec.md`
-- [x] **PDF companion prototype** — Selectable text PDF alongside instruction images
-
----
-
-## Completed — v0.4.0
-
-### Feature A: Multi-Crop Ensemble OCR Rescan
-
-**Spec:** `docs/specs/multi-scale-ocr-rescan.md` | **Research:** `docs/research/ocr-rescan-experiments.md` | **Release:** `docs/releases/v0.4.0.md`
+**Spec:** `docs/specs/multi-scale-ocr-rescan.md` | **Research:** `docs/research/ocr-rescan-experiments.md`
 
 - [x] Implement multi-crop ensemble re-OCR pipeline stage (`uitag/rescan.py`)
 - [x] Add `--no-lang-correction` flag to Swift binary
@@ -84,12 +102,10 @@ _Status: Sprints 1-3 complete. v0.3.1 shipped (batch, benchmark). v0.4.1 current
 - [x] Confidence threshold set to 0.8
 - [x] 8-phase experiment validating approach (crop sensitivity, context, light/dark mode)
 - [x] Light mode OCR advantage documented in README and research
-- [ ] Determine verbose vs. non-verbose output behavior (TBD)
-- [ ] Determine batch output format for low-confidence elements (TBD)
 
-### Feature B: Patch JSON Input (Re-Annotation)
+#### Feature B: Patch JSON Input (Re-Annotation)
 
-**Spec:** `docs/specs/patch-json-input.md` | **Release:** `docs/releases/v0.4.0.md`
+**Spec:** `docs/specs/patch-json-input.md`
 
 - [x] Define and validate patch JSON schema (`uitag/patch.py`)
 - [x] Implement `uitag patch` subcommand (`uitag/patch_cli.py`)
@@ -97,24 +113,21 @@ _Status: Sprints 1-3 complete. v0.3.1 shipped (batch, benchmark). v0.4.1 current
 - [x] Output naming: `{stem}-uitag.png` + `{stem}-uitag-manifest.json`
 - [x] Partial patches: unpatched elements pass through unchanged
 
----
+### v0.3.x Features
 
-## Up Next — P1
+- [x] Batch CLI (`uitag batch <dir>`) — v0.3.1
+- [x] Benchmark CLI (`uitag benchmark`) — v0.3.1
+- [x] Per-stage timing instrumentation — v0.3.1
+- [x] API reference docs, performance docs, VHS demo GIF
+- [x] Marker repositioning, contrast-aware text, resolved output paths
+- [x] Dark mode validation, light mode validation
 
-- [ ] **Pipeline architecture visual** — Replace ASCII diagram in README with SVG/image
-- [ ] **OCR correction baseline** — Minimal deterministic heuristics for common OCR confusions in UI text (see `docs/ocr-correction-strategy.md`)
+### Sprints 1-3 (2026-02-27)
 
----
-
-## Up Next — Validation
-
-- [ ] **Dense UI testing** — Test diff render with many changes in a small area
-- [x] **Light mode validation** — Light mode produces measurably better OCR for special characters (v0.4.0 research)
-- [x] **Dark mode validation** — Dark mode baseline established; thin characters (`\`) unrecoverable in some positions (v0.4.0 research)
-- [ ] **Broader screenshot testing** — IDE, settings UIs, web apps in both light/dark mode
-- [ ] **Large callout count** — Test stacking/overlap with 5+ callout boxes
-- [ ] **Long values** — Test truncation or wrapping for very long field values
-- [x] **Dark mode detection** — CLI hint when dark mode screenshots may benefit from light mode recapture (v0.4.1)
+- [x] S1: CI + documentation (GitHub Actions, hero image, README, pre-commit)
+- [x] S2: Distribution (PyPI, GitHub Release, issue templates)
+- [x] S3: Contributor experience (CONTRIBUTING.md, examples, JSON Schema)
+- [x] Post-sprint fixes (pip install, `run_pipeline` export, license headers)
 
 ---
 
@@ -142,7 +155,7 @@ _Status: Sprints 1-3 complete. v0.3.1 shipped (batch, benchmark). v0.4.1 current
 
 | Item | Why parked | Resume trigger |
 |------|-----------|----------------|
-| CoreML as AUTO default | MLX is faster on idle GPU | Profiling shows otherwise |
+| CoreML as AUTO default | MLX is faster on idle GPU (benchmarked) | Profiling on M3/M4 shows otherwise |
 | GPU load detection in selector | Not needed for single-user CLI | Multi-process use cases |
 | Florence-2 task token exploration | Current task tokens work well | Quality issues surface |
 | Parallel quadrant inference | Sequential is already ~650ms | User demand |
