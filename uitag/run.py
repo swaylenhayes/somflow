@@ -8,6 +8,7 @@ from uitag.types import PipelineResult
 from uitag.vision import run_vision_detect
 from uitag.quadrants import split_object_aware
 from uitag.merge import merge_detections
+from uitag.correct import correct_detections
 from uitag.annotate import render_som
 from uitag.manifest import generate_manifest
 
@@ -100,6 +101,12 @@ def run_pipeline(
         timing["rescan_ms"] = round((time.perf_counter() - t0) * 1000, 1)
         timing["rescan_count"] = rescan_stats["rescanned"]
         timing["rescan_improved"] = rescan_stats["improved"]
+
+    # Stage 4c: Deterministic label corrections
+    t0 = time.perf_counter()
+    merged, correction_count = correct_detections(merged)
+    timing["correct_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+    timing["corrections"] = correction_count
 
     # Build result
     result = PipelineResult(
