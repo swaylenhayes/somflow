@@ -33,8 +33,8 @@ New always-on pipeline stage (4d) in `uitag/group.py`. Same philosophy as OCR co
 1. Separate `vision_text` detections from all other sources.
 2. Sort text detections by y-position.
 3. Walk through sorted list, growing groups when the next line meets **both**:
-   - **Vertical proximity**: gap between bottom of current line and top of next line < 1.0x current line height.
-   - **Left-alignment**: x-start within 20px of the group's first line.
+   - **Vertical proximity**: gap between bottom of the *last line in the group* and top of next line < 1.0x the *last line's* height. ("Current line" always means the most recently added line to the group — the one physically adjacent to the candidate.)
+   - **Left-alignment**: x-start within 20px of the group's first line. (First-line-indented paragraphs will not be grouped; this is acceptable for iOS/macOS UI text, which is flush-left.)
 4. For groups of 2+ lines, emit a single `Detection`:
    - **Label**: space-joined text from all lines.
    - **Bbox**: union of all line bounding boxes.
@@ -61,12 +61,22 @@ After text blocks are formed, `vision_rect` detections are checked for containme
 ## Pipeline Integration
 
 ```
+Stage 4b: rescan_low_confidence(merged)    -- existing (optional, --rescan)
 Stage 4c: correct_detections(merged)       -- existing
 Stage 4d: group_text_blocks(merged)         -- new
 Stage 5:  render_som(img, merged)           -- existing
 ```
 
+**Ordering constraint**: Stage 4d MUST run after 4b (rescan). Rescan filters on `d.source == "vision_text"` — if grouping ran first, grouped lines would have source `"vision_text_block"` and be invisible to rescan.
+
 In `uitag/run.py`, call `group_text_blocks()` after `correct_detections()`. Add timing keys `group_ms` (stage duration) and `groups_formed` (number of text blocks created) to the pipeline timing dict.
+
+## Required Downstream Changes
+
+- **`uitag/schema.json`**: Add `"vision_text_block"` to the `source` enum (line ~60). Without this, manifest validation fails.
+- **`uitag/merge.py`**: Add `"vision_text_block": 3` to `SOURCE_PRIORITY` (same priority as `vision_text`). Prevents text blocks from being de-prioritized if detections are ever re-merged.
+- **`uitag/types.py`**: Update the source field comment to include `"vision_text_block"`.
+- **`examples/use_as_library.py`**: Update any `d.source == "vision_text"` filters to also match `"vision_text_block"`.
 
 ## File Layout
 
@@ -87,6 +97,8 @@ In `uitag/run.py`, call `group_text_blocks()` after `correct_detections()`. Add 
 - SoM IDs are re-assigned after grouping
 - Empty input returns empty
 - Florence and other non-text sources are untouched
+- Mixed-height lines: bold first line (h=24) + regular body (h=16) with gap=20 — merges correctly (gap < last line's height is the check)
+- Same-y different-x lines (side-by-side columns) are NOT grouped (x-alignment check prevents it)
 
 ### Integration Verification
 
