@@ -4,6 +4,7 @@ from uitag.types import Detection
 
 SOURCE_PRIORITY = {
     "vision_text": 3,
+    "vision_text_block": 3,
     "vision_rect": 2,
     "florence2": 1,
 }

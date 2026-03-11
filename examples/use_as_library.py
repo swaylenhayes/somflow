@@ -33,7 +33,7 @@ def main():
     print(f"Image: {result.image_width}x{result.image_height}")
 
     # Filter by source
-    vision_text = [d for d in result.detections if d.source == "vision_text"]
+    vision_text = [d for d in result.detections if d.source in ("vision_text", "vision_text_block")]
     florence = [d for d in result.detections if d.source == "florence2"]
     print(f"  Vision text: {len(vision_text)}")
     print(f"  Florence-2:  {len(florence)}")
