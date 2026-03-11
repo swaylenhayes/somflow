@@ -164,3 +164,79 @@ def test_same_y_different_x_not_grouped():
 
     assert groups_formed == 0
     assert len(result) == 2
+
+
+# --- Rectangle absorption ---
+
+
+def test_contained_rect_absorbed():
+    """vision_rect mostly inside a text block is removed."""
+    from uitag.group import group_text_blocks
+
+    dets = [
+        # Two text lines that will group (gap=6, height=19)
+        _det("Line one of the paragraph text here", x=46, y=189, w=361, h=19),
+        _det("Line two of the paragraph continues", x=46, y=214, w=338, h=17),
+        # Small rect fully inside the text block area
+        _det("rectangle", x=100, y=190, w=50, h=15, source="vision_rect"),
+    ]
+    result, groups_formed = group_text_blocks(dets)
+
+    assert groups_formed == 1
+    # Text block + no rect (absorbed)
+    assert len(result) == 1
+    assert result[0].source == "vision_text_block"
+
+
+def test_large_container_rect_preserved():
+    """vision_rect larger than a text block is NOT absorbed."""
+    from uitag.group import group_text_blocks
+
+    dets = [
+        _det("Line one of the paragraph", x=46, y=189, w=361, h=19),
+        _det("Line two continues here", x=46, y=214, w=338, h=17),
+        # Large container rect that extends well beyond text block
+        _det("rectangle", x=13, y=91, w=471, h=298, source="vision_rect"),
+    ]
+    result, groups_formed = group_text_blocks(dets)
+
+    assert groups_formed == 1
+    # Text block + container rect (preserved)
+    assert len(result) == 2
+    sources = {d.source for d in result}
+    assert "vision_rect" in sources
+    assert "vision_text_block" in sources
+
+
+def test_florence_detections_never_absorbed():
+    """Florence detections inside a text block area are NOT absorbed."""
+    from uitag.group import group_text_blocks
+
+    dets = [
+        _det("Line one text", x=10, y=10, w=200, h=20),
+        _det("Line two text", x=10, y=35, w=200, h=20),
+        # Florence detection inside the text block area
+        _det("button", x=50, y=15, w=30, h=10, source="florence2"),
+    ]
+    result, groups_formed = group_text_blocks(dets)
+
+    assert groups_formed == 1
+    sources = [d.source for d in result]
+    assert "florence2" in sources
+
+
+def test_rect_outside_text_block_preserved():
+    """vision_rect outside any text block passes through."""
+    from uitag.group import group_text_blocks
+
+    dets = [
+        _det("Line one", x=10, y=10, w=200, h=20),
+        _det("Line two", x=10, y=35, w=200, h=20),
+        # Rect far away from text block
+        _det("rectangle", x=400, y=400, w=50, h=50, source="vision_rect"),
+    ]
+    result, groups_formed = group_text_blocks(dets)
+
+    assert groups_formed == 1
+    assert len(result) == 2
+    assert any(d.source == "vision_rect" for d in result)
