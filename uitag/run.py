@@ -9,6 +9,7 @@ from uitag.vision import run_vision_detect
 from uitag.quadrants import split_object_aware
 from uitag.merge import merge_detections
 from uitag.correct import correct_detections
+from uitag.group import group_text_blocks
 from uitag.annotate import render_som
 from uitag.manifest import generate_manifest
 
@@ -31,6 +32,9 @@ def run_pipeline(
     2. Quadrant split
     3. Florence-2 on each quadrant (via backend)
     4. Merge + deduplicate
+    4b. Rescan (optional)
+    4c. OCR correction
+    4d. Text block grouping
     5. Annotate SoM
     6. Generate manifest
 
@@ -107,6 +111,12 @@ def run_pipeline(
     merged, correction_count = correct_detections(merged)
     timing["correct_ms"] = round((time.perf_counter() - t0) * 1000, 1)
     timing["corrections"] = correction_count
+
+    # Stage 4d: Text block grouping
+    t0 = time.perf_counter()
+    merged, groups_formed = group_text_blocks(merged)
+    timing["group_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+    timing["groups_formed"] = groups_formed
 
     # Build result
     result = PipelineResult(
