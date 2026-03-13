@@ -43,7 +43,12 @@ def main():
 
     parser = argparse.ArgumentParser(description="uitag Detection Pipeline")
     parser.add_argument("image", help="Path to screenshot")
-    parser.add_argument("--output-dir", "-o", default=".", help="Output directory")
+    parser.add_argument(
+        "--output-dir",
+        "-o",
+        default=None,
+        help="Output directory (default: same directory as input image)",
+    )
     parser.add_argument("--task", default="<OD>", help="Florence-2 task token")
     parser.add_argument(
         "--overlap", type=int, default=50, help="Quadrant overlap pixels"
@@ -82,7 +87,11 @@ def main():
         print(f"Error: Image not found: {image_path}", file=sys.stderr)
         sys.exit(1)
 
-    out_dir = Path(args.output_dir)
+    # Default output dir: same directory as the input image
+    if args.output_dir is None:
+        out_dir = Path(image_path).parent.resolve()
+    else:
+        out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     from uitag.backends.selector import BackendPreference, select_backend

@@ -125,10 +125,12 @@ def test_format_summary_no_failures():
     assert "failed" not in summary
 
 
-def test_batch_main_no_args_exits():
-    """batch_main with no image path prints usage and exits."""
+def test_batch_main_no_args_defaults_to_cwd(tmp_path, monkeypatch):
+    """batch_main with no args defaults to current directory."""
     from uitag.batch_cli import batch_main
 
+    # Empty dir → exits with "No images found"
+    monkeypatch.chdir(tmp_path)
     with pytest.raises(SystemExit) as exc:
         batch_main([])
     assert exc.value.code != 0

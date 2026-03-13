@@ -82,8 +82,9 @@ def batch_main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument(
         "path",
-        nargs="+",
-        help="Directory containing images, or individual image paths",
+        nargs="*",
+        default=["."],
+        help="Directory containing images, or individual image paths (default: current directory)",
     )
     parser.add_argument(
         "--output-dir",
