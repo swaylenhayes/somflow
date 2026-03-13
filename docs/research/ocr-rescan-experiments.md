@@ -1,7 +1,13 @@
+---
+title: ocr-rescan-experiments
+type: note
+permalink: uitag/docs/research/ocr-rescan-experiments
+---
+
 # OCR Rescan Experiments — Apple Vision Accuracy on Special Characters
 
 > Research supporting the multi-crop ensemble rescan feature in uitag v0.4.0.
-> Full experimental spec: [`docs/specs/multi-scale-ocr-rescan.md`](../specs/multi-scale-ocr-rescan.md)
+> Research supporting the multi-crop ensemble rescan feature shipped in v0.4.0.
 
 ---
 
@@ -121,7 +127,7 @@ on all test elements.
 ## Experiment Details
 
 8 phases of experiments were conducted. Full data tables, methodology,
-and raw results are in [`docs/specs/multi-scale-ocr-rescan.md`](../specs/multi-scale-ocr-rescan.md):
+and raw results are documented below:
 
 1. Upscale + Re-OCR — disproved (no improvement)
 2. `customWords` vocabulary — no effect (operates too late in pipeline)
