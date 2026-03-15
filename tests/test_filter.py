@@ -34,7 +34,39 @@ def test_coverage_filter_boundary_at_threshold():
     """Detection at exactly 5% threshold survives (> not >=)."""
     # Image 1000x1000 = 1,000,000 px. 5% = 50,000. Detection exactly 50,000.
     # 250x200 = 50,000. Ratio = 0.05. Filter uses >, so this should survive.
-    dets = [_make_det("poster", x=0, y=0, w=250, h=200)]
+    # Label "button" is not on the COCO blocklist so only coverage is tested.
+    dets = [_make_det("button", x=0, y=0, w=250, h=200)]
     filtered, stats = filter_florence2(dets, image_width=1000, image_height=1000)
     assert len(filtered) == 1  # exactly at threshold, not above it
     assert stats["florence2_coverage_filtered"] == 0
+
+
+# --- COCO blocklist ---
+
+
+def test_blocklist_strips_known_coco_label():
+    """Small florence2 detection with COCO label is stripped by blocklist."""
+    # Small bbox (under coverage threshold) but COCO label.
+    dets = [_make_det("human face", x=100, y=200, w=50, h=40)]
+    filtered, stats = filter_florence2(dets, image_width=1920, image_height=1080)
+    assert len(filtered) == 0
+    assert stats["florence2_blocklist_filtered"] == 1
+    assert stats["florence2_coverage_filtered"] == 0
+
+
+def test_blocklist_passes_unknown_label():
+    """Small florence2 detection with non-COCO label survives both filters."""
+    dets = [_make_det("toggle switch", x=100, y=200, w=50, h=40)]
+    filtered, stats = filter_florence2(dets, image_width=1920, image_height=1080)
+    assert len(filtered) == 1
+    assert filtered[0].label == "toggle switch"
+    assert stats["florence2_kept"] == 1
+    assert stats["florence2_labels_kept"] == ["toggle switch"]
+
+
+def test_blocklist_case_insensitive():
+    """Blocklist matching is case-insensitive."""
+    dets = [_make_det("Mobile Phone", x=100, y=200, w=50, h=40)]
+    filtered, stats = filter_florence2(dets, image_width=1920, image_height=1080)
+    assert len(filtered) == 0
+    assert stats["florence2_blocklist_filtered"] == 1
