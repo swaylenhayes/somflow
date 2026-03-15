@@ -31,9 +31,10 @@ def run_pipeline(
 
     Pipeline stages:
     1. Apple Vision (text + rectangles)
-    2. Quadrant split
-    3. Florence-2 on each quadrant (via backend)
+    2. Quadrant split (skipped if no_florence)
+    3. Florence-2 on each quadrant via backend (skipped if no_florence)
     4. Merge + deduplicate
+    4a. Florence-2 filter (coverage + COCO blocklist)
     4b. Rescan (optional)
     4c. OCR correction
     4d. Text block grouping
@@ -42,6 +43,7 @@ def run_pipeline(
 
     Args:
         backend: Optional DetectionBackend. If None, uses MLXBackend.
+        no_florence: Skip Florence-2 entirely (stages 2, 3, 4a). Vision-only mode.
 
     Returns:
         (PipelineResult, annotated_image, manifest_json)
