@@ -99,6 +99,11 @@ def batch_main(argv: list[str] | None = None) -> None:
         default="auto",
         help="Detection backend",
     )
+    parser.add_argument(
+        "--no-florence",
+        action="store_true",
+        help="Skip Florence-2 detection (Vision-only mode, saves ~3s)",
+    )
 
     args = parser.parse_args(argv)
 
@@ -128,19 +133,28 @@ def batch_main(argv: list[str] | None = None) -> None:
     ocr_mode = "fast" if args.fast else "fine"
     ocr_recognition = "fast" if args.fast else "accurate"
 
-    # Load backend once
-    from uitag.backends.selector import BackendPreference, select_backend
+    if args.no_florence:
+        backend = None
+        source_label = (
+            args.path[0].rstrip("/")
+            if len(args.path) == 1
+            else f"{len(args.path)} paths"
+        )
+        print(f"Running pipeline on: {len(image_paths)} images in {source_label}/")
+        print(f"Florence-2: skipped | OCR mode: {ocr_mode}\n")
+    else:
+        from uitag.backends.selector import BackendPreference, select_backend
 
-    preference = BackendPreference(args.backend)
-    backend = select_backend(preference=preference)
-
-    # Warm the backend import before starting timer
-    info = backend.info()
-    source_label = (
-        args.path[0].rstrip("/") if len(args.path) == 1 else f"{len(args.path)} paths"
-    )
-    print(f"Running pipeline on: {len(image_paths)} images in {source_label}/")
-    print(f"Backend: {info.name} ({info.device}) | OCR mode: {ocr_mode}\n")
+        preference = BackendPreference(args.backend)
+        backend = select_backend(preference=preference)
+        info = backend.info()
+        source_label = (
+            args.path[0].rstrip("/")
+            if len(args.path) == 1
+            else f"{len(args.path)} paths"
+        )
+        print(f"Running pipeline on: {len(image_paths)} images in {source_label}/")
+        print(f"Backend: {info.name} ({info.device}) | OCR mode: {ocr_mode}\n")
 
     # Process
     from uitag.run import run_pipeline
@@ -157,6 +171,7 @@ def batch_main(argv: list[str] | None = None) -> None:
                 str(img_path),
                 recognition_level=ocr_recognition,
                 backend=backend,
+                no_florence=args.no_florence,
             )
             elapsed = time.perf_counter() - t0
 
