@@ -10,6 +10,7 @@ from uitag.quadrants import split_object_aware
 from uitag.merge import merge_detections
 from uitag.correct import correct_detections
 from uitag.group import group_text_blocks
+from uitag.filter import filter_florence2
 from uitag.annotate import render_som
 from uitag.manifest import generate_manifest
 
@@ -24,6 +25,7 @@ def run_pipeline(
     rescan: bool = False,
     rescan_threshold: float = 0.8,
     rescan_ids: list[int] | None = None,
+    no_florence: bool = False,
 ) -> tuple[PipelineResult, Image.Image, str]:
     """Run the full detection pipeline on a screenshot.
 
@@ -56,39 +58,56 @@ def run_pipeline(
     timing["vision_ms"] = round((time.perf_counter() - t0) * 1000, 1)
     timing.update(vision_timing)
 
-    # Stage 2: Object-aware tiling
-    t0 = time.perf_counter()
-    quads, split_info = split_object_aware(img, vision_dets, overlap_px=overlap_px)
-    timing["tiling_ms"] = round((time.perf_counter() - t0) * 1000, 1)
-    timing["split_x"] = split_info.split_x
-    timing["split_y"] = split_info.split_y
-    timing["split_x_clean"] = split_info.x_clean
-    timing["split_y_clean"] = split_info.y_clean
+    if no_florence:
+        florence_dets = []
+        timing["florence_skipped"] = True
+    else:
+        # Stage 2: Object-aware tiling
+        t0 = time.perf_counter()
+        quads, split_info = split_object_aware(img, vision_dets, overlap_px=overlap_px)
+        timing["tiling_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+        timing["split_x"] = split_info.split_x
+        timing["split_y"] = split_info.split_y
+        timing["split_x_clean"] = split_info.x_clean
+        timing["split_y_clean"] = split_info.y_clean
 
-    # Stage 3: Florence-2 via backend
-    if backend is None:
-        from uitag.backends.mlx_backend import MLXBackend
+        # Stage 3: Florence-2 via backend
+        if backend is None:
+            from uitag.backends.mlx_backend import MLXBackend
 
-        backend = MLXBackend()
+            backend = MLXBackend()
 
-    quad_inputs = [(q.image, q.offset_x, q.offset_y) for q in quads]
+        quad_inputs = [(q.image, q.offset_x, q.offset_y) for q in quads]
 
-    t0 = time.perf_counter()
-    florence_dets = backend.detect_quadrants(quad_inputs, task=florence_task)
-    timing["florence_total_ms"] = round((time.perf_counter() - t0) * 1000, 1)
-    timing["florence_backend"] = backend.info().name
+        t0 = time.perf_counter()
+        florence_dets = backend.detect_quadrants(quad_inputs, task=florence_task)
+        timing["florence_total_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+        timing["florence_backend"] = backend.info().name
 
-    # Capture per-quadrant timing if backend provides it
-    if hasattr(backend, "last_timing"):
-        timing["florence_per_quadrant_ms"] = backend.last_timing.get(
-            "per_quadrant_ms", []
-        )
+        # Capture per-quadrant timing if backend provides it
+        if hasattr(backend, "last_timing"):
+            timing["florence_per_quadrant_ms"] = backend.last_timing.get(
+                "per_quadrant_ms", []
+            )
 
     # Stage 4: Merge + deduplicate
     all_dets = vision_dets + florence_dets
     t0 = time.perf_counter()
     merged = merge_detections(all_dets, iou_threshold=iou_threshold)
     timing["merge_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+
+    # Stage 4a: Florence-2 filter
+    if not no_florence:
+        t0 = time.perf_counter()
+        merged, filter_stats = filter_florence2(merged, w, h)
+        timing["florence2_filter_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+        timing["florence2_total"] = filter_stats["florence2_total"]
+        timing["florence2_filtered"] = (
+            filter_stats["florence2_coverage_filtered"]
+            + filter_stats["florence2_blocklist_filtered"]
+        )
+        timing["florence2_kept"] = filter_stats["florence2_kept"]
+        timing["florence2_labels_kept"] = filter_stats["florence2_labels_kept"]
 
     # Stage 4b: Rescan (optional)
     if rescan:
