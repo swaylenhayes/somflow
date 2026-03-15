@@ -64,6 +64,11 @@ def main():
         help="Detection backend: auto (default, uses MLX), coreml (ANE offload), mlx",
     )
     parser.add_argument(
+        "--no-florence",
+        action="store_true",
+        help="Skip Florence-2 detection (Vision-only mode, saves ~3s)",
+    )
+    parser.add_argument(
         "--verbose", "-v", action="store_true", help="Show element list and timing"
     )
     parser.add_argument(
@@ -94,20 +99,30 @@ def main():
         out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    from uitag.backends.selector import BackendPreference, select_backend
-
-    preference = BackendPreference(args.backend)
-    backend = select_backend(preference=preference)
-    # Warm the backend import (mlx_vlm ~3s first import) before starting timer
-    info = backend.info()
-    ocr_mode = "fast" if args.fast else "fine"
-    img_parent = str(Path(image_path).parent)
-    if img_parent == ".":
-        img_parent = ""
+    if args.no_florence:
+        backend = None
+        ocr_mode = "fast" if args.fast else "fine"
+        img_parent = str(Path(image_path).parent)
+        if img_parent == ".":
+            img_parent = ""
+        else:
+            img_parent = f" in {img_parent}/"
+        print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
+        print(f"Florence-2: skipped | OCR mode: {ocr_mode}")
     else:
-        img_parent = f" in {img_parent}/"
-    print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
-    print(f"Backend: {info.name} ({info.device}) | OCR mode: {ocr_mode}")
+        from uitag.backends.selector import BackendPreference, select_backend
+
+        preference = BackendPreference(args.backend)
+        backend = select_backend(preference=preference)
+        info = backend.info()
+        ocr_mode = "fast" if args.fast else "fine"
+        img_parent = str(Path(image_path).parent)
+        if img_parent == ".":
+            img_parent = ""
+        else:
+            img_parent = f" in {img_parent}/"
+        print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
+        print(f"Backend: {info.name} ({info.device}) | OCR mode: {ocr_mode}")
     t0 = time.perf_counter()
 
     # Parse rescan ids if provided
@@ -125,6 +140,7 @@ def main():
         rescan=bool(args.rescan),
         rescan_threshold=0.8,
         rescan_ids=rescan_ids,
+        no_florence=args.no_florence,
     )
 
     total_ms = (time.perf_counter() - t0) * 1000
@@ -199,6 +215,7 @@ def main():
                     backend=backend,
                     rescan=True,
                     rescan_threshold=0.8,
+                    no_florence=args.no_florence,
                 )
                 rescan_s = time.perf_counter() - t0_rescan
 
@@ -220,6 +237,22 @@ def main():
 
     if args.verbose:
         print(f"\nTiming: {json.dumps(result.timing_ms)}")
+        # Florence-2 filter summary
+        if args.no_florence:
+            print("Florence-2: skipped")
+        elif "florence2_total" in result.timing_ms:
+            total = result.timing_ms["florence2_total"]
+            filt = result.timing_ms["florence2_filtered"]
+            kept = result.timing_ms["florence2_kept"]
+            if kept == 0:
+                print(f"Florence-2: {total} detected → {filt} filtered (0 kept)")
+            else:
+                labels = result.timing_ms.get("florence2_labels_kept", [])
+                label_str = ", ".join(labels[:5])
+                print(
+                    f"Florence-2: {total} detected → {filt} filtered, "
+                    f"{kept} kept [{label_str}]"
+                )
         print(f"\nElements ({count}):")
         show_limit = 10
         for d in result.detections[:show_limit]:
