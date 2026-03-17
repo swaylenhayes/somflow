@@ -100,9 +100,9 @@ def batch_main(argv: list[str] | None = None) -> None:
         help="Detection backend",
     )
     parser.add_argument(
-        "--no-florence",
+        "--florence",
         action="store_true",
-        help="Skip Florence-2 detection (Vision-only mode, saves ~3s)",
+        help="Enable Florence-2 detection (slower, adds ~1.5s — off by default)",
     )
 
     args = parser.parse_args(argv)
@@ -133,7 +133,7 @@ def batch_main(argv: list[str] | None = None) -> None:
     ocr_mode = "fast" if args.fast else "fine"
     ocr_recognition = "fast" if args.fast else "accurate"
 
-    if args.no_florence:
+    if not args.florence:
         backend = None
         source_label = (
             args.path[0].rstrip("/")
@@ -171,7 +171,7 @@ def batch_main(argv: list[str] | None = None) -> None:
                 str(img_path),
                 recognition_level=ocr_recognition,
                 backend=backend,
-                no_florence=args.no_florence,
+                no_florence=not args.florence,
             )
             elapsed = time.perf_counter() - t0
 

@@ -64,9 +64,9 @@ def main():
         help="Detection backend: auto (default, uses MLX), coreml (ANE offload), mlx",
     )
     parser.add_argument(
-        "--no-florence",
+        "--florence",
         action="store_true",
-        help="Skip Florence-2 detection (Vision-only mode, saves ~3s)",
+        help="Enable Florence-2 detection (slower, adds ~1.5s — off by default)",
     )
     parser.add_argument(
         "--verbose", "-v", action="store_true", help="Show element list and timing"
@@ -99,7 +99,7 @@ def main():
         out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    if args.no_florence:
+    if not args.florence:
         backend = None
         ocr_mode = "fast" if args.fast else "fine"
         img_parent = str(Path(image_path).parent)
@@ -140,7 +140,7 @@ def main():
         rescan=bool(args.rescan),
         rescan_threshold=0.8,
         rescan_ids=rescan_ids,
-        no_florence=args.no_florence,
+        no_florence=not args.florence,
     )
 
     total_ms = (time.perf_counter() - t0) * 1000
@@ -215,7 +215,7 @@ def main():
                     backend=backend,
                     rescan=True,
                     rescan_threshold=0.8,
-                    no_florence=args.no_florence,
+                    no_florence=not args.florence,
                 )
                 rescan_s = time.perf_counter() - t0_rescan
 
@@ -238,7 +238,7 @@ def main():
     if args.verbose:
         print(f"\nTiming: {json.dumps(result.timing_ms)}")
         # Florence-2 filter summary
-        if args.no_florence:
+        if not args.florence:
             print("Florence-2: skipped")
         elif "florence2_total" in result.timing_ms:
             total = result.timing_ms["florence2_total"]

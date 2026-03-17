@@ -181,7 +181,9 @@ def test_filter_stats_in_timing(tmp_path):
         mock_vision.return_value = (mock_vision_dets, {})
         from uitag.run import run_pipeline
 
-        result, annotated, manifest = run_pipeline(str(img_path), backend=mock_backend)
+        result, annotated, manifest = run_pipeline(
+            str(img_path), backend=mock_backend, no_florence=False
+        )
 
     assert "florence2_filter_ms" in result.timing_ms
     assert result.timing_ms["florence2_total"] == 1

@@ -25,7 +25,7 @@ def run_pipeline(
     rescan: bool = False,
     rescan_threshold: float = 0.8,
     rescan_ids: list[int] | None = None,
-    no_florence: bool = False,
+    no_florence: bool = True,
 ) -> tuple[PipelineResult, Image.Image, str]:
     """Run the full detection pipeline on a screenshot.
 
