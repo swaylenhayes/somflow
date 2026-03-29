@@ -1,3 +1,9 @@
+---
+title: troubleshooting
+type: note
+permalink: uitag/docs/troubleshooting
+---
+
 # Troubleshooting
 
 Practical fixes for common issues when installing and running uitag.
@@ -6,14 +12,12 @@ Practical fixes for common issues when installing and running uitag.
 
 ## Requirements Checklist
 
-Before troubleshooting, verify your environment meets these requirements:
-
 | Requirement | Details |
 |---|---|
-| **macOS** | Required. Apple Vision Framework is macOS-only. |
-| **Apple Silicon** | Required. MLX requires Metal GPU (M1/M2/M3/M4). Intel Macs are not supported. |
-| **Python 3.10+** | Minimum version. Tested on 3.10, 3.11, 3.12, 3.13. |
-| **Florence-2 model** | ~159MB, downloads automatically on first run. No manual setup needed. |
+| macOS | Required. Apple Vision Framework is macOS-only. |
+| Python 3.10+ | Minimum version. Tested on 3.10, 3.11, 3.12, 3.13. |
+| YOLO (optional) | `pip install uitag[yolo]` for `--yolo` flag. Model weights (18 MB) are bundled. |
+| Apple Silicon (optional) | Required only for `--florence` (MLX needs Metal GPU). Vision-only and `--yolo` run on any macOS hardware. |
 
 ---
 
@@ -21,52 +25,14 @@ Before troubleshooting, verify your environment meets these requirements:
 
 | Error Message | Cause | Fix |
 |---|---|---|
-| `FileNotFoundError: Swift tool not found at .../vision-detect or .../vision-detect.swift` | The compiled Swift binary and Swift source are both missing. Package was not installed correctly, or the `uitag/tools/` directory was not included. | Reinstall the package: `uv pip install --force-reinstall uitag` (or `uv pip install -e ".[dev]"` for dev installs). |
-| `FileNotFoundError: Image not found: <path>` | The image path passed to `uitag` does not exist on disk. Often caused by relative paths that resolve to the wrong directory. | Use an absolute path to the image. Verify the file exists with `ls <path>`. |
-| `RuntimeError: vision-detect.swift failed (exit <code>): <stderr>` | The Swift subprocess that runs Apple Vision crashed or returned an error. Common causes: running on Linux/Windows, running on Intel Mac, corrupt image file, or missing macOS frameworks. | Verify you are on macOS with Apple Silicon. Check the image file is a valid PNG or JPEG. The stderr output in the error message contains details from the Swift process. |
-| `ImportError: No module named 'mlx_vlm'` | The `mlx_vlm` dependency is not installed. This happens when running from source without installing dependencies. | Install uitag properly: `uv pip install uitag` or `uv pip install -e ".[dev]"`. The `mlx_vlm` package is a required dependency and installs automatically. |
-| `RuntimeError: CoreML model not available at .../davit_encoder.mlpackage. Run: python tools/convert_davit_coreml.py` | The CoreML backend was explicitly requested (`--backend coreml`) but the converted CoreML model file does not exist. | Either run `python tools/convert_davit_coreml.py` to convert the model, or use the default MLX backend instead (`--backend mlx` or omit the flag entirely). CoreML is optional; the default MLX backend works without any conversion step. |
-| `ImportError: No module named 'coremltools'` | The `coremltools` package is not installed. This only matters if you are using the CoreML backend. | Install the CoreML extras: `uv pip install uitag[coreml]`. This is optional -- the default MLX backend does not require coremltools. |
-| `subprocess.TimeoutExpired` (after ~60 seconds) | The Apple Vision Swift subprocess has a 60-second timeout. This usually means the image is extremely large, corrupt, or the system is under heavy load. | Check the image file is not corrupt (`file <image.png>` should show valid PNG/JPEG). Try a smaller image. If the system is under load, wait and retry. |
-| Model download hangs or fails on first run | Network issue, proxy, or Hugging Face rate limit. The Florence-2 model (~159MB) downloads from Hugging Face on first use. | Check network connectivity. If behind a proxy, set `HTTPS_PROXY`. To clear a partial download: `rm -rf ~/.cache/huggingface/hub/models--mlx-community--Florence-2-base-ft-4bit` and retry. |
-
----
-
-## Model FAQ
-
-### Why Florence-2-base, not Florence-2-large?
-
-Florence-2-large produces degenerate output at 4-bit quantization -- specifically, repeated `<s>` tokens with no actual detections. The base model (`Florence-2-base-ft-4bit`) works correctly at 4-bit and provides good detection quality at ~159MB.
-
-### Why is confidence fixed at 0.5 for Florence-2 detections?
-
-Florence-2 does not emit per-box confidence scores. All Florence-2 detections are assigned a fixed `confidence=0.5`. Apple Vision detections have real confidence values from the framework.
-
-### Can I use a different model?
-
-Yes. Implement the `DetectionBackend` protocol defined in `uitag/backends/base.py`. Your backend needs three methods: `info()`, `warmup()`, and `detect_quadrants()`. See `examples/custom_backend.py` for a working example.
-
-### How big is the model?
-
-The Florence-2-base-ft-4bit model is approximately 159MB. It downloads automatically from Hugging Face on first run and is cached locally by the `transformers` library. Subsequent runs use the cached model with no network access.
-
----
-
-## Performance
-
-### Slow first run
-
-The first invocation downloads the Florence-2 model (~159MB) from Hugging Face. This is a one-time cost. Subsequent runs use the cached model from `~/.cache/huggingface/`. If the first run takes 30+ seconds, this is the model downloading -- not a pipeline issue.
-
-### Slow subsequent runs
-
-If warm runs are significantly slower than expected (~2.5s accurate, ~1.7s fast on M2 Max), the GPU may be contended by other workloads. Try:
-
-- `--backend coreml` to offload the vision encoder to the Apple Neural Engine
-- `--fast` to cut Vision time from ~1s to ~213ms
-- Close GPU-heavy applications (rendering, ML training)
-
-For detailed timing breakdowns, see [Performance Benchmarks](performance.md).
+| `FileNotFoundError: Swift tool not found` | Compiled Swift binary and source both missing. Package not installed correctly. | Reinstall: `uv pip install --force-reinstall uitag` |
+| `FileNotFoundError: Image not found: <path>` | Image path does not exist. Often a relative path resolving to the wrong directory. | Use an absolute path. Verify with `ls <path>`. |
+| `RuntimeError: vision-detect.swift failed` | Swift subprocess crashed. Causes: not on macOS, corrupt image, missing frameworks. | Verify macOS. Check image is valid PNG/JPEG. Stderr in the error message has details. |
+| `ImportError: No module named 'ultralytics'` | YOLO dependency not installed. | `pip install uitag[yolo]` or `pip install ultralytics` |
+| `FileNotFoundError: YOLO model not found` | Model weights missing from `uitag/models/yolo-ui.pt`. | Reinstall uitag. The model is bundled with the package. |
+| `ImportError: No module named 'mlx_vlm'` | Florence-2 dependency not installed. Only needed for `--florence`. | `pip install uitag` includes it. For source installs: `uv pip install -e ".[dev]"` |
+| `RuntimeError: CoreML model not available` | CoreML backend requested but model not converted. | Run `python tools/convert_davit_coreml.py` or omit the `--backend coreml` flag. |
+| `subprocess.TimeoutExpired` (after ~60s) | Apple Vision subprocess timed out. Image may be extremely large or corrupt. | Check image with `file <image.png>`. Try a smaller image. |
 
 ---
 
@@ -74,38 +40,85 @@ For detailed timing breakdowns, see [Performance Benchmarks](performance.md).
 
 ### Few or no detections on a complex screenshot
 
-This should not happen under normal conditions. The object-aware tiling system splits complex screenshots into quadrants to keep each tile within Florence-2's detection capacity. If you are seeing missing detections:
+Vision-only mode detects text and rectangles. Icons, buttons, and visual controls without text labels are invisible to Vision. This is the expected gap that `--yolo` addresses:
 
-- Verify the image is a valid PNG or JPEG (not a PDF, TIFF, or WebP).
-- Check that the image loaded correctly by inspecting the annotated SoM output.
-- Try running with `--task "<OD>"` explicitly (the default).
+```bash
+# Vision-only: ~57% coverage on ScreenSpot-Pro
+uitag screenshot.png -o out/
+
+# Vision + YOLO: ~91% coverage
+uitag screenshot.png --yolo -o out/
+```
+
+If detections are still missing with `--yolo`, the image may contain UI patterns not well-represented in the training data (GroundCUA). CAD applications and audio production software show the lowest coverage.
 
 ### Duplicate detections
 
-The pipeline deduplicates using IoU (Intersection over Union). The default threshold is 0.5. If you are seeing duplicates, the overlapping boxes may not overlap enough to trigger dedup. Lower the threshold:
+The pipeline deduplicates using IoU (Intersection over Union). The default threshold is 0.5. If overlapping boxes survive dedup, lower the threshold:
 
 ```bash
 uitag screenshot.png --iou 0.3
 ```
 
-Lower values are more aggressive at merging overlapping boxes.
-
 ### Missing text elements
 
 Apple Vision handles text detection. If text elements are missing:
 
-- Try switching OCR modes. If you used `--fast`, remove it for the more thorough accurate mode. If you used accurate mode, try `--fast` -- in rare cases it captures elements the accurate pass misses.
+- Try switching OCR modes. `--fast` is noisier but occasionally captures elements the accurate pass misses.
 - Very small text (under ~8px) may fall below Apple Vision's detection threshold.
+- Dark mode screenshots produce noisier OCR. Light mode is more reliable for special characters and code. See [OCR Rescan Research](research/ocr-rescan-experiments.md).
+
+### YOLO detections have class labels instead of text content
+
+This is expected. YOLO detections have class labels (Button, Menu, Input_Elements, etc.) rather than text content. Apple Vision provides the actual text. When both detect the same element, the Vision text label takes priority in the merge step. Elements detected only by YOLO will have class labels.
 
 ### Florence-2 detections have generic labels like "computer monitor"
 
-This is expected behavior. Florence-2 uses open-vocabulary object detection, which produces descriptive category labels rather than UI-specific labels. Labels like "computer monitor", "keyboard", or "icon" are normal. The labels describe what the model sees, not the semantic role of the UI element. The spatial coordinates (bounding boxes) are what matter for Set-of-Mark annotation.
+Florence-2 uses open-vocabulary object detection, producing descriptive labels rather than UI-specific labels. Labels like "computer monitor" or "keyboard" are normal. Florence-2 is legacy — use `--yolo` instead for better non-text detection.
+
+---
+
+## Performance
+
+### Slow runs with --yolo
+
+YOLO adds ~2-3 seconds for tiled inference. On a 3840x2160 image, the model processes ~32 tiles. On 1920x1080, ~12 tiles. Total pipeline time with `--yolo` is typically 3-5 seconds.
+
+### Slow first run with --florence
+
+First use of `--florence` downloads the Florence-2 model (~159MB) from Hugging Face. Subsequent runs use the cached model. Vision-only and `--yolo` have no download step.
+
+### Slow subsequent runs
+
+Vision-only should complete in ~1s (accurate) or ~0.3s (fast) on M2 Max. If runs are significantly slower:
+
+- `--fast` cuts Vision time from ~1s to ~213ms
+- Close GPU-heavy applications (rendering, ML training)
+- For detailed timing breakdowns, see [Performance Benchmarks](performance.md)
+
+---
+
+## Model FAQ
+
+### Which detection model should I use?
+
+| Flag | Model | Size | When to use |
+|------|-------|------|-------------|
+| _(none)_ | Apple Vision only | 0 | Fast (~1s), text-heavy UIs |
+| `--yolo` | uitag-yolo11s-ui-detect-v1 | 18 MB (bundled) | Need icon/button coverage |
+| `--florence` | Florence-2-base-ft-4bit | 159 MB (downloaded) | Legacy, superseded by `--yolo` |
+
+### Can I use a different model?
+
+For Florence-2 style detection: implement the `DetectionBackend` protocol defined in `uitag/backends/base.py`. See `examples/custom_backend.py`.
+
+For YOLO: replace the model weights at `uitag/models/yolo-ui.pt` with any YOLO11-compatible `.pt` file.
 
 ---
 
 ## Platform Limitations
 
-- **macOS only.** The pipeline depends on Apple Vision Framework for text and rectangle detection. There is no Linux or Windows equivalent.
-- **Apple Silicon only.** MLX requires Metal GPU support, which is only available on Apple Silicon (M1 and later). Intel Macs cannot run MLX.
-- **No Linux or Windows support.** Both the Apple Vision stage and the MLX inference stage are macOS/Apple Silicon-specific.
-- **No iOS or iPadOS.** While Apple Vision Framework exists on iOS, the API surface differs and the Swift subprocess model does not apply to mobile platforms.
+- macOS only. The pipeline depends on Apple Vision Framework for text and rectangle detection.
+- Vision-only and `--yolo` run on any macOS hardware (Intel or Apple Silicon).
+- `--florence` requires Apple Silicon (M1+) for MLX inference.
+- No Linux, Windows, iOS, or iPadOS support.

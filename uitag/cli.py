@@ -69,6 +69,11 @@ def main():
         help="Enable Florence-2 detection (slower, adds ~1.5s — off by default)",
     )
     parser.add_argument(
+        "--yolo",
+        action="store_true",
+        help="Enable YOLO detection (adds ~1-2s, trained on GroundCUA — off by default)",
+    )
+    parser.add_argument(
         "--verbose", "-v", action="store_true", help="Show element list and timing"
     )
     parser.add_argument(
@@ -108,7 +113,8 @@ def main():
         else:
             img_parent = f" in {img_parent}/"
         print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
-        print(f"Florence-2: skipped | OCR mode: {ocr_mode}")
+        yolo_status = "enabled" if args.yolo else "off"
+        print(f"Florence-2: skipped | YOLO: {yolo_status} | OCR mode: {ocr_mode}")
     else:
         from uitag.backends.selector import BackendPreference, select_backend
 
@@ -141,6 +147,7 @@ def main():
         rescan_threshold=0.8,
         rescan_ids=rescan_ids,
         no_florence=not args.florence,
+        use_yolo=args.yolo,
     )
 
     total_ms = (time.perf_counter() - t0) * 1000
@@ -216,6 +223,7 @@ def main():
                     rescan=True,
                     rescan_threshold=0.8,
                     no_florence=not args.florence,
+                    use_yolo=args.yolo,
                 )
                 rescan_s = time.perf_counter() - t0_rescan
 

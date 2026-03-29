@@ -13,7 +13,9 @@ class Detection:
     width: int
     height: int
     confidence: float
-    source: str  # "vision_text", "vision_text_block", "vision_rect", "florence2"
+    source: (
+        str  # "vision_text", "vision_text_block", "vision_rect", "florence2", "yolo"
+    )
     som_id: int | None = None
 
 

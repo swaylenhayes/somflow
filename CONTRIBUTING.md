@@ -1,12 +1,18 @@
+---
+title: CONTRIBUTING
+type: note
+permalink: uitag/contributing
+---
+
 # Contributing to uitag
 
 ## Quick Start
 
 ```bash
-# Clone and install
+# Clone and install (includes YOLO dependencies)
 git clone https://github.com/swaylenhayes/uitag.git
 cd uitag
-uv pip install -e ".[dev]"
+uv pip install -e ".[dev,yolo]"
 
 # Run tests
 uv run pytest
@@ -18,21 +24,28 @@ pre-commit install
 
 ## Architecture
 
-uitag runs a 6-stage detection pipeline:
+uitag runs a multi-stage detection pipeline:
 
 ```
-Screenshot → [1] Apple Vision → [2] Tiling → [3] Florence-2 → [4] Merge → [5] Annotate → [6] Manifest
+Screenshot → [1] Apple Vision → [2] Merge → [3] OCR Correction → [4] Text Grouping → [5] Annotate → [6] Manifest
+                              ↘ [opt] YOLO tiled detection ↗ (--yolo)
+                              ↘ [legacy] Tiling → Florence-2 ↗ (--florence)
 ```
 
 | Module | What it does |
 |--------|-------------|
 | `uitag/vision.py` | Apple Vision via Swift subprocess (text + rectangles) |
-| `uitag/quadrants.py` | Object-aware image tiling (avoids splitting UI elements) |
-| `uitag/florence.py` | Florence-2 detection token parsing |
+| `uitag/yolo.py` | YOLO tiled detection (640x640 tiles, cross-tile NMS) |
 | `uitag/merge.py` | IoU-based deduplication with source priority |
+| `uitag/correct.py` | OCR correction (Cyrillic homoglyphs, invisible Unicode, NFC) |
+| `uitag/group.py` | Text block grouping (adjacent lines to paragraphs) |
 | `uitag/annotate.py` | SoM numbered overlay rendering |
 | `uitag/manifest.py` | JSON manifest generation |
-| `uitag/run.py` | Pipeline orchestrator — `run_pipeline()` is the main entry point |
+| `uitag/run.py` | Pipeline orchestrator |
+| `uitag/rescan.py` | Multi-crop OCR rescan for low-confidence text |
+| `uitag/filter.py` | Florence-2 detection filtering (legacy) |
+| `uitag/quadrants.py` | Object-aware image tiling for Florence-2 (legacy) |
+| `uitag/florence.py` | Florence-2 detection token parsing (legacy) |
 | `uitag/backends/` | `DetectionBackend` protocol + MLX/CoreML implementations |
 
 ## Making Changes
@@ -46,16 +59,16 @@ Screenshot → [1] Apple Vision → [2] Tiling → [3] Florence-2 → [4] Merge 
 
 ### Test Split
 
-- `uv run pytest` — fast tests only (~50 tests, no model required)
+- `uv run pytest` — fast tests only (134 tests, no model required)
 - `uv run pytest --run-slow` — includes tests that load Florence-2 (requires macOS + model download)
 
 Tests marked `@pytest.mark.slow` need the Florence-2 model and a macOS system with Apple Vision. CI runs fast tests only.
 
 ## What's Welcome
 
-- **Bug fixes** — especially around edge cases in detection merging or tiling
-- **New backends** — implement `DetectionBackend` protocol (see `uitag/backends/base.py`)
-- **Test coverage** — more edge cases for quadrant splitting, IoU merging
-- **Documentation** — examples, tutorials, manifest format docs
+- Bug fixes, especially around detection merging, tiling, or cross-tile NMS
+- New detection backends (implement `DetectionBackend` protocol in `uitag/backends/base.py`)
+- Test coverage for edge cases in quadrant splitting, IoU merging, YOLO tile boundary handling
+- Documentation improvements, examples, and tutorials
 
 See [open issues](https://github.com/swaylenhayes/uitag/issues) for specific ideas.

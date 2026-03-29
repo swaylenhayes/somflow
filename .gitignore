@@ -35,8 +35,8 @@ docs/f1.3-coreml-acceleration.md
 # Pre-compiled Swift binary (compile locally with: swiftc -O tools/vision-detect.swift -o tools/vision-detect)
 tools/vision-detect
 
-# CoreML models (generated, large)
-models/
+# CoreML models (generated, large — root level only)
+/models/
 
 # Environment variables
 .env

@@ -57,7 +57,7 @@
           "source": {
             "type": "string",
             "description": "Detection source",
-            "enum": ["vision_text", "vision_text_block", "vision_rect", "florence2"]
+            "enum": ["vision_text", "vision_text_block", "vision_rect", "florence2", "yolo"]
           }
         },
         "additionalProperties": false

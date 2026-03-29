@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "uitag"
-version = "0.4.1"
-description = "SoM (Set-of-Mark) detection pipeline for macOS — Apple Vision + Florence-2 on MLX"
+version = "0.5.0"
+description = "UI element detection for macOS — Apple Vision + fine-tuned YOLO, on-device, ~1-5s"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [{name = "Swaylen Hayes"}]
-keywords = ["uitag", "som", "set-of-mark", "detection", "apple-vision", "mlx", "florence-2", "ui-detection"]
+keywords = ["uitag", "som", "set-of-mark", "detection", "apple-vision", "mlx", "ui-detection", "vlm"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -30,6 +30,9 @@ dev = [
     "ruff>=0.1.0",
     "jsonschema>=4.0.0",
 ]
+yolo = [
+    "ultralytics>=8.0",
+]
 coreml = [
     "coremltools>=8.0",
     "torch>=2.0",
@@ -48,7 +51,7 @@ where = ["."]
 include = ["uitag*"]
 
 [tool.setuptools.package-data]
-uitag = ["tools/*.swift", "*.json", "assets/*.png"]
+uitag = ["tools/*.swift", "*.json", "assets/*.png", "models/*.pt"]
 
 [tool.ruff]
 line-length = 88

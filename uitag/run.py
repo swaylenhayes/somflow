@@ -26,6 +26,7 @@ def run_pipeline(
     rescan_threshold: float = 0.8,
     rescan_ids: list[int] | None = None,
     no_florence: bool = True,
+    use_yolo: bool = False,
 ) -> tuple[PipelineResult, Image.Image, str]:
     """Run the full detection pipeline on a screenshot.
 
@@ -33,6 +34,7 @@ def run_pipeline(
     1. Apple Vision (text + rectangles)
     2. Quadrant split (skipped if no_florence)
     3. Florence-2 on each quadrant via backend (skipped if no_florence)
+    3y. YOLO tiled inference (if use_yolo)
     4. Merge + deduplicate
     4a. Florence-2 filter (coverage + COCO blocklist)
     4b. Rescan (optional)
@@ -45,6 +47,7 @@ def run_pipeline(
         backend: Optional DetectionBackend. If None, uses MLXBackend.
         no_florence: Skip Florence-2 entirely (stages 2, 3, 4a). Vision-only mode.
             Auto-set to False when a backend is explicitly provided.
+        use_yolo: Enable YOLO tiled detection (adds ~1-2s).
 
     Returns:
         (PipelineResult, annotated_image, manifest_json)
@@ -97,8 +100,19 @@ def run_pipeline(
                 "per_quadrant_ms", []
             )
 
+    # Stage 3y: YOLO tiled inference (optional)
+    if use_yolo:
+        from uitag.yolo import run_yolo_detect
+
+        t0 = time.perf_counter()
+        yolo_dets, yolo_timing = run_yolo_detect(image_path)
+        timing["yolo_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+        timing.update(yolo_timing)
+    else:
+        yolo_dets = []
+
     # Stage 4: Merge + deduplicate
-    all_dets = vision_dets + florence_dets
+    all_dets = vision_dets + florence_dets + yolo_dets
     t0 = time.perf_counter()
     merged = merge_detections(all_dets, iou_threshold=iou_threshold)
     timing["merge_ms"] = round((time.perf_counter() - t0) * 1000, 1)

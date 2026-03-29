@@ -1,0 +1,3470 @@
+{
+  "image_width": 1920,
+  "image_height": 1080,
+  "element_count": 287,
+  "elements": [
+    {
+      "som_id": 1,
+      "label": "Input_Elements",
+      "bbox": {
+        "x": 9,
+        "y": 0,
+        "width": 39,
+        "height": 12
+      },
+      "confidence": 0.2587,
+      "source": "yolo"
+    },
+    {
+      "som_id": 2,
+      "label": "Others",
+      "bbox": {
+        "x": 971,
+        "y": 3,
+        "width": 58,
+        "height": 637
+      },
+      "confidence": 0.2523,
+      "source": "yolo"
+    },
+    {
+      "som_id": 3,
+      "label": "* Settings",
+      "bbox": {
+        "x": 89,
+        "y": 8,
+        "width": 78,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 4,
+      "label": "Input_Elements",
+      "bbox": {
+        "x": 411,
+        "y": 16,
+        "width": 52,
+        "height": 27
+      },
+      "confidence": 0.5434,
+      "source": "yolo"
+    },
+    {
+      "som_id": 5,
+      "label": "71",
+      "bbox": {
+        "x": 987,
+        "y": 16,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 6,
+      "label": "def",
+      "bbox": {
+        "x": 1038,
+        "y": 16,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 7,
+      "label": "resolve_device(device:",
+      "bbox": {
+        "x": 1080,
+        "y": 16,
+        "width": 239,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 8,
+      "label": "str)",
+      "bbox": {
+        "x": 1322,
+        "y": 16,
+        "width": 50,
+        "height": 19
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 9,
+      "label": "str:",
+      "bbox": {
+        "x": 1409,
+        "y": 16,
+        "width": 47,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 10,
+      "label": "_=>",
+      "bbox": {
+        "x": 1373,
+        "y": 19,
+        "width": 36,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 11,
+      "label": "rectangle",
+      "bbox": {
+        "x": 404,
+        "y": 20,
+        "width": 61,
+        "height": 40
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 12,
+      "label": "User",
+      "bbox": {
+        "x": 418,
+        "y": 22,
+        "width": 36,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 13,
+      "label": "Workspace",
+      "bbox": {
+        "x": 468,
+        "y": 22,
+        "width": 80,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 14,
+      "label": "Last synced: 37 secs ago",
+      "bbox": {
+        "x": 742,
+        "y": 22,
+        "width": 175,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 15,
+      "label": "Button",
+      "bbox": {
+        "x": 6,
+        "y": 30,
+        "width": 44,
+        "height": 40
+      },
+      "confidence": 0.3841,
+      "source": "yolo"
+    },
+    {
+      "som_id": 16,
+      "label": "GROUP 2",
+      "bbox": {
+        "x": 61,
+        "y": 32,
+        "width": 61,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 17,
+      "label": "72",
+      "bbox": {
+        "x": 985,
+        "y": 41,
+        "width": 27,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 18,
+      "label": "\"\"\"Resolve",
+      "bbox": {
+        "x": 1079,
+        "y": 41,
+        "width": 111,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 19,
+      "label": "\"auto device to",
+      "bbox": {
+        "x": 1191,
+        "y": 41,
+        "width": 181,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 20,
+      "label": "the best available device.\"\"\"",
+      "bbox": {
+        "x": 1370,
+        "y": 41,
+        "width": 320,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 21,
+      "label": "* Settings",
+      "bbox": {
+        "x": 88,
+        "y": 55,
+        "width": 79,
+        "height": 20
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 22,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1071,
+        "y": 57,
+        "width": 43,
+        "height": 36
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 23,
+      "label": "rectangle",
+      "bbox": {
+        "x": 426,
+        "y": 68,
+        "width": 233,
+        "height": 87
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 24,
+      "label": "73",
+      "bbox": {
+        "x": 985,
+        "y": 69,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 25,
+      "label": "if",
+      "bbox": {
+        "x": 1080,
+        "y": 69,
+        "width": 27,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 26,
+      "label": "device == \"auto\":",
+      "bbox": {
+        "x": 1110,
+        "y": 69,
+        "width": 186,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 27,
+      "label": "Commonly Used",
+      "bbox": {
+        "x": 438,
+        "y": 72,
+        "width": 220,
+        "height": 30
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 28,
+      "label": "Information_Display",
+      "bbox": {
+        "x": 344,
+        "y": 79,
+        "width": 33,
+        "height": 20
+      },
+      "confidence": 0.3993,
+      "source": "yolo"
+    },
+    {
+      "som_id": 29,
+      "label": "profile_inference.py",
+      "bbox": {
+        "x": 80,
+        "y": 80,
+        "width": 165,
+        "height": 20
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 30,
+      "label": "LM",
+      "bbox": {
+        "x": 346,
+        "y": 80,
+        "width": 25,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 31,
+      "label": "Button",
+      "bbox": {
+        "x": 4,
+        "y": 87,
+        "width": 41,
+        "height": 33
+      },
+      "confidence": 0.4343,
+      "source": "yolo"
+    },
+    {
+      "som_id": 32,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1312,
+        "y": 90,
+        "width": 394,
+        "height": 35
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 33,
+      "label": "if hasattr(torch,",
+      "bbox": {
+        "x": 1121,
+        "y": 94,
+        "width": 186,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 34,
+      "label": "\"xpu\")",
+      "bbox": {
+        "x": 1311,
+        "y": 94,
+        "width": 69,
+        "height": 22
+      },
+      "confidence": 0.30000001192092896,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 35,
+      "label": "torch.xpu.is_availableO):",
+      "bbox": {
+        "x": 1431,
+        "y": 94,
+        "width": 270,
+        "height": 22
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 36,
+      "label": "74",
+      "bbox": {
+        "x": 987,
+        "y": 97,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 37,
+      "label": "and",
+      "bbox": {
+        "x": 1389,
+        "y": 97,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 38,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1067,
+        "y": 100,
+        "width": 25,
+        "height": 173
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 39,
+      "label": "Button",
+      "bbox": {
+        "x": 270,
+        "y": 104,
+        "width": 24,
+        "height": 22
+      },
+      "confidence": 0.3692,
+      "source": "yolo"
+    },
+    {
+      "som_id": 40,
+      "label": "Input_Elements",
+      "bbox": {
+        "x": 352,
+        "y": 104,
+        "width": 23,
+        "height": 20
+      },
+      "confidence": 0.4342,
+      "source": "yolo"
+    },
+    {
+      "som_id": 41,
+      "label": "Others",
+      "bbox": {
+        "x": 512,
+        "y": 104,
+        "width": 227,
+        "height": 49
+      },
+      "confidence": 0.3457,
+      "source": "yolo"
+    },
+    {
+      "som_id": 42,
+      "label": "Button",
+      "bbox": {
+        "x": 297,
+        "y": 105,
+        "width": 23,
+        "height": 20
+      },
+      "confidence": 0.3995,
+      "source": "yolo"
+    },
+    {
+      "som_id": 43,
+      "label": "Input_Elements",
+      "bbox": {
+        "x": 324,
+        "y": 105,
+        "width": 22,
+        "height": 18
+      },
+      "confidence": 0.6944,
+      "source": "yolo"
+    },
+    {
+      "som_id": 44,
+      "label": "Editor: Word Wrap (Modified elsewhere)",
+      "bbox": {
+        "x": 438,
+        "y": 105,
+        "width": 279,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 45,
+      "label": "VACE-STEP-1.5",
+      "bbox": {
+        "x": 58,
+        "y": 106,
+        "width": 108,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 46,
+      "label": "l\u00e0 lo",
+      "bbox": {
+        "x": 270,
+        "y": 106,
+        "width": 47,
+        "height": 19
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 47,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1108,
+        "y": 120,
+        "width": 48,
+        "height": 29
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 48,
+      "label": "75",
+      "bbox": {
+        "x": 985,
+        "y": 122,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 49,
+      "label": "return \"xpu\"",
+      "bbox": {
+        "x": 1163,
+        "y": 122,
+        "width": 133,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 50,
+      "label": "cache",
+      "bbox": {
+        "x": 111,
+        "y": 131,
+        "width": 47,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 51,
+      "label": "Controls how lines should wrap.",
+      "bbox": {
+        "x": 438,
+        "y": 133,
+        "width": 214,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 52,
+      "label": "Button",
+      "bbox": {
+        "x": 5,
+        "y": 139,
+        "width": 45,
+        "height": 38
+      },
+      "confidence": 0.5461,
+      "source": "yolo"
+    },
+    {
+      "som_id": 53,
+      "label": "76",
+      "bbox": {
+        "x": 985,
+        "y": 147,
+        "width": 27,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 54,
+      "label": "if torch.cuda.is_available():",
+      "bbox": {
+        "x": 1121,
+        "y": 147,
+        "width": 312,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 55,
+      "label": "claude",
+      "bbox": {
+        "x": 111,
+        "y": 156,
+        "width": 50,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 56,
+      "label": "Input_Elements",
+      "bbox": {
+        "x": 438,
+        "y": 161,
+        "width": 202,
+        "height": 30
+      },
+      "confidence": 0.3371,
+      "source": "yolo"
+    },
+    {
+      "som_id": 57,
+      "label": "rectangle",
+      "bbox": {
+        "x": 437,
+        "y": 165,
+        "width": 32,
+        "height": 25
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 58,
+      "label": "off",
+      "bbox": {
+        "x": 443,
+        "y": 167,
+        "width": 25,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 59,
+      "label": "rectangle",
+      "bbox": {
+        "x": 767,
+        "y": 167,
+        "width": 17,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 60,
+      "label": "77",
+      "bbox": {
+        "x": 985,
+        "y": 175,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 61,
+      "label": "return \"cuda\"",
+      "bbox": {
+        "x": 1163,
+        "y": 175,
+        "width": 145,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 62,
+      "label": "Button",
+      "bbox": {
+        "x": 65,
+        "y": 177,
+        "width": 108,
+        "height": 20
+      },
+      "confidence": 0.3369,
+      "source": "yolo"
+    },
+    {
+      "som_id": 63,
+      "label": "github",
+      "bbox": {
+        "x": 111,
+        "y": 178,
+        "width": 50,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 64,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1840,
+        "y": 181,
+        "width": 56,
+        "height": 38
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 65,
+      "label": "Button",
+      "bbox": {
+        "x": 7,
+        "y": 193,
+        "width": 40,
+        "height": 33
+      },
+      "confidence": 0.4659,
+      "source": "yolo"
+    },
+    {
+      "som_id": 66,
+      "label": "\"mps) and torch.backends.mps.is_avail",
+      "bbox": {
+        "x": 1406,
+        "y": 200,
+        "width": 410,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 67,
+      "label": "Button",
+      "bbox": {
+        "x": 66,
+        "y": 203,
+        "width": 99,
+        "height": 18
+      },
+      "confidence": 0.4092,
+      "source": "yolo"
+    },
+    {
+      "som_id": 68,
+      "label": "78",
+      "bbox": {
+        "x": 987,
+        "y": 203,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 69,
+      "label": "if hasattr(torch.backends,",
+      "bbox": {
+        "x": 1121,
+        "y": 203,
+        "width": 284,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 70,
+      "label": ".venv",
+      "bbox": {
+        "x": 108,
+        "y": 206,
+        "width": 39,
+        "height": 11
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 71,
+      "label": "Files: Exclude",
+      "bbox": {
+        "x": 438,
+        "y": 225,
+        "width": 100,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 72,
+      "label": "Button",
+      "bbox": {
+        "x": 64,
+        "y": 227,
+        "width": 111,
+        "height": 18
+      },
+      "confidence": 0.442,
+      "source": "yolo"
+    },
+    {
+      "som_id": 73,
+      "label": "acestep",
+      "bbox": {
+        "x": 108,
+        "y": 228,
+        "width": 58,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 74,
+      "label": "79",
+      "bbox": {
+        "x": 987,
+        "y": 228,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 75,
+      "label": "return \"mps\"",
+      "bbox": {
+        "x": 1163,
+        "y": 228,
+        "width": 133,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 76,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1815,
+        "y": 230,
+        "width": 88,
+        "height": 47
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 77,
+      "label": "Information_Display",
+      "bbox": {
+        "x": 423,
+        "y": 236,
+        "width": 217,
+        "height": 308
+      },
+      "confidence": 0.7721,
+      "source": "yolo"
+    },
+    {
+      "som_id": 78,
+      "label": "Configure glob patterns for excluding files and folders. For example,",
+      "bbox": {
+        "x": 438,
+        "y": 251,
+        "width": 457,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 79,
+      "label": "Button",
+      "bbox": {
+        "x": 63,
+        "y": 252,
+        "width": 106,
+        "height": 19
+      },
+      "confidence": 0.5827,
+      "source": "yolo"
+    },
+    {
+      "som_id": 80,
+      "label": "return \"cpu\"",
+      "bbox": {
+        "x": 1121,
+        "y": 252,
+        "width": 134,
+        "height": 25
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 81,
+      "label": "assets",
+      "bbox": {
+        "x": 108,
+        "y": 253,
+        "width": 47,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 82,
+      "label": "80",
+      "bbox": {
+        "x": 987,
+        "y": 256,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 83,
+      "label": "the File Explorer decides which files and folders to show or hide",
+      "bbox": {
+        "x": 438,
+        "y": 270,
+        "width": 429,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 84,
+      "label": "Button",
+      "bbox": {
+        "x": 62,
+        "y": 275,
+        "width": 143,
+        "height": 20
+      },
+      "confidence": 0.5899,
+      "source": "yolo"
+    },
+    {
+      "som_id": 85,
+      "label": "rectangle",
+      "bbox": {
+        "x": 81,
+        "y": 275,
+        "width": 113,
+        "height": 86
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 86,
+      "label": "checkpoints",
+      "bbox": {
+        "x": 111,
+        "y": 279,
+        "width": 83,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 87,
+      "label": "81",
+      "bbox": {
+        "x": 987,
+        "y": 281,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 88,
+      "label": "return device",
+      "bbox": {
+        "x": 1080,
+        "y": 281,
+        "width": 142,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 89,
+      "label": "based on this setting. Refer to the Search: Exclude setting to define",
+      "bbox": {
+        "x": 438,
+        "y": 293,
+        "width": 457,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 90,
+      "label": "Button",
+      "bbox": {
+        "x": 63,
+        "y": 300,
+        "width": 106,
+        "height": 19
+      },
+      "confidence": 0.2643,
+      "source": "yolo"
+    },
+    {
+      "som_id": 91,
+      "label": "82",
+      "bbox": {
+        "x": 985,
+        "y": 309,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 92,
+      "label": "search-specific excludes. Refer to the Explorer: Exclude Git Ignore",
+      "bbox": {
+        "x": 435,
+        "y": 312,
+        "width": 449,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 93,
+      "label": "examples",
+      "bbox": {
+        "x": 108,
+        "y": 326,
+        "width": 67,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 94,
+      "label": "setting for ignoring files based on your gitignore.",
+      "bbox": {
+        "x": 435,
+        "y": 331,
+        "width": 357,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 95,
+      "label": "83",
+      "bbox": {
+        "x": 987,
+        "y": 337,
+        "width": 25,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 96,
+      "label": "Button",
+      "bbox": {
+        "x": 62,
+        "y": 349,
+        "width": 165,
+        "height": 20
+      },
+      "confidence": 0.4906,
+      "source": "yolo"
+    },
+    {
+      "som_id": 97,
+      "label": "gradio_outputs",
+      "bbox": {
+        "x": 108,
+        "y": 351,
+        "width": 106,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 98,
+      "label": "auto_detect_backend (device: str) -> str:",
+      "bbox": {
+        "x": 1080,
+        "y": 360,
+        "width": 429,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 99,
+      "label": "84",
+      "bbox": {
+        "x": 987,
+        "y": 362,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 100,
+      "label": "def",
+      "bbox": {
+        "x": 1038,
+        "y": 362,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 101,
+      "label": "**/.git",
+      "bbox": {
+        "x": 440,
+        "y": 365,
+        "width": 66,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 102,
+      "label": "Button",
+      "bbox": {
+        "x": 64,
+        "y": 374,
+        "width": 133,
+        "height": 19
+      },
+      "confidence": 0.4854,
+      "source": "yolo"
+    },
+    {
+      "som_id": 103,
+      "label": "openrouter",
+      "bbox": {
+        "x": 108,
+        "y": 376,
+        "width": 78,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 104,
+      "label": "\u2022\"Auto-detect the best",
+      "bbox": {
+        "x": 1080,
+        "y": 387,
+        "width": 251,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 105,
+      "label": "device.\"'\"'\"",
+      "bbox": {
+        "x": 1640,
+        "y": 387,
+        "width": 114,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 106,
+      "label": "85",
+      "bbox": {
+        "x": 987,
+        "y": 390,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 107,
+      "label": "LLM backend",
+      "bbox": {
+        "x": 1333,
+        "y": 390,
+        "width": 125,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 108,
+      "label": "for the resolved",
+      "bbox": {
+        "x": 1459,
+        "y": 390,
+        "width": 184,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 109,
+      "label": "**/.svn",
+      "bbox": {
+        "x": 438,
+        "y": 393,
+        "width": 69,
+        "height": 16
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 110,
+      "label": "Button",
+      "bbox": {
+        "x": 64,
+        "y": 398,
+        "width": 112,
+        "height": 20
+      },
+      "confidence": 0.3855,
+      "source": "yolo"
+    },
+    {
+      "som_id": 111,
+      "label": "scripts",
+      "bbox": {
+        "x": 108,
+        "y": 398,
+        "width": 50,
+        "height": 18
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 112,
+      "label": "== \"mps\":",
+      "bbox": {
+        "x": 1180,
+        "y": 412,
+        "width": 109,
+        "height": 24
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 113,
+      "label": "86",
+      "bbox": {
+        "x": 987,
+        "y": 415,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 114,
+      "label": "if device",
+      "bbox": {
+        "x": 1080,
+        "y": 415,
+        "width": 100,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 115,
+      "label": "**/.hg **/.DS_Store",
+      "bbox": {
+        "x": 438,
+        "y": 418,
+        "width": 114,
+        "height": 48
+      },
+      "confidence": 0.5,
+      "source": "vision_text_block"
+    },
+    {
+      "som_id": 116,
+      "label": "Button",
+      "bbox": {
+        "x": 63,
+        "y": 421,
+        "width": 134,
+        "height": 20
+      },
+      "confidence": 0.2845,
+      "source": "yolo"
+    },
+    {
+      "som_id": 117,
+      "label": "Others",
+      "bbox": {
+        "x": 966,
+        "y": 440,
+        "width": 60,
+        "height": 609
+      },
+      "confidence": 0.3749,
+      "source": "yolo"
+    },
+    {
+      "som_id": 118,
+      "label": "87",
+      "bbox": {
+        "x": 987,
+        "y": 443,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 119,
+      "label": "try:",
+      "bbox": {
+        "x": 1121,
+        "y": 443,
+        "width": 47,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 120,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1067,
+        "y": 446,
+        "width": 25,
+        "height": 123
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 121,
+      "label": "Unknown",
+      "bbox": {
+        "x": 81,
+        "y": 447,
+        "width": 270,
+        "height": 19
+      },
+      "confidence": 0.4568,
+      "source": "yolo"
+    },
+    {
+      "som_id": 122,
+      "label": "\u2022editorconfig",
+      "bbox": {
+        "x": 108,
+        "y": 448,
+        "width": 89,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 123,
+      "label": "Unknown",
+      "bbox": {
+        "x": 339,
+        "y": 467,
+        "width": 38,
+        "height": 24
+      },
+      "confidence": 0.4551,
+      "source": "yolo"
+    },
+    {
+      "som_id": 124,
+      "label": "88",
+      "bbox": {
+        "x": 987,
+        "y": 468,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 125,
+      "label": "import mlx.core",
+      "bbox": {
+        "x": 1166,
+        "y": 468,
+        "width": 164,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 126,
+      "label": "# noqa: F401",
+      "bbox": {
+        "x": 1347,
+        "y": 468,
+        "width": 131,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 127,
+      "label": "Button",
+      "bbox": {
+        "x": 82,
+        "y": 471,
+        "width": 294,
+        "height": 19
+      },
+      "confidence": 0.7025,
+      "source": "yolo"
+    },
+    {
+      "som_id": 128,
+      "label": "LM",
+      "bbox": {
+        "x": 343,
+        "y": 471,
+        "width": 27,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 129,
+      "label": "**/Thumbs. db",
+      "bbox": {
+        "x": 440,
+        "y": 471,
+        "width": 111,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 130,
+      "label": ".env.example",
+      "bbox": {
+        "x": 108,
+        "y": 474,
+        "width": 92,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 131,
+      "label": "rectangle",
+      "bbox": {
+        "x": 428,
+        "y": 481,
+        "width": 114,
+        "height": 58
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 132,
+      "label": "89",
+      "bbox": {
+        "x": 985,
+        "y": 493,
+        "width": 27,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 133,
+      "label": "return \"mlx\"",
+      "bbox": {
+        "x": 1166,
+        "y": 493,
+        "width": 131,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 134,
+      "label": "Button",
+      "bbox": {
+        "x": 81,
+        "y": 495,
+        "width": 296,
+        "height": 18
+      },
+      "confidence": 0.7171,
+      "source": "yolo"
+    },
+    {
+      "som_id": 135,
+      "label": "gitignore",
+      "bbox": {
+        "x": 111,
+        "y": 496,
+        "width": 64,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 136,
+      "label": "JM",
+      "bbox": {
+        "x": 343,
+        "y": 496,
+        "width": 27,
+        "height": 13
+      },
+      "confidence": 0.30000001192092896,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 137,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1202,
+        "y": 497,
+        "width": 34,
+        "height": 25
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 138,
+      "label": "Information_Display",
+      "bbox": {
+        "x": 435,
+        "y": 499,
+        "width": 102,
+        "height": 31
+      },
+      "confidence": 0.522,
+      "source": "yolo"
+    },
+    {
+      "som_id": 139,
+      "label": "Add Pattern",
+      "bbox": {
+        "x": 443,
+        "y": 507,
+        "width": 80,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 140,
+      "label": "Button",
+      "bbox": {
+        "x": 81,
+        "y": 519,
+        "width": 296,
+        "height": 19
+      },
+      "confidence": 0.7158,
+      "source": "yolo"
+    },
+    {
+      "som_id": 141,
+      "label": "AGENTS.md",
+      "bbox": {
+        "x": 108,
+        "y": 521,
+        "width": 86,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 142,
+      "label": "VA, U",
+      "bbox": {
+        "x": 329,
+        "y": 521,
+        "width": 41,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 143,
+      "label": "90",
+      "bbox": {
+        "x": 987,
+        "y": 521,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 144,
+      "label": "except ImportError:",
+      "bbox": {
+        "x": 1121,
+        "y": 521,
+        "width": 206,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 145,
+      "label": "Button",
+      "bbox": {
+        "x": 81,
+        "y": 544,
+        "width": 207,
+        "height": 19
+      },
+      "confidence": 0.6794,
+      "source": "yolo"
+    },
+    {
+      "som_id": 146,
+      "label": "return \"pt\"",
+      "bbox": {
+        "x": 1163,
+        "y": 545,
+        "width": 125,
+        "height": 24
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 147,
+      "label": "check_update.bat",
+      "bbox": {
+        "x": 108,
+        "y": 546,
+        "width": 128,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 148,
+      "label": "91",
+      "bbox": {
+        "x": 987,
+        "y": 549,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 149,
+      "label": "Others",
+      "bbox": {
+        "x": 512,
+        "y": 562,
+        "width": 370,
+        "height": 77
+      },
+      "confidence": 0.2709,
+      "source": "yolo"
+    },
+    {
+      "som_id": 150,
+      "label": "Information_Display",
+      "bbox": {
+        "x": 427,
+        "y": 567,
+        "width": 213,
+        "height": 73
+      },
+      "confidence": 0.288,
+      "source": "yolo"
+    },
+    {
+      "som_id": 151,
+      "label": "Button",
+      "bbox": {
+        "x": 81,
+        "y": 568,
+        "width": 215,
+        "height": 19
+      },
+      "confidence": 0.5938,
+      "source": "yolo"
+    },
+    {
+      "som_id": 152,
+      "label": "check_update.sh",
+      "bbox": {
+        "x": 108,
+        "y": 569,
+        "width": 120,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 153,
+      "label": "Workbench: Color Theme",
+      "bbox": {
+        "x": 438,
+        "y": 571,
+        "width": 181,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 154,
+      "label": "92",
+      "bbox": {
+        "x": 985,
+        "y": 574,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 155,
+      "label": "if",
+      "bbox": {
+        "x": 1080,
+        "y": 574,
+        "width": 27,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 156,
+      "label": "device. startswith(\"cuda\"):",
+      "bbox": {
+        "x": 1110,
+        "y": 574,
+        "width": 281,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 157,
+      "label": "Unknown",
+      "bbox": {
+        "x": 340,
+        "y": 591,
+        "width": 36,
+        "height": 23
+      },
+      "confidence": 0.4887,
+      "source": "yolo"
+    },
+    {
+      "som_id": 158,
+      "label": "Unknown",
+      "bbox": {
+        "x": 81,
+        "y": 592,
+        "width": 295,
+        "height": 21
+      },
+      "confidence": 0.6508,
+      "source": "yolo"
+    },
+    {
+      "som_id": 159,
+      "label": "cli.py",
+      "bbox": {
+        "x": 108,
+        "y": 594,
+        "width": 41,
+        "height": 16
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 160,
+      "label": "LM",
+      "bbox": {
+        "x": 343,
+        "y": 594,
+        "width": 27,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 161,
+      "label": "rectangle",
+      "bbox": {
+        "x": 430,
+        "y": 597,
+        "width": 122,
+        "height": 41
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 162,
+      "label": "Specifies the color theme used in the workbench when Window:",
+      "bbox": {
+        "x": 438,
+        "y": 597,
+        "width": 432,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 163,
+      "label": "\"vIlm\"",
+      "bbox": {
+        "x": 1194,
+        "y": 599,
+        "width": 72,
+        "height": 19
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 164,
+      "label": "93",
+      "bbox": {
+        "x": 987,
+        "y": 602,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 165,
+      "label": "return",
+      "bbox": {
+        "x": 1121,
+        "y": 602,
+        "width": 69,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 166,
+      "label": "rectangle",
+      "bbox": {
+        "x": 413,
+        "y": 614,
+        "width": 389,
+        "height": 73
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 167,
+      "label": "Auto Detect Color Scheme is not enabled.",
+      "bbox": {
+        "x": 438,
+        "y": 616,
+        "width": 284,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 168,
+      "label": "Unknown",
+      "bbox": {
+        "x": 81,
+        "y": 618,
+        "width": 276,
+        "height": 18
+      },
+      "confidence": 0.5486,
+      "source": "yolo"
+    },
+    {
+      "som_id": 169,
+      "label": "close_api_server.sh",
+      "bbox": {
+        "x": 108,
+        "y": 619,
+        "width": 139,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 170,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1835,
+        "y": 626,
+        "width": 62,
+        "height": 43
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 171,
+      "label": "94",
+      "bbox": {
+        "x": 987,
+        "y": 627,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 172,
+      "label": "return \"pt\"",
+      "bbox": {
+        "x": 1079,
+        "y": 627,
+        "width": 120,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 173,
+      "label": "Unknown",
+      "bbox": {
+        "x": 80,
+        "y": 642,
+        "width": 270,
+        "height": 19
+      },
+      "confidence": 0.5383,
+      "source": "yolo"
+    },
+    {
+      "som_id": 174,
+      "label": "generate_examples.py",
+      "bbox": {
+        "x": 108,
+        "y": 644,
+        "width": 156,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 175,
+      "label": "Unknown",
+      "bbox": {
+        "x": 513,
+        "y": 646,
+        "width": 283,
+        "height": 31
+      },
+      "confidence": 0.69,
+      "source": "yolo"
+    },
+    {
+      "som_id": 176,
+      "label": "rectangle",
+      "bbox": {
+        "x": 438,
+        "y": 649,
+        "width": 152,
+        "height": 25
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 177,
+      "label": "GitHub Dark Default",
+      "bbox": {
+        "x": 443,
+        "y": 653,
+        "width": 142,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 178,
+      "label": "95",
+      "bbox": {
+        "x": 985,
+        "y": 655,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 179,
+      "label": "install_uv.bat",
+      "bbox": {
+        "x": 108,
+        "y": 666,
+        "width": 94,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 180,
+      "label": "Button",
+      "bbox": {
+        "x": 81,
+        "y": 667,
+        "width": 168,
+        "height": 18
+      },
+      "confidence": 0.3765,
+      "source": "yolo"
+    },
+    {
+      "som_id": 181,
+      "label": "96",
+      "bbox": {
+        "x": 987,
+        "y": 683,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 182,
+      "label": "Unknown",
+      "bbox": {
+        "x": 80,
+        "y": 690,
+        "width": 159,
+        "height": 19
+      },
+      "confidence": 0.2555,
+      "source": "yolo"
+    },
+    {
+      "som_id": 183,
+      "label": "Unknown",
+      "bbox": {
+        "x": 512,
+        "y": 691,
+        "width": 391,
+        "height": 87
+      },
+      "confidence": 0.7362,
+      "source": "yolo"
+    },
+    {
+      "som_id": 184,
+      "label": "install_uv.sh",
+      "bbox": {
+        "x": 106,
+        "y": 692,
+        "width": 89,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 185,
+      "label": "Editor: Tab Size (Modified elsewhere)",
+      "bbox": {
+        "x": 438,
+        "y": 708,
+        "width": 262,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 186,
+      "label": "97",
+      "bbox": {
+        "x": 985,
+        "y": 708,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 187,
+      "label": "def",
+      "bbox": {
+        "x": 1038,
+        "y": 708,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 188,
+      "label": "load_env_config - Dictistr,",
+      "bbox": {
+        "x": 1077,
+        "y": 708,
+        "width": 326,
+        "height": 22
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 189,
+      "label": "strl:",
+      "bbox": {
+        "x": 1406,
+        "y": 708,
+        "width": 61,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 190,
+      "label": "LICENSE",
+      "bbox": {
+        "x": 108,
+        "y": 717,
+        "width": 64,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 191,
+      "label": "rectangle",
+      "bbox": {
+        "x": 424,
+        "y": 727,
+        "width": 466,
+        "height": 57
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 192,
+      "label": "98",
+      "bbox": {
+        "x": 985,
+        "y": 733,
+        "width": 27,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 193,
+      "label": "'\u2022'\"Load configuration",
+      "bbox": {
+        "x": 1080,
+        "y": 733,
+        "width": 228,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 194,
+      "label": "defaults",
+      "bbox": {
+        "x": 1314,
+        "y": 733,
+        "width": 89,
+        "height": 20
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 195,
+      "label": "\u2022env file.\"..",
+      "bbox": {
+        "x": 1465,
+        "y": 733,
+        "width": 139,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 196,
+      "label": "The number of spaces a tab is equal to. This setting is overridden",
+      "bbox": {
+        "x": 438,
+        "y": 736,
+        "width": 443,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 197,
+      "label": "from",
+      "bbox": {
+        "x": 1409,
+        "y": 736,
+        "width": 47,
+        "height": 13
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 198,
+      "label": "merge_config.bat",
+      "bbox": {
+        "x": 106,
+        "y": 739,
+        "width": 125,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 199,
+      "label": "based on the file contents when Editor: Detect Indentation is on.",
+      "bbox": {
+        "x": 435,
+        "y": 755,
+        "width": 438,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 200,
+      "label": "env_config = {",
+      "bbox": {
+        "x": 1079,
+        "y": 759,
+        "width": 153,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 201,
+      "label": "99",
+      "bbox": {
+        "x": 987,
+        "y": 761,
+        "width": 25,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 202,
+      "label": "Unknown",
+      "bbox": {
+        "x": 75,
+        "y": 763,
+        "width": 296,
+        "height": 20
+      },
+      "confidence": 0.3501,
+      "source": "yolo"
+    },
+    {
+      "som_id": 203,
+      "label": "merge_config.sh",
+      "bbox": {
+        "x": 108,
+        "y": 764,
+        "width": 117,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 204,
+      "label": "Input_Elements",
+      "bbox": {
+        "x": 437,
+        "y": 786,
+        "width": 203,
+        "height": 27
+      },
+      "confidence": 0.4262,
+      "source": "yolo"
+    },
+    {
+      "som_id": 205,
+      "label": "rectangle",
+      "bbox": {
+        "x": 970,
+        "y": 786,
+        "width": 49,
+        "height": 272
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 206,
+      "label": "\"ACESTEP_CONFIG_PATH\": \"acestep-v15-turbo\"",
+      "bbox": {
+        "x": 1121,
+        "y": 786,
+        "width": 452,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 207,
+      "label": "Unknown",
+      "bbox": {
+        "x": 74,
+        "y": 787,
+        "width": 304,
+        "height": 21
+      },
+      "confidence": 0.643,
+      "source": "yolo"
+    },
+    {
+      "som_id": 208,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1836,
+        "y": 788,
+        "width": 33,
+        "height": 29
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 209,
+      "label": "profile_inference.py",
+      "bbox": {
+        "x": 108,
+        "y": 789,
+        "width": 136,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 210,
+      "label": "100",
+      "bbox": {
+        "x": 976,
+        "y": 789,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 211,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1067,
+        "y": 792,
+        "width": 25,
+        "height": 93
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 212,
+      "label": "\"ACESTEP_LM_MODEL_PATH\": \"acestep-5Hz-Lm-0.6B\",",
+      "bbox": {
+        "x": 1121,
+        "y": 811,
+        "width": 505,
+        "height": 25
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 213,
+      "label": "Button",
+      "bbox": {
+        "x": 78,
+        "y": 812,
+        "width": 303,
+        "height": 20
+      },
+      "confidence": 0.5413,
+      "source": "yolo"
+    },
+    {
+      "som_id": 214,
+      "label": "rectangle",
+      "bbox": {
+        "x": 164,
+        "y": 812,
+        "width": 120,
+        "height": 29
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 215,
+      "label": "proxy_config.txt.example",
+      "bbox": {
+        "x": 108,
+        "y": 814,
+        "width": 173,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 216,
+      "label": "101",
+      "bbox": {
+        "x": 976,
+        "y": 814,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 217,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1113,
+        "y": 814,
+        "width": 23,
+        "height": 18
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 218,
+      "label": "Unknown",
+      "bbox": {
+        "x": 325,
+        "y": 833,
+        "width": 52,
+        "height": 26
+      },
+      "confidence": 0.3803,
+      "source": "yolo"
+    },
+    {
+      "som_id": 219,
+      "label": "Unknown",
+      "bbox": {
+        "x": 69,
+        "y": 837,
+        "width": 305,
+        "height": 21
+      },
+      "confidence": 0.4926,
+      "source": "yolo"
+    },
+    {
+      "som_id": 220,
+      "label": "pyproject.toml",
+      "bbox": {
+        "x": 108,
+        "y": 837,
+        "width": 100,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 221,
+      "label": "7, LM",
+      "bbox": {
+        "x": 329,
+        "y": 837,
+        "width": 41,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 222,
+      "label": "102",
+      "bbox": {
+        "x": 976,
+        "y": 839,
+        "width": 36,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 223,
+      "label": "\"auto\"",
+      "bbox": {
+        "x": 1308,
+        "y": 839,
+        "width": 75,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 224,
+      "label": "\"ACESTEP_DEVICE\":",
+      "bbox": {
+        "x": 1121,
+        "y": 840,
+        "width": 186,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 225,
+      "label": "rectangle",
+      "bbox": {
+        "x": 101,
+        "y": 848,
+        "width": 102,
+        "height": 32
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 226,
+      "label": "Editor: Mouse Wheel Zoom",
+      "bbox": {
+        "x": 438,
+        "y": 848,
+        "width": 189,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 227,
+      "label": "\u00ae quick_test.bat",
+      "bbox": {
+        "x": 86,
+        "y": 861,
+        "width": 122,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 228,
+      "label": "Button",
+      "bbox": {
+        "x": 79,
+        "y": 862,
+        "width": 271,
+        "height": 18
+      },
+      "confidence": 0.3978,
+      "source": "yolo"
+    },
+    {
+      "som_id": 229,
+      "label": "\"ACESTEP_LM_BACKEND\": \"auto\",",
+      "bbox": {
+        "x": 1121,
+        "y": 864,
+        "width": 312,
+        "height": 25
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 230,
+      "label": "103",
+      "bbox": {
+        "x": 976,
+        "y": 867,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 231,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1853,
+        "y": 872,
+        "width": 48,
+        "height": 80
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 232,
+      "label": "Zoom the font of the editor when using mouse wheel and",
+      "bbox": {
+        "x": 466,
+        "y": 873,
+        "width": 387,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 233,
+      "label": "Button",
+      "bbox": {
+        "x": 79,
+        "y": 886,
+        "width": 179,
+        "height": 21
+      },
+      "confidence": 0.3746,
+      "source": "yolo"
+    },
+    {
+      "som_id": 234,
+      "label": "quick_test.sh",
+      "bbox": {
+        "x": 108,
+        "y": 887,
+        "width": 97,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 235,
+      "label": "holding Cmd.",
+      "bbox": {
+        "x": 466,
+        "y": 892,
+        "width": 92,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 236,
+      "label": "}",
+      "bbox": {
+        "x": 1079,
+        "y": 893,
+        "width": 13,
+        "height": 19
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 237,
+      "label": "Others",
+      "bbox": {
+        "x": 448,
+        "y": 895,
+        "width": 69,
+        "height": 19
+      },
+      "confidence": 0.4343,
+      "source": "yolo"
+    },
+    {
+      "som_id": 238,
+      "label": "104",
+      "bbox": {
+        "x": 976,
+        "y": 895,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 239,
+      "label": "rectangle",
+      "bbox": {
+        "x": 337,
+        "y": 906,
+        "width": 34,
+        "height": 92
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 240,
+      "label": "LM",
+      "bbox": {
+        "x": 343,
+        "y": 909,
+        "width": 27,
+        "height": 16
+      },
+      "confidence": 0.30000001192092896,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 241,
+      "label": "README.md",
+      "bbox": {
+        "x": 108,
+        "y": 912,
+        "width": 89,
+        "height": 13
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 242,
+      "label": "env_file = os.path. join(PROJECT_ROOT, \". env\")",
+      "bbox": {
+        "x": 1080,
+        "y": 918,
+        "width": 479,
+        "height": 25
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 243,
+      "label": "105",
+      "bbox": {
+        "x": 976,
+        "y": 920,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 244,
+      "label": "requirements-rocm-linux.txt",
+      "bbox": {
+        "x": 108,
+        "y": 934,
+        "width": 195,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 245,
+      "label": "if",
+      "bbox": {
+        "x": 1077,
+        "y": 946,
+        "width": 30,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 246,
+      "label": "106",
+      "bbox": {
+        "x": 976,
+        "y": 948,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 247,
+      "label": "os.path.exists(env_file):",
+      "bbox": {
+        "x": 1107,
+        "y": 948,
+        "width": 273,
+        "height": 19
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 248,
+      "label": "Unknown",
+      "bbox": {
+        "x": 512,
+        "y": 954,
+        "width": 408,
+        "height": 94
+      },
+      "confidence": 0.5833,
+      "source": "yolo"
+    },
+    {
+      "som_id": 249,
+      "label": "Editor: Format On Paste",
+      "bbox": {
+        "x": 438,
+        "y": 956,
+        "width": 170,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 250,
+      "label": "Unknown",
+      "bbox": {
+        "x": 5,
+        "y": 958,
+        "width": 41,
+        "height": 33
+      },
+      "confidence": 0.4836,
+      "source": "yolo"
+    },
+    {
+      "som_id": 251,
+      "label": "Unknown",
+      "bbox": {
+        "x": 80,
+        "y": 959,
+        "width": 299,
+        "height": 20
+      },
+      "confidence": 0.5774,
+      "source": "yolo"
+    },
+    {
+      "som_id": 252,
+      "label": "requirements-rocm.txt",
+      "bbox": {
+        "x": 108,
+        "y": 959,
+        "width": 156,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 253,
+      "label": "LM",
+      "bbox": {
+        "x": 343,
+        "y": 959,
+        "width": 27,
+        "height": 13
+      },
+      "confidence": 0.30000001192092896,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 254,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1833,
+        "y": 969,
+        "width": 69,
+        "height": 41
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 255,
+      "label": "107",
+      "bbox": {
+        "x": 976,
+        "y": 973,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 256,
+      "label": "with",
+      "bbox": {
+        "x": 1121,
+        "y": 973,
+        "width": 53,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 257,
+      "label": "open(env_file,",
+      "bbox": {
+        "x": 1174,
+        "y": 973,
+        "width": 153,
+        "height": 22
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 258,
+      "label": "\"p\"",
+      "bbox": {
+        "x": 1336,
+        "y": 973,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 259,
+      "label": "encoding=\"utf-8\") as f:",
+      "bbox": {
+        "x": 1389,
+        "y": 973,
+        "width": 248,
+        "height": 19
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 260,
+      "label": "Controls whether the editor should automatically format the",
+      "bbox": {
+        "x": 466,
+        "y": 981,
+        "width": 407,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 261,
+      "label": "Unknown",
+      "bbox": {
+        "x": 78,
+        "y": 984,
+        "width": 301,
+        "height": 20
+      },
+      "confidence": 0.4368,
+      "source": "yolo"
+    },
+    {
+      "som_id": 262,
+      "label": "requirements-xpu.txt",
+      "bbox": {
+        "x": 106,
+        "y": 985,
+        "width": 150,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 263,
+      "label": "LM",
+      "bbox": {
+        "x": 343,
+        "y": 985,
+        "width": 27,
+        "height": 13
+      },
+      "confidence": 0.30000001192092896,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 264,
+      "label": "rectangle",
+      "bbox": {
+        "x": 1152,
+        "y": 989,
+        "width": 48,
+        "height": 40
+      },
+      "confidence": 1,
+      "source": "vision_rect"
+    },
+    {
+      "som_id": 265,
+      "label": "pasted content. A formatter must be available and the formatter",
+      "bbox": {
+        "x": 466,
+        "y": 1001,
+        "width": 432,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 266,
+      "label": "108",
+      "bbox": {
+        "x": 976,
+        "y": 1001,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 267,
+      "label": "for line in f:",
+      "bbox": {
+        "x": 1166,
+        "y": 1001,
+        "width": 150,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 268,
+      "label": "> OUTLINE",
+      "bbox": {
+        "x": 58,
+        "y": 1010,
+        "width": 75,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 269,
+      "label": "Unknown",
+      "bbox": {
+        "x": 6,
+        "y": 1013,
+        "width": 40,
+        "height": 32
+      },
+      "confidence": 0.4495,
+      "source": "yolo"
+    },
+    {
+      "som_id": 270,
+      "label": "should be able to format a range in a document.",
+      "bbox": {
+        "x": 466,
+        "y": 1020,
+        "width": 326,
+        "height": 17
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 271,
+      "label": "109",
+      "bbox": {
+        "x": 976,
+        "y": 1026,
+        "width": 36,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 272,
+      "label": "Line = line.strip()",
+      "bbox": {
+        "x": 1208,
+        "y": 1026,
+        "width": 203,
+        "height": 20
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 273,
+      "label": "Unknown",
+      "bbox": {
+        "x": 51,
+        "y": 1034,
+        "width": 331,
+        "height": 21
+      },
+      "confidence": 0.2534,
+      "source": "yolo"
+    },
+    {
+      "som_id": 274,
+      "label": "\u203a TIMELINE So main* 4991 01",
+      "bbox": {
+        "x": 44,
+        "y": 1035,
+        "width": 147,
+        "height": 41
+      },
+      "confidence": 1,
+      "source": "vision_text_block"
+    },
+    {
+      "som_id": 275,
+      "label": "Unknown",
+      "bbox": {
+        "x": 1886,
+        "y": 1056,
+        "width": 34,
+        "height": 24
+      },
+      "confidence": 0.2946,
+      "source": "yolo"
+    },
+    {
+      "som_id": 276,
+      "label": "Others",
+      "bbox": {
+        "x": 239,
+        "y": 1057,
+        "width": 18,
+        "height": 21
+      },
+      "confidence": 0.2528,
+      "source": "yolo"
+    },
+    {
+      "som_id": 277,
+      "label": "() Python",
+      "bbox": {
+        "x": 1294,
+        "y": 1057,
+        "width": 78,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 278,
+      "label": "\u2022 Colorize",
+      "bbox": {
+        "x": 1604,
+        "y": 1057,
+        "width": 75,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 279,
+      "label": "Prettier",
+      "bbox": {
+        "x": 1696,
+        "y": 1057,
+        "width": 69,
+        "height": 16
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 280,
+      "label": "Others",
+      "bbox": {
+        "x": 41,
+        "y": 1058,
+        "width": 64,
+        "height": 20
+      },
+      "confidence": 0.2923,
+      "source": "yolo"
+    },
+    {
+      "som_id": 281,
+      "label": "Others",
+      "bbox": {
+        "x": 108,
+        "y": 1058,
+        "width": 86,
+        "height": 21
+      },
+      "confidence": 0.4361,
+      "source": "yolo"
+    },
+    {
+      "som_id": 282,
+      "label": "Unknown",
+      "bbox": {
+        "x": 258,
+        "y": 1058,
+        "width": 18,
+        "height": 20
+      },
+      "confidence": 0.2819,
+      "source": "yolo"
+    },
+    {
+      "som_id": 283,
+      "label": "Ln 1. Col 1",
+      "bbox": {
+        "x": 1040,
+        "y": 1059,
+        "width": 72,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 284,
+      "label": "Formatting: X",
+      "bbox": {
+        "x": 1777,
+        "y": 1059,
+        "width": 94,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 285,
+      "label": "Spaces: 4",
+      "bbox": {
+        "x": 1127,
+        "y": 1060,
+        "width": 67,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 286,
+      "label": "UTF-8 LF",
+      "bbox": {
+        "x": 1202,
+        "y": 1060,
+        "width": 92,
+        "height": 14
+      },
+      "confidence": 0.5,
+      "source": "vision_text"
+    },
+    {
+      "som_id": 287,
+      "label": "Colorize: 0 variables",
+      "bbox": {
+        "x": 1456,
+        "y": 1060,
+        "width": 133,
+        "height": 14
+      },
+      "confidence": 1,
+      "source": "vision_text"
+    }
+  ],
+  "timing_ms": {
+    "vision_ms": 1033.5,
+    "image_width": 1920,
+    "image_height": 1080,
+    "vision_time_ms": 996.8,
+    "text_count": 196,
+    "rect_count": 32,
+    "florence_skipped": true,
+    "yolo_ms": 1804.6,
+    "yolo_tiles": 8,
+    "yolo_raw_dets": 112,
+    "yolo_nms_dets": 84,
+    "merge_ms": 12.8,
+    "correct_ms": 0.4,
+    "corrections": 0,
+    "group_ms": 0.1,
+    "groups_formed": 2,
+    "annotate_ms": 32.5
+  }
+}

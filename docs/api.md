@@ -1,3 +1,9 @@
+---
+title: api
+type: note
+permalink: uitag/docs/api
+---
+
 # API Reference
 
 uitag is a Set-of-Mark detection pipeline for macOS. This reference covers the public Python API for library consumers.
@@ -31,10 +37,11 @@ result, annotated_image, manifest_json = run_pipeline(
     iou_threshold=0.5,
     recognition_level="accurate",
     backend=None,
+    use_yolo=False,
 )
 ```
 
-Runs the full 6-stage detection pipeline: Apple Vision, quadrant split, Florence-2 inference, merge/dedup, SoM annotation, and manifest generation.
+Runs the detection pipeline: Apple Vision (text + rectangles), optional YOLO tiled detection (if `use_yolo=True`), optional Florence-2 inference (if `backend` provided or `--florence` used), merge/dedup, OCR correction, text block grouping, SoM annotation, and manifest generation.
 
 ### Parameters
 
@@ -46,6 +53,7 @@ Runs the full 6-stage detection pipeline: Apple Vision, quadrant split, Florence
 | `iou_threshold` | `float` | `0.5` | IoU threshold for duplicate suppression during merge. |
 | `recognition_level` | `str` | `"accurate"` | Apple Vision OCR mode: `"accurate"` or `"fast"`. |
 | `backend` | `DetectionBackend \| None` | `None` | Florence-2 inference backend. When `None`, uses `MLXBackend`. |
+| `use_yolo` | `bool` | `False` | Enable YOLO tiled detection. Adds ~2s, closes icon gap. Requires `ultralytics`. |
 
 ### Return Value
 
@@ -64,7 +72,7 @@ Returns a 3-tuple: `tuple[PipelineResult, Image.Image, str]`
 | `FileNotFoundError` | The input image does not exist, or the Swift Vision tool cannot be found. |
 | `RuntimeError` | The Apple Vision subprocess fails (e.g., not on macOS, corrupt image). |
 
-Exceptions from Florence-2 model loading (network errors, missing dependencies) propagate directly from `mlx_vlm`.
+When `use_yolo=True`, a `FileNotFoundError` is raised if the YOLO model weights are not found. An `ImportError` propagates if `ultralytics` is not installed (`pip install uitag[yolo]`). Florence-2 exceptions propagate from `mlx_vlm`.
 
 ### Example
 
@@ -95,22 +103,24 @@ A single detected UI element. Defined as a dataclass in `uitag/types.py`.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `label` | `str` | Element label -- text content (for Vision text) or detection class name (for Florence-2). |
+| `label` | `str` | Element label — text content (for Vision text), class name (for Florence-2), or grouped text (for text blocks). |
 | `x` | `int` | Left edge of bounding box in pixels. |
 | `y` | `int` | Top edge of bounding box in pixels. |
 | `width` | `int` | Bounding box width in pixels. |
 | `height` | `int` | Bounding box height in pixels. |
-| `confidence` | `float` | Detection confidence score (0.0--1.0). Florence-2 detections are always `0.5` (the model does not emit per-box scores). |
-| `source` | `str` | Detection source identifier. One of: `"vision_text"`, `"vision_rect"`, `"florence2"`. |
+| `confidence` | `float` | Detection confidence score (0.0--1.0). Vision provides real scores; YOLO provides model confidence; Florence-2 detections default to `0.5`. |
+| `source` | `str` | Detection source identifier. One of: `"vision_text"`, `"vision_rect"`, `"vision_text_block"`, `"yolo"`, `"florence2"`. |
 | `som_id` | `int \| None` | SoM marker number (1-indexed). `None` until `merge_detections()` assigns sequential IDs sorted by position (top-to-bottom, left-to-right). |
 
-**Source values:**
+__Source values:__
 
 | Value | Origin |
 |-------|--------|
 | `"vision_text"` | Apple Vision text recognition |
 | `"vision_rect"` | Apple Vision rectangle detection |
-| `"florence2"` | Florence-2 object detection via MLX |
+| `"vision_text_block"` | Grouped adjacent text lines (paragraph-level) |
+| `"yolo"` | YOLO tiled detection (only with `--yolo`) |
+| `"florence2"` | Florence-2 object detection via MLX (only with `--florence`, legacy) |
 
 ### `PipelineResult`
 
@@ -127,18 +137,24 @@ Output of the full detection pipeline. Defined as a dataclass in `uitag/types.py
 | `image_height` | `int` | Height of the input image in pixels. |
 | `timing_ms` | `dict` | Pipeline timing breakdown. Defaults to an empty dict. |
 
-**`timing_ms` keys** (populated by `run_pipeline`):
+__`timing_ms` keys__ (populated by `run_pipeline`):
 
 | Key | Type | Description |
 |-----|------|-------------|
 | `vision_ms` | `float` | Total Apple Vision stage wall time. |
-| `split_x` | `int` | Vertical cut X coordinate chosen by object-aware tiling. |
-| `split_y` | `int` | Horizontal cut Y coordinate chosen by object-aware tiling. |
-| `split_x_clean` | `bool` | Whether the X split avoided all bounding boxes. |
-| `split_y_clean` | `bool` | Whether the Y split avoided all bounding boxes. |
-| `florence_total_ms` | `float` | Total Florence-2 inference time across all quadrants. |
-| `florence_backend` | `str` | Name of the backend used (e.g. `"mlx"`). |
-| `florence_per_quadrant_ms` | `list[float]` | Per-quadrant inference times (if the backend provides them). |
+| `yolo_ms` | `float` | Total YOLO tiled inference time (only with `--yolo`). |
+| `yolo_tiles` | `int` | Number of 640x640 tiles processed (only with `--yolo`). |
+| `yolo_raw_dets` | `int` | Raw detections before cross-tile NMS (only with `--yolo`). |
+| `yolo_nms_dets` | `int` | Detections after NMS (only with `--yolo`). |
+| `merge_ms` | `float` | Merge and deduplication stage time. |
+| `correct_ms` | `float` | OCR correction stage time. |
+| `corrections` | `int` | Number of labels corrected. |
+| `group_ms` | `float` | Text block grouping stage time. |
+| `groups_formed` | `int` | Number of text blocks formed. |
+| `annotate_ms` | `float` | SoM annotation rendering time. |
+| `manifest_ms` | `float` | JSON manifest generation time. |
+| `florence_total_ms` | `float` | Total Florence-2 inference time (only with `--florence`). |
+| `florence_backend` | `str` | Backend used for Florence-2 (only with `--florence`). |
 
 ---
 
@@ -226,7 +242,7 @@ detect_on_quadrant(
 
 `list[Detection]` -- Detections with coordinates translated to full-image space. All have `source="florence2"` and `confidence=0.5`.
 
-**Note:** This function saves the PIL Image to a temporary file (mlx_vlm requires a file path), runs inference, then deletes the temp file. The model is lazy-loaded as a singleton on the first call to any Florence-2 detection function.
+This function saves the PIL Image to a temporary file (mlx_vlm requires a file path), runs inference, then deletes the temp file. The model is lazy-loaded as a singleton on the first call to any Florence-2 detection function.
 
 #### Example
 
@@ -264,7 +280,7 @@ merge_detections(
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `detections` | `list[Detection]` | *(required)* | All detections from all sources (Vision + Florence-2), unmerged. |
+| `detections` | `list[Detection]` | *(required)* | All detections from all sources (Vision + YOLO + Florence-2), unmerged. |
 | `iou_threshold` | `float` | `0.5` | When two detections overlap above this IoU threshold, the lower-priority one is discarded. |
 
 #### Source Priority
@@ -273,9 +289,11 @@ When overlapping detections are found, the higher-priority source is kept:
 
 | Source | Priority | Rationale |
 |--------|----------|-----------|
-| `"vision_text"` | 3 (highest) | Apple Vision text is the most precise for text elements. |
-| `"vision_rect"` | 2 | Apple Vision rectangles are accurate but less specific. |
-| `"florence2"` | 1 (lowest) | Florence-2 detections fill gaps not caught by Vision. |
+| `"vision_text"` | 3 (highest) | Apple Vision text has OCR content — most useful for labeling. |
+| `"vision_text_block"` | 3 (highest) | Grouped text inherits Vision text priority. |
+| `"vision_rect"` | 2 | Apple Vision rectangles are accurate but lack semantic labels. |
+| `"yolo"` | 2 | YOLO detections have class labels (Button, Menu, etc.) but no OCR. |
+| `"florence2"` | 1 (lowest) | Florence-2 detections fill gaps (legacy, superseded by YOLO). |
 
 #### Returns
 
@@ -324,7 +342,7 @@ render_som(
 
 #### Returns
 
-`PIL.Image.Image` -- A **copy** of the input image (converted to RGB) with bounding boxes and numbered markers drawn. The original image is not modified.
+`PIL.Image.Image` -- A copy of the input image (converted to RGB) with bounding boxes and numbered markers drawn. The original image is not modified.
 
 Colors cycle through 8 values in `SOM_COLORS`: red, green, blue, orange, purple, cyan, yellow, pink. The color for each detection is determined by `(som_id - 1) % 8`.
 
@@ -454,7 +472,7 @@ Each entry in `elements`:
 | `label` | `string` | Element label (text content or detection class). |
 | `bbox` | `object` | Bounding box with `x`, `y`, `width`, `height` (all integers, pixels). |
 | `confidence` | `number` | Detection confidence score (0.0--1.0). |
-| `source` | `string` | Detection source: `"vision_text"`, `"vision_rect"`, or `"florence2"`. |
+| `source` | `string` | Detection source: `"vision_text"`, `"vision_rect"`, `"vision_text_block"`, `"yolo"`, or `"florence2"`. |
 
 ### Example Manifest
 
@@ -473,16 +491,17 @@ Each entry in `elements`:
     },
     {
       "som_id": 2,
-      "label": "toolbar",
-      "bbox": { "x": 0, "y": 0, "width": 1920, "height": 40 },
-      "confidence": 0.5,
-      "source": "florence2"
+      "label": "Button",
+      "bbox": { "x": 2752, "y": 305, "width": 101, "height": 104 },
+      "confidence": 0.87,
+      "source": "yolo"
     }
   ],
   "timing_ms": {
     "vision_ms": 980.1,
-    "florence_total_ms": 592.4,
-    "florence_backend": "mlx"
+    "yolo_ms": 2150.3,
+    "yolo_tiles": 32,
+    "merge_ms": 3.3
   }
 }
 ```
