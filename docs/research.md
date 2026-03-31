@@ -6,8 +6,6 @@ permalink: uitag/docs/research
 
 # Research Notes
 
-Technical context behind uitag's architecture decisions.
-
 > __Note (2026-03-29):__ This document covers the original model selection research (Florence-2 for non-text detection). Florence-2 has since been superseded by a fine-tuned YOLO model (`--yolo`) that achieves 90.8% detection coverage on ScreenSpot-Pro — see [Performance](performance.md) for current numbers. VLM classification (MAI-UI-2B-bf16-v2, 96.1% accuracy) is validated and planned for v0.6.0.
 
 ## Model Selection
@@ -25,12 +23,12 @@ Technical context behind uitag's architecture decisions.
 
 | Model | License | Status | Notes |
 |-------|---------|--------|-------|
-| Florence-2-base-ft-4bit | MIT | __Selected__ | 159MB, 133ms warm, effective 4-bit quant |
+| Florence-2-base-ft-4bit | MIT | Selected | 159MB, 133ms warm, effective 4-bit quant |
 | Florence-2-large-ft-4bit | MIT | Eliminated | Degenerate at 4-bit (repeating `<s>` tokens) |
 | PTA-1 (UI fine-tune of Florence-2) | MIT | Viable alt | 458MB, 130ms warm, but quantization only reached 14-bit |
 | Screen2AX | AGPL | Reference only | macOS-specific YOLO, best quality, but AGPL |
 | OmniParser | AGPL | Excluded | Strong results but license incompatible |
-| YOLO variants (Ultralytics) | AGPL (lib) / MIT (weights) | __Shipped in v0.5.0__ | Fine-tuned YOLO11s on GroundCUA. Ultralytics library is AGPL; trained model weights and training data are MIT. |
+| YOLO variants (Ultralytics) | AGPL (lib) / MIT (weights) | Shipped in v0.5.0 | Fine-tuned YOLO11s on GroundCUA (MIT data). Ultralytics training library is AGPL-3.0. uitag ships the weights under MIT; see [Ultralytics license FAQ](https://www.ultralytics.com/legal/licensing-faq) for their interpretation of weight licensing. |
 | Various HF models | Mixed | Excluded | See notes below |
 
 Additional models excluded during survey: PaddleOCR-VL (incompatible), GLM-OCR (incompatible), Kimi-VL (incompatible), InternVL3-8B (incompatible), gemma-3n (upstream bug).
@@ -98,15 +96,19 @@ Measured on M2 Max (96GB) with 1920x1080 VS Code screenshot (~151 detections, 3-
 | Merge + dedup | <1ms | <1ms | CPU only |
 | SoM annotation | <1ms | <1ms | Pillow drawing |
 | Manifest generation | <1ms | <1ms | JSON serialization |
-| __Total__ | __~2551ms__ | __~1695ms__ | |
+| Total | ~2551ms | ~1695ms | |
 
 Florence-2 total time includes per-quadrant inference (~222ms each) plus overhead from temp file I/O required by mlx_vlm's file-based API, coordinate translation, and image preparation (~600ms total).
 
-__Pre-optimization baseline__ (v0.1.0): Florence-2 ran at ~800ms/quadrant (~3200ms total). MLX optimizations (pre-saved temp files, warm inference) achieved significant speedup in raw inference time.
+Pre-optimization baseline (v0.1.0): Florence-2 ran at ~800ms/quadrant (~3200ms total). MLX optimizations (pre-saved temp files, warm inference) achieved ~3.6x speedup in raw inference time (~800ms to ~222ms per quadrant).
 
 For detailed benchmarks including backend comparison and optimization notes, see [Performance](performance.md).
 
+For current pipeline timing with the YOLO model (v0.5.0+), see [Performance](performance.md#stage-timing).
+
 ### Bottleneck
+
+> __Note:__ This bottleneck analysis applied to the Florence-2 pipeline (pre-v0.5.0). Florence-2 has since been superseded by the fine-tuned YOLO model. See [Performance](performance.md) for current pipeline timing.
 
 Florence-2 inference at ~222ms per quadrant is well-optimized. The ~600ms overhead (temp file I/O) is the next optimization target. CoreML backend is available (`--backend coreml`) and offloads the vision encoder to the ANE, which is beneficial under GPU contention but slightly slower on an idle GPU.
 

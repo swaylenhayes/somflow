@@ -93,17 +93,6 @@ def batch_main(argv: list[str] | None = None) -> None:
         help="Output directory (default: uitag-output/)",
     )
     parser.add_argument("--fast", action="store_true", help="Use fast OCR mode")
-    parser.add_argument(
-        "--backend",
-        choices=["auto", "coreml", "mlx"],
-        default="auto",
-        help="Detection backend",
-    )
-    parser.add_argument(
-        "--florence",
-        action="store_true",
-        help="Enable Florence-2 detection (slower, adds ~1.5s — off by default)",
-    )
 
     args = parser.parse_args(argv)
 
@@ -133,28 +122,12 @@ def batch_main(argv: list[str] | None = None) -> None:
     ocr_mode = "fast" if args.fast else "fine"
     ocr_recognition = "fast" if args.fast else "accurate"
 
-    if not args.florence:
-        backend = None
-        source_label = (
-            args.path[0].rstrip("/")
-            if len(args.path) == 1
-            else f"{len(args.path)} paths"
-        )
-        print(f"Running pipeline on: {len(image_paths)} images in {source_label}/")
-        print(f"Florence-2: skipped | OCR mode: {ocr_mode}\n")
-    else:
-        from uitag.backends.selector import BackendPreference, select_backend
-
-        preference = BackendPreference(args.backend)
-        backend = select_backend(preference=preference)
-        info = backend.info()
-        source_label = (
-            args.path[0].rstrip("/")
-            if len(args.path) == 1
-            else f"{len(args.path)} paths"
-        )
-        print(f"Running pipeline on: {len(image_paths)} images in {source_label}/")
-        print(f"Backend: {info.name} ({info.device}) | OCR mode: {ocr_mode}\n")
+    backend = None
+    source_label = (
+        args.path[0].rstrip("/") if len(args.path) == 1 else f"{len(args.path)} paths"
+    )
+    print(f"Running pipeline on: {len(image_paths)} images in {source_label}/")
+    print(f"OCR mode: {ocr_mode}\n")
 
     # Process
     from uitag.run import run_pipeline
@@ -171,7 +144,7 @@ def batch_main(argv: list[str] | None = None) -> None:
                 str(img_path),
                 recognition_level=ocr_recognition,
                 backend=backend,
-                no_florence=not args.florence,
+                no_florence=True,
             )
             elapsed = time.perf_counter() - t0
 

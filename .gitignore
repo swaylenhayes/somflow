@@ -41,3 +41,6 @@ tools/vision-detect
 # Environment variables
 .env
 .env.*
+
+# Internal/private directories (underscore prefix = not for public remotes)
+_*/

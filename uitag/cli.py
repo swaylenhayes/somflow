@@ -49,24 +49,12 @@ def main():
         default=None,
         help="Output directory (default: same directory as input image)",
     )
-    parser.add_argument("--task", default="<OD>", help="Florence-2 task token")
     parser.add_argument(
         "--overlap", type=int, default=50, help="Quadrant overlap pixels"
     )
     parser.add_argument("--iou", type=float, default=0.5, help="IoU dedup threshold")
     parser.add_argument(
         "--fast", action="store_true", help="Use fast OCR (less accurate, ~2-3x faster)"
-    )
-    parser.add_argument(
-        "--backend",
-        choices=["auto", "coreml", "mlx"],
-        default="auto",
-        help="Detection backend: auto (default, uses MLX), coreml (ANE offload), mlx",
-    )
-    parser.add_argument(
-        "--florence",
-        action="store_true",
-        help="Enable Florence-2 detection (slower, adds ~1.5s — off by default)",
     )
     parser.add_argument(
         "--yolo",
@@ -104,31 +92,16 @@ def main():
         out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    if not args.florence:
-        backend = None
-        ocr_mode = "fast" if args.fast else "fine"
-        img_parent = str(Path(image_path).parent)
-        if img_parent == ".":
-            img_parent = ""
-        else:
-            img_parent = f" in {img_parent}/"
-        print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
-        yolo_status = "enabled" if args.yolo else "off"
-        print(f"Florence-2: skipped | YOLO: {yolo_status} | OCR mode: {ocr_mode}")
+    backend = None
+    ocr_mode = "fast" if args.fast else "fine"
+    img_parent = str(Path(image_path).parent)
+    if img_parent == ".":
+        img_parent = ""
     else:
-        from uitag.backends.selector import BackendPreference, select_backend
-
-        preference = BackendPreference(args.backend)
-        backend = select_backend(preference=preference)
-        info = backend.info()
-        ocr_mode = "fast" if args.fast else "fine"
-        img_parent = str(Path(image_path).parent)
-        if img_parent == ".":
-            img_parent = ""
-        else:
-            img_parent = f" in {img_parent}/"
-        print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
-        print(f"Backend: {info.name} ({info.device}) | OCR mode: {ocr_mode}")
+        img_parent = f" in {img_parent}/"
+    print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
+    yolo_status = "enabled" if args.yolo else "off"
+    print(f"YOLO: {yolo_status} | OCR mode: {ocr_mode}")
     t0 = time.perf_counter()
 
     # Parse rescan ids if provided
@@ -138,7 +111,6 @@ def main():
 
     result, annotated, manifest = run_pipeline(
         image_path,
-        florence_task=args.task,
         overlap_px=args.overlap,
         iou_threshold=args.iou,
         recognition_level="fast" if args.fast else "accurate",
@@ -146,7 +118,7 @@ def main():
         rescan=bool(args.rescan),
         rescan_threshold=0.8,
         rescan_ids=rescan_ids,
-        no_florence=not args.florence,
+        no_florence=True,
         use_yolo=args.yolo,
     )
 
@@ -215,14 +187,13 @@ def main():
                 t0_rescan = time.perf_counter()
                 result, annotated, manifest = _rerun(
                     image_path,
-                    florence_task=args.task,
                     overlap_px=args.overlap,
                     iou_threshold=args.iou,
                     recognition_level="fast" if args.fast else "accurate",
                     backend=backend,
                     rescan=True,
                     rescan_threshold=0.8,
-                    no_florence=not args.florence,
+                    no_florence=True,
                     use_yolo=args.yolo,
                 )
                 rescan_s = time.perf_counter() - t0_rescan
@@ -245,22 +216,6 @@ def main():
 
     if args.verbose:
         print(f"\nTiming: {json.dumps(result.timing_ms)}")
-        # Florence-2 filter summary
-        if not args.florence:
-            print("Florence-2: skipped")
-        elif "florence2_total" in result.timing_ms:
-            total = result.timing_ms["florence2_total"]
-            filt = result.timing_ms["florence2_filtered"]
-            kept = result.timing_ms["florence2_kept"]
-            if kept == 0:
-                print(f"Florence-2: {total} detected → {filt} filtered (0 kept)")
-            else:
-                labels = result.timing_ms.get("florence2_labels_kept", [])
-                label_str = ", ".join(labels[:5])
-                print(
-                    f"Florence-2: {total} detected → {filt} filtered, "
-                    f"{kept} kept [{label_str}]"
-                )
         print(f"\nElements ({count}):")
         show_limit = 10
         for d in result.detections[:show_limit]:

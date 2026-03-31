@@ -6,10 +6,6 @@ permalink: uitag/docs/troubleshooting
 
 # Troubleshooting
 
-Practical fixes for common issues when installing and running uitag.
-
----
-
 ## Requirements Checklist
 
 | Requirement | Details |
@@ -62,11 +58,7 @@ uitag screenshot.png --iou 0.3
 
 ### Missing text elements
 
-Apple Vision handles text detection. If text elements are missing:
-
-- Try switching OCR modes. `--fast` is noisier but occasionally captures elements the accurate pass misses.
-- Very small text (under ~8px) may fall below Apple Vision's detection threshold.
-- Dark mode screenshots produce noisier OCR. Light mode is more reliable for special characters and code. See [OCR Rescan Research](research/ocr-rescan-experiments.md).
+Apple Vision handles text detection. If text elements are missing, try switching OCR modes first — `--fast` is noisier but occasionally captures elements the accurate pass misses. Very small text (under ~8px) may fall below Apple Vision's detection threshold entirely. Dark mode screenshots also produce noisier OCR, so light mode is more reliable for special characters and code. See [OCR Rescan Research](research/ocr-rescan-experiments.md) for details.
 
 ### YOLO detections have class labels instead of text content
 
@@ -90,7 +82,7 @@ First use of `--florence` downloads the Florence-2 model (~159MB) from Hugging F
 
 ### Slow subsequent runs
 
-Vision-only should complete in ~1s (accurate) or ~0.3s (fast) on M2 Max. If runs are significantly slower:
+Vision-only should complete in ~1s (accurate) or ~0.3s (fast) on M2 Max. Times may be longer on Intel Macs or earlier Apple Silicon. If runs are significantly slower:
 
 - `--fast` cuts Vision time from ~1s to ~213ms
 - Close GPU-heavy applications (rendering, ML training)

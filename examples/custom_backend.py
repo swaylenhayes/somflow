@@ -73,7 +73,9 @@ class GridBackend:
 
 
 # Verify it satisfies the protocol
-assert isinstance(GridBackend(), DetectionBackend), "GridBackend must implement DetectionBackend"
+assert isinstance(GridBackend(), DetectionBackend), (
+    "GridBackend must implement DetectionBackend"
+)
 
 
 def main():
@@ -88,9 +90,7 @@ def main():
 
     # Use our custom backend instead of the default MLX backend
     backend = GridBackend()
-    result, annotated_image, manifest_json = run_pipeline(
-        image_path, backend=backend
-    )
+    result, annotated_image, manifest_json = run_pipeline(image_path, backend=backend)
 
     print(f"Detections: {len(result.detections)} (grid + Apple Vision)")
     print(f"Backend: {result.timing_ms.get('florence_backend', 'unknown')}")

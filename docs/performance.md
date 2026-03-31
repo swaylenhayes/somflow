@@ -4,34 +4,39 @@ type: note
 permalink: uitag/docs/performance
 ---
 
-# Performance Benchmarks
+# Performance
 
-Timing characteristics of the uitag detection pipeline. All numbers measured on real screenshots with warm caches.
+uitag runs the full detection pipeline in ~5 seconds on an M2 Max laptop with `--yolo`, producing ~300 detections with 90.8% coverage on ScreenSpot-Pro. Everything runs on-device — Apple Vision handles text, and the opt-in YOLO model handles icons and visual controls. The default Vision-only mode completes in ~1 second with ~150 detections. No API calls, no model downloads beyond the YOLO optional dependency.
 
 ---
 
-## TL;DR
+## Methodology
 
-| Mode                                   | End-to-End | Detections | Coverage (ScreenSpot-Pro) | Best For                         |
-| -------------------------------------- | ---------- | ---------- | ------------------------- | -------------------------------- |
-| __Vision + YOLO__ (`--yolo`)           | ~5s        | ~300       | 90.8%                     | Full coverage including icons    |
-| __Vision-only__ (default)              | ~1.0s      | ~150       | 57.3%                     | Fast, no model download needed   |
-| __Vision + Florence-2__ (`--florence`) | ~2.5s      | ~230       | —                         | Legacy, superseded by `--yolo`   |
-| __Fast OCR__ (`--fast`)                | ~0.4s      | ~140       | —                         | Interactive use, rapid iteration |
+All timing measurements were collected on an Apple M2 Max with 96 GB unified memory, using warm caches and 3-run averages. Individual runs varied by +/- 60ms (~2-3%).
 
-Vision-only is the default. YOLO is opt-in via `--yolo` (requires `pip install uitag[yolo]`). Florence-2 is legacy opt-in via `--florence`.
+Detection coverage was evaluated on [ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro) — 1,581 ground-truth targets across 26 professional applications on macOS, Windows, and Linux. The metric is center-hit: does any detection's bounding box contain the center of the ground-truth target? This measures whether uitag _found_ the element, not whether a downstream model could _name_ it from a natural language instruction. Detection coverage is the ceiling for any grounding system built on uitag's SoM annotations.
+
+---
+
+## Pipeline Modes
+
+| Mode | Time | Detections | Coverage | Use Case |
+| ---- | ---- | ---------- | -------- | -------- |
+| Vision + YOLO (`--yolo`) | ~5s | ~300 | 90.8% | Full coverage including icons |
+| Vision-only (default) | ~1.0s | ~150 | 57.3% | Fast, no model download needed |
+| Fast OCR (`--fast`) | ~0.4s | ~140 | — | Interactive use, rapid iteration |
+
+Vision-only is the default. YOLO is opt-in via `--yolo` (requires `pip install uitag[yolo]`). Florence-2 (`--florence`) is a legacy option superseded by YOLO.
 
 ---
 
 ## ScreenSpot-Pro Detection Coverage
 
-Evaluated on [ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro) — 1,581 targets across 26 professional applications on macOS, Windows, and Linux. Center-hit: does any detection's bounding box contain the center of the ground-truth target?
-
 ### All Platforms (1,581 targets, 26 apps)
 
 | Mode | Text (n=977) | Icon (n=604) | Overall | Zero Detection |
 | ---- | ------------ | ------------ | ------- | -------------- |
-| __Vision + YOLO__ (`--yolo`) | 92.7% | 87.6% | __90.8%__ | 5.8% |
+| Vision + YOLO (`--yolo`) | 92.7% | 87.6% | 90.8% | 5.8% |
 | Vision-only (default) | 66.4% | 42.5% | 57.3% | 32.9% |
 
 ### macOS Subset (604 targets, 9 apps)
@@ -41,7 +46,7 @@ Evaluated on [ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpo
 | Vision + YOLO | 93.7% | 87.9% | 91.7% |
 | Vision-only | 71.1% | 46.6% | 62.7% |
 
-The YOLO model closes the icon detection gap: 42.5% → 87.6% (+45.1 percentage points) across all platforms. Vision-only struggles most on Windows applications where UI conventions differ from macOS.
+The YOLO model closes the icon detection gap: 42.5% to 87.6% (+45.1 percentage points) across all platforms. Vision-only struggles most on Windows applications where UI conventions differ from macOS.
 
 ### Per-Application Results (Vision + YOLO, selected)
 
@@ -57,70 +62,15 @@ The YOLO model closes the icon detection gap: 42.5% → 87.6% (+45.1 percentage 
 | FL Studio | 79% | 92% | 68% | 44% |
 | VS Code | 87% | 91% | 82% | 71% |
 
-AutoCAD (68%) and FL Studio (79%) remain the weakest — applications with highly specialized UI patterns.
-
-### Detection Coverage vs Grounding
-
-These numbers measure detection _coverage_ — whether any detection found the target element. The ScreenSpot-Pro leaderboard measures _grounding accuracy_ — whether a model can follow a natural language instruction to locate a specific target. Detection coverage is the ceiling for any grounding system built on uitag's SoM annotations.
-
----
-
-## VLM Crop Classification (Validated, planned for v0.6.0)
-
-Selective VLM classification of non-text UI elements using MAI-UI-2B-bf16-v2 (5.3 GB, Apache 2.0).
-
-### Accuracy
-
-| Configuration                | Strict | Relaxed | Parse Rate | Speed      |
-| ---------------------------- | ------ | ------- | ---------- | ---------- |
-| Speed (10 types, 25% pad)    | 96.1%  | 96.1%   | 100.0%     | 0.32s/crop |
-| Accuracy (17 types, 25% pad) | 96.1%  | 99.0%   | 99.5%      | 0.49s/crop |
-
-Tested on 206 icon targets from ScreenSpot-Pro macOS subset.
-
-### Reproducibility (2026-03-23)
-
-Both configurations were run 3 times each on the full 206 icon crops at temperature=0:
-
-| Config   | Run 1 | Run 2 | Run 3 | Flips    |
-| -------- | ----- | ----- | ----- | -------- |
-| Speed    | 96.1% | 96.1% | 96.1% | 0 (0.0%) |
-| Accuracy | 96.1% | 96.1% | 96.1% | 0 (0.0%) |
-
-__Result: Zero flips across 1,236 total classifications.__ The 96.1% is a hard number — perfectly deterministic at temperature=0 on M2 Max.
-
-### Prompt Sensitivity
-
-Prompt choice significantly affects measured accuracy — a finding relevant to the broader VLM benchmarking community:
-
-| Prompt                             | Types  | Strict    | Notes                |
-| ---------------------------------- | ------ | --------- | -------------------- |
-| Binary ("text or visual?")         | 2      | 84.3%     | False dichotomy      |
-| Baseline (17 types + description)  | 17     | 93.2%     | Original prompt      |
-| Context-aware (17 types + framing) | 17     | 94.2%     | +1pp from context    |
-| __Constrained (10 types)__         | __10__ | __96.1%__ | __Shipping default__ |
-
-Prompt choice alone swings accuracy by 12 percentage points on the same model. See [Standard Prompt Research](research/standard-prompt-investigation.md).
-
-### Model Comparison
-
-| Model                 | Strict    | Relaxed   | Speed     | Memory                   |
-| --------------------- | --------- | --------- | --------- | ------------------------ |
-| __MAI-UI-2B-bf16-v2__ | __96.1%__ | __99.0%__ | __0.49s__ | __5.3 GB__               |
-| MAI-UI-8B-4bit        | 95.6%     | 96.1%     | 0.98s     | 30.5 GB                  |
-| UGround-V1-2B         | —         | —         | —         | Dropped (grounding-only) |
-
-The 2B model matches the 8B under relaxed taxonomy while using 6x less memory and being 2x faster. The 8B's 2.4pp strict advantage does not justify the resource cost.
+YOLO lifts icon detection from 40-56% to 86-100% on most desktop UIs. AutoCAD (68%) and FL Studio (79%) remain the weakest — applications with specialized UI patterns that diverge from the training distribution.
 
 ---
 
 ## Cross-Benchmark Comparison
 
-uitag was evaluated on three independent benchmarks. All measurements are detection coverage — did uitag find the target element? — not grounding accuracy.
+uitag was evaluated on three independent benchmarks. All measurements are detection coverage — did uitag find the target element?
 
 ### ScreenSpot-Pro (all platforms, n=1,581)
-
-See the full breakdown in the Detection Coverage section above.
 
 | Config | Text | Icon | Overall |
 | ------ | ---- | ---- | ------- |
@@ -150,7 +100,9 @@ UI-Vision "basic" annotations label 1-3 target elements per image. High recall i
 
 ---
 
-## YOLO Pipeline Timing
+## Stage Timing
+
+### Vision + YOLO Pipeline
 
 Measured on a 3840x2160 screenshot (32 tiles). M2 Max, warm cache.
 
@@ -163,72 +115,23 @@ Measured on a 3840x2160 screenshot (32 tiles). M2 Max, warm cache.
 | Annotate + manifest | <20ms |
 | Total | ~3.5-5s |
 
-Tile count scales with image resolution: 1920x1080 produces ~12 tiles, 3840x2160 produces ~32. The YOLO model runs each tile independently with cross-tile NMS at the end.
+Tile count scales with image resolution: 1920x1080 produces ~12 tiles, 3840x2160 produces ~32. The YOLO model runs each tile independently with cross-tile NMS at the end. Total varies with image resolution and element density.
 
----
-
-## Vision-Only Stage Breakdown
+### Vision-Only Pipeline
 
 Measured on a 1920x1080 VS Code screenshot (~151 UI elements). M2 Max, warm cache.
 
-| Stage                   | Accurate  | Fast (`--fast`) | Notes                                       |
-| ----------------------- | --------- | --------------- | ------------------------------------------- |
-| Apple Vision            | 977ms     | 213ms           | Text + rectangles via compiled Swift binary |
-| OCR correction          | <1ms      | <1ms            | Cyrillic homoglyphs, invisible Unicode, NFC |
-| Text block grouping     | <1ms      | <1ms            | Adjacent lines merged into paragraphs       |
-| Merge + dedup           | <1ms      | <1ms            | IoU-based overlap removal                   |
-| Annotate                | <1ms      | <1ms            | SoM numbered overlay rendering              |
-| Manifest                | <1ms      | <1ms            | JSON output generation                      |
-| __Total (Vision-only)__ | __~1.0s__ | __~0.3s__       |                                             |
+| Stage | Accurate | Fast (`--fast`) | Notes |
+| ----- | -------- | --------------- | ----- |
+| Apple Vision | 977ms | 213ms | Text + rectangles via compiled Swift binary |
+| OCR correction | <1ms | <1ms | Cyrillic homoglyphs, invisible Unicode, NFC |
+| Text block grouping | <1ms | <1ms | Adjacent lines merged into paragraphs |
+| Merge + dedup | <1ms | <1ms | IoU-based overlap removal |
+| Annotate | <1ms | <1ms | SoM numbered overlay rendering |
+| Manifest | <1ms | <1ms | JSON output generation |
+| Total | ~1.0s | ~0.3s | |
 
-### With Florence-2 (`--florence`)
-
-| Stage            | Accurate  | Fast      | Notes                                           |
-| ---------------- | --------- | --------- | ----------------------------------------------- |
-| Apple Vision     | 977ms     | 213ms     | Same as above                                   |
-| Florence-2 total | 1542ms    | 1452ms    | 4 quadrants + temp file I/O                     |
-| -- per-quadrant  | 222ms     | 214ms     | Raw model inference per tile                    |
-| -- overhead      | ~600ms    | ~600ms    | Temp file I/O, coordinate mapping               |
-| Post-processing  | <5ms      | <5ms      | Correction, grouping, merge, annotate, manifest |
-| __Total__        | __~2.5s__ | __~1.7s__ |                                                 |
-
-### Detection Counts (VS Code screenshot)
-
-| Source                            | Accurate | Fast     |
-| --------------------------------- | -------- | -------- |
-| Text (Vision)                     | 129      | 119      |
-| Rectangles (Vision)               | 31       | 31       |
-| Non-text (Florence-2, if enabled) | ~69      | ~72      |
-| __Total (Vision-only)__           | __~160__ | __~150__ |
-| __Total (with Florence-2)__       | __~229__ | __~222__ |
-
----
-
-## Florence-2 Backend Comparison
-
-uitag supports two Florence-2 backends. Only relevant when using `--florence`.
-
-| Condition          | MLX         | CoreML      | Winner                    |
-| ------------------ | ----------- | ----------- | ------------------------- |
-| GPU idle (typical) | ~148ms/quad | ~183ms/quad | __MLX__ (1.25x faster)    |
-| GPU contended      | ~188ms/quad | ~158ms/quad | __CoreML__ (1.18x faster) |
-
-MLX runs on the GPU via Metal. CoreML offloads the DaViT vision encoder to the Apple Neural Engine (ANE).
-
-```bash
-# Force CoreML backend
-uitag screenshot.png --florence --backend coreml
-
-# Explicit MLX (same as default)
-uitag screenshot.png --florence --backend mlx
-```
-
-CoreML requires a converted model at `models/davit_encoder.mlpackage`. If absent, `--backend coreml` falls back to MLX silently.
-
-```bash
-# One-time CoreML model conversion
-uv run python tools/convert_davit_coreml.py
-```
+Apple Vision dominates wall-clock time in both modes. All post-processing stages together consume less than 5ms.
 
 ---
 
@@ -236,50 +139,35 @@ uv run python tools/convert_davit_coreml.py
 
 Apple Vision offers two recognition levels. The `--fast` flag selects fast mode.
 
-|                              | Accurate (default)                          | Fast (`--fast`)                           |
-| ---------------------------- | ------------------------------------------- | ----------------------------------------- |
-| Vision time                  | ~977ms                                      | ~213ms                                    |
-| Text quality                 | High fidelity, better with small/dense text | Noisier, may miss or misread small labels |
-| Text count                   | 129                                         | 119                                       |
-| Rectangle detection          | Identical                                   | Identical                                 |
-| Total pipeline (Vision-only) | ~1.0s                                       | ~0.3s                                     |
+| | Accurate (default) | Fast (`--fast`) |
+| --- | --- | --- |
+| Vision time | ~977ms | ~213ms |
+| Text quality | High fidelity, better with small/dense text | Noisier, may miss or misread small labels |
+| Text count | 129 | 119 |
+| Rectangle detection | Identical | Identical |
+| Total pipeline (Vision-only) | ~1.0s | ~0.3s |
 
-__When to use each:__
-
-- __Accurate__ (default): When downstream tasks depend on exact text content — reading labels, matching element names, extracting values from UI fields.
-- __Fast__ (`--fast`): When you need element locations but not precise text — click target identification, layout analysis, element counting.
+The 4.6x speedup comes from Apple Vision's fast recognition level, which uses a lighter text model. Rectangle detection is identical in both modes. The 10-element delta (129 vs 119) comes from small or low-contrast labels that the fast model misses.
 
 ---
 
-## Tips
+## Caveats
 
-| Situation                                      | Recommendation                                 |
-| ---------------------------------------------- | ---------------------------------------------- |
-| General use                                    | Default settings (Vision-only, accurate OCR)   |
-| Need icon/button detection                     | `--yolo` (91% coverage vs 57% Vision-only)     |
-| Need faster results, text quality not critical | `--fast`                                       |
-| Legacy Florence-2                              | `--florence` (superseded by `--yolo`)           |
-| Benchmarking                                   | Use `uitag benchmark` for full pipeline timing |
+- Timing scales with image resolution and element density. A 3840x2160 screenshot with YOLO produces ~32 tiles vs ~12 at 1920x1080, roughly doubling YOLO inference time.
+- Apple Vision's text detection quality varies across screenshots of the same content. This is an upstream behavior, not a pipeline artifact.
+- ScreenSpot-Pro coverage numbers reflect the dataset's application mix (26 apps, 3 platforms). Applications with non-standard UI frameworks score lower.
+- Detection coverage is not grounding accuracy. A 90.8% center-hit rate means 90.8% of targets have _some_ overlapping detection. Whether a VLM can select the _correct_ detection from a natural language instruction is a separate evaluation.
 
 ---
 
-## Benchmark Setup
-
-- __Hardware:__ Apple M2 Max, 96 GB unified memory
-- __Image (timing):__ 1920x1080 VS Code screenshot, 3-run average, warm cache
-- __Variance:__ Individual runs varied by +/- 60ms (~2-3%)
-- __ScreenSpot-Pro (coverage):__ 1,581 annotations, 26 apps, macOS + Windows + Linux (MIT license)
-- __ScreenSpot-Pro (macOS subset):__ 604 annotations, 9 apps
-- __VLM server:__ OpenAI-compatible API, temperature=0
-
-### Reproducing
+## Reproducing
 
 ```bash
 # Vision-only (default)
 uitag screenshot.png -o out/
 
-# With Florence-2
-uitag screenshot.png --florence -o out/
+# With YOLO
+uitag screenshot.png --yolo -o out/
 
 # Fast mode
 uitag screenshot.png --fast -o out/

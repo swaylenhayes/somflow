@@ -33,15 +33,19 @@ def main():
     print(f"Image: {result.image_width}x{result.image_height}")
 
     # Filter by source
-    vision_text = [d for d in result.detections if d.source in ("vision_text", "vision_text_block")]
+    vision_text = [
+        d for d in result.detections if d.source in ("vision_text", "vision_text_block")
+    ]
     florence = [d for d in result.detections if d.source == "florence2"]
     print(f"  Vision text: {len(vision_text)}")
     print(f"  Florence-2:  {len(florence)}")
 
     # Access individual detections
     for det in result.detections[:5]:
-        print(f"  [{det.som_id}] {det.label} at ({det.x},{det.y}) "
-              f"{det.width}x{det.height} [{det.source}]")
+        print(
+            f"  [{det.som_id}] {det.label} at ({det.x},{det.y}) "
+            f"{det.width}x{det.height} [{det.source}]"
+        )
 
     # Save the annotated image
     out_dir = Path("out")

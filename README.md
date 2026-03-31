@@ -73,7 +73,7 @@ uitag benchmark <image>         Measure per-stage pipeline timing
 
 ```
 -o, --output-dir DIR    Output directory (default: current dir or uitag-output/)
---yolo                  Enable YOLO detection (adds ~2s, closes icon gap)
+--yolo                  Enable YOLO detection (adds ~3-4s, closes icon gap)
 --fast                  Use fast OCR (5x faster, noisier text)
 --rescan                Re-scan low-confidence text at higher resolution
 --florence              Enable Florence-2 detection (legacy, opt-in)
@@ -184,7 +184,7 @@ Screenshot
 
 - _Use light mode for best OCR accuracy._ Apple Vision produces measurably better results on light mode screenshots, especially for special characters in code, regex patterns, and variable names. In testing, a backslash character (`\`) that was unrecoverable in dark mode across all techniques was correctly read in light mode. [Full research findings →](docs/research/ocr-rescan-experiments.md)
 - _Use `--rescan` for code-heavy UIs._ If your screenshot contains regex, variable names, or other non-prose text, `--rescan` re-checks low-confidence elements with language correction disabled — preventing Apple Vision from "correcting" `Local_Trigger` to `Local Trigger` or `[\w_]+` to garbled text.
-- _Use `--yolo` when you need icon coverage._ Default Vision-only mode is fast (~1s) but misses icons and visual controls. Adding `--yolo` brings coverage from 57% to 91% at the cost of ~2 extra seconds.
+- _Use `--yolo` when you need icon coverage._ Default Vision-only mode is fast (~1s) but misses icons and visual controls. Adding `--yolo` brings coverage from 57% to 91% at the cost of ~3-4 extra seconds.
 
 ## Documentation
 
@@ -219,9 +219,9 @@ uv run pytest  # 134 tests (11 skipped without --run-slow or macOS)
 
 uitag emerged from a structured research effort evaluating detection approaches for macOS UI automation.
 
-Fourteen detection models were evaluated across HuggingFace, academic sources, and commercial options. AGPL-licensed models (Screen2AX, OmniParser) were excluded for MIT compatibility. All sub-10B detection models tested produced single full-screen bounding boxes on complex screenshots but worked correctly on tiled inputs — a model capacity limitation confirmed across 7 penalty configurations. Tiling is architecturally required for small detection VLMs.
+Fourteen detection models were evaluated across HuggingFace, academic sources, and commercial options. AGPL-licensed models (Screen2AX, OmniParser) were excluded for MIT compatibility. All sub-10B detection models tested during initial evaluation (early 2026) produced single full-screen bounding boxes on complex screenshots but worked correctly on tiled inputs — a model capacity limitation confirmed across 7 penalty configurations. Tiling is architecturally required for small detection VLMs.
 
-Apple Vision's text recognition and rectangle detection runs natively on macOS with zero model overhead. Against ScreenSpot-Pro (604 macOS screenshots), Vision-only text grounding reaches 71.1% — ahead of published VLM approaches including GUI-Actor-7B (60.7%) and UI-TARS-72B (50.9%).
+Apple Vision's text recognition and rectangle detection runs natively on macOS with zero model overhead. Against ScreenSpot-Pro (604 macOS screenshots), Vision-only text detection coverage reaches 71.1%.
 
 To close the icon gap, a YOLO11s model was fine-tuned on GroundCUA (224K tiled images, 9 element classes, 100 epochs on 2x H100 PCIe). The resulting model (18 MB) detects buttons, menus, inputs, navigation, sidebars, and visual elements that Vision misses. Combined coverage: 90.8% across 26 professional applications on 3 platforms.
 
@@ -232,7 +232,7 @@ To close the icon gap, a YOLO11s model was fine-tuned on GroundCUA (224K tiled i
 
 | Decision | Rationale |
 |----------|-----------|
-| Apple Vision as default | Text + rectangle detection with zero model overhead, beats published VLMs on text grounding |
+| Apple Vision as default | Text + rectangle detection with zero model overhead |
 | YOLO detection opt-in (`--yolo`) | Bundled 18 MB model closes icon gap (42.5% → 87.6%) at ~2s cost. Trained on GroundCUA (MIT). |
 | Florence-2 as legacy opt-in | Superseded by YOLO for non-text detection. Zero useful detections on desktop UIs in evaluation. |
 | Pre-compiled Swift binary | Saves ~230ms JIT startup per Vision invocation |

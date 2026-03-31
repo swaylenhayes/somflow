@@ -6,7 +6,7 @@ permalink: uitag/docs/api
 
 # API Reference
 
-uitag is a Set-of-Mark detection pipeline for macOS. This reference covers the public Python API for library consumers.
+The pipeline produces two core types. A `Detection` represents a single UI element — its bounding box, label, confidence score, and source (Apple Vision text, Vision rectangles, YOLO, or Florence-2). `PipelineResult` collects all merged detections for an image along with dimensions and per-stage timing data. The entry point, `run_pipeline()`, takes a screenshot path, runs detection through all enabled stages, and returns a `PipelineResult`, an annotated PIL image, and a JSON manifest string.
 
 ---
 
@@ -112,7 +112,7 @@ A single detected UI element. Defined as a dataclass in `uitag/types.py`.
 | `source` | `str` | Detection source identifier. One of: `"vision_text"`, `"vision_rect"`, `"vision_text_block"`, `"yolo"`, `"florence2"`. |
 | `som_id` | `int \| None` | SoM marker number (1-indexed). `None` until `merge_detections()` assigns sequential IDs sorted by position (top-to-bottom, left-to-right). |
 
-__Source values:__
+#### Source values
 
 | Value | Origin |
 |-------|--------|
@@ -137,7 +137,9 @@ Output of the full detection pipeline. Defined as a dataclass in `uitag/types.py
 | `image_height` | `int` | Height of the input image in pixels. |
 | `timing_ms` | `dict` | Pipeline timing breakdown. Defaults to an empty dict. |
 
-__`timing_ms` keys__ (populated by `run_pipeline`):
+#### `timing_ms` keys
+
+Populated by `run_pipeline`:
 
 | Key | Type | Description |
 |-----|------|-------------|

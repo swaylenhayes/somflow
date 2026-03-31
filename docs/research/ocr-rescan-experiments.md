@@ -6,7 +6,6 @@ permalink: uitag/docs/research/ocr-rescan-experiments
 
 # OCR Rescan Experiments — Apple Vision Accuracy on Special Characters
 
-> Research supporting the multi-crop ensemble rescan feature in uitag v0.4.0.
 > Research supporting the multi-crop ensemble rescan feature shipped in v0.4.0.
 
 ---
@@ -42,8 +41,8 @@ Shifting a crop boundary by just 5 pixels can flip OCR from perfect to
 garbled. Testing symmetric padding from 0-60px on the same text produced
 results ranging from perfect (`sc=9`) to hallucinated characters (`sc=3`).
 
-**20px padding (our initial default) was a local minimum** — the worst value
-for both test elements. **10px emerged as the best single value.**
+20px padding (our initial default) was a local minimum — the worst value
+for both test elements. 10px emerged as the best single value.
 
 This motivated a multi-crop ensemble strategy: try 5 padding values and pick
 the reading with the most special/punctuation characters.
@@ -69,24 +68,26 @@ position — tested in dark mode and light mode:
 | SOM [27] regex | `;([w_]+);` (no `\` at any padding) | `;([\w_]+);` (recovered at pad=25) |
 
 The backslash character `\` — a thin 1-pixel diagonal stroke — was
-**completely unrecoverable** in dark mode across all padding values, all
+completely unrecoverable in dark mode across all padding values, all
 image pre-processing techniques (sharpening, contrast, thresholding,
 edge enhancement), and all context manipulations. In light mode, the
 multi-crop ensemble recovers it automatically.
 
-**Root cause:** Apple Vision's neural network likely has a training data
+Root cause: Apple Vision's neural network likely has a training data
 distribution favoring light backgrounds (documents, web pages, standard
 macOS UI). Dark text on light backgrounds provides higher character
 contrast for the neural network's convolutional feature extractors. The
 thin `\` stroke that falls below the detection threshold in dark mode
 (light-on-dark) clears it in light mode (dark-on-light).
 
+This finding is based on a single test image. The light-mode advantage is consistent with expected training distributions but has not been validated across a broad corpus.
+
 ### 5. Image Pre-Processing Has No Useful Sweet Spot (Dark Mode)
 
 We tested a full gradient of:
-- UnsharpMask: 50-600% intensity, 0.5-5.0 radius
-- Contrast enhancement: 1.0-5.0x
-- Sharpness enhancement: 1.0-20.0x
+- UnsharpMask: 50–600% intensity, 0.5–5.0 radius
+- Contrast enhancement: 1.0–5.0x
+- Sharpness enhancement: 1.0–20.0x
 - Binary thresholding at multiple levels
 - Combined contrast + sharpness grids
 
@@ -99,17 +100,17 @@ while maintaining correct readings for other characters.
 Three factors influence Apple Vision's OCR accuracy on special characters,
 in order of significance:
 
-1. **Contrast polarity (light vs dark mode)** — Strongest factor. Affects
+1. __Contrast polarity (light vs dark mode)__ — Strongest factor. Affects
    all characters including the thinnest strokes. Light mode is measurably
    more accurate for code/regex/symbol text.
 
-2. **Sub-pixel rendering (screen position)** — macOS renders the same glyph
+2. __Sub-pixel rendering (screen position)__ — macOS renders the same glyph
    with different sub-pixel patterns at different positions. In dark mode,
    this pushes thin strokes below Vision's detection threshold at some
    positions. Light mode's higher base contrast makes this variance less
    impactful.
 
-3. **Surrounding visual context** — Vision uses surrounding pixels as part
+3. __Surrounding visual context__ — Vision uses surrounding pixels as part
    of its recognition. Text-heavy context biases toward "prose mode,"
    degrading special characters. UI-element-heavy context preserves accuracy.
 
@@ -122,7 +123,7 @@ The multi-crop ensemble rescan in `uitag/rescan.py`:
 - Runs on ANE (zero GPU contention with Florence-2)
 
 Combined with the light mode advantage, this achieves perfect readings
-on all test elements.
+on all test elements in the Keyboard Maestro test image.
 
 ## Experiment Details
 
@@ -140,6 +141,6 @@ and raw results are documented below:
 
 ---
 
-*Test image: Keyboard Maestro macro configuration (regex trigger + variable actions)*
-*Hardware: Apple Silicon (M2 Max), macOS, Retina 144 DPI*
-*Date: 2026-03-06 through 2026-03-08*
+_Test image: Keyboard Maestro macro configuration (regex trigger + variable actions)_
+_Hardware: Apple Silicon (M2 Max), macOS, Retina 144 DPI_
+_Date: 2026-03-06 through 2026-03-08_
