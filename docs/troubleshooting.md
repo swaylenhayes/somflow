@@ -1,9 +1,3 @@
----
-title: troubleshooting
-type: note
-permalink: uitag/docs/troubleshooting
----
-
 # Troubleshooting
 
 ## Requirements Checklist

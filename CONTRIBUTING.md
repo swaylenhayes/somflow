@@ -1,9 +1,3 @@
----
-title: CONTRIBUTING
-type: note
-permalink: uitag/contributing
----
-
 # Contributing to uitag
 
 uitag exists to answer one question accurately: _what UI elements are on this screen?_ Every contribution should improve the answer — better detection coverage, fewer false positives, faster inference, or clearer documentation of what the pipeline does and where it falls short.

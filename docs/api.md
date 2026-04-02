@@ -1,9 +1,3 @@
----
-title: api
-type: note
-permalink: uitag/docs/api
----
-
 # API Reference
 
 The pipeline produces two core types. A `Detection` represents a single UI element — its bounding box, label, confidence score, and source (Apple Vision text, Vision rectangles, YOLO, or Florence-2). `PipelineResult` collects all merged detections for an image along with dimensions and per-stage timing data. The entry point, `run_pipeline()`, takes a screenshot path, runs detection through all enabled stages, and returns a `PipelineResult`, an annotated PIL image, and a JSON manifest string.

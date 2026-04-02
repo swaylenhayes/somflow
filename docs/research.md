@@ -1,9 +1,3 @@
----
-title: research
-type: note
-permalink: uitag/docs/research
----
-
 # Research Notes
 
 > __Note (2026-03-29):__ This document covers the original model selection research (Florence-2 for non-text detection). Florence-2 has since been superseded by a fine-tuned YOLO model (`--yolo`) that achieves 90.8% detection coverage on ScreenSpot-Pro — see [Performance](performance.md) for current numbers. VLM classification (MAI-UI-2B-bf16-v2, 96.1% accuracy) is validated and planned for v0.6.0.

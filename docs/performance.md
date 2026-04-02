@@ -1,9 +1,3 @@
----
-title: performance
-type: note
-permalink: uitag/docs/performance
----
-
 # Performance
 
 uitag runs the full detection pipeline in ~5 seconds on an M2 Max laptop with `--yolo`, producing ~300 detections with 90.8% coverage on ScreenSpot-Pro. Everything runs on-device — Apple Vision handles text, and the opt-in YOLO model handles icons and visual controls. The default Vision-only mode completes in ~1 second with ~150 detections. No API calls, no model downloads beyond the YOLO optional dependency.

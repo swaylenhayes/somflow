@@ -1,10 +1,3 @@
----
-title: Standard Prompt Investigation — UI Element Classification
-type: research
-status: in-progress
-permalink: uitag/docs/research/standard-prompt-investigation
----
-
 # Standard Prompt Investigation — UI Element Classification
 
 _Status: Research track, in progress_
@@ -83,7 +76,7 @@ Our deep research synthesis (2026-03-22) suggests 13-16 types is the optimal ran
 ### RQ3: Is prompt sensitivity a recognized confound in published benchmarks?
 
 - Survey published VLM papers for acknowledgment of prompt variance
-- If unacknowledged, our data is a novel contribution: to our knowledge, the first documented evidence of 12pp prompt swing
+- If unacknowledged: to our knowledge, the first documented evidence of a 12pp prompt swing on the same model
 
 ### RQ4: Can a standard prompt be model-agnostic?
 

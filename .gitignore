@@ -21,13 +21,22 @@ venv/
 # Internal working docs (not for public repo)
 _docs/
 CLAUDE.md
+AGENTS.md
+CODEX.md
+GEMINI.md
 docs/plans/
+docs/publish/
 docs/interagent-somflow/
 docs/interagent-uitag/
 docs/current-state.md
 docs/uitag-launch-steps.md
 docs/f1.3-coreml-acceleration.md
 .sediment/
+
+# Agent / session artifacts
+.claude/
+commands-tracking-etc.md
+context-snap-output.md
 
 # Worktrees
 .worktrees/
@@ -37,6 +46,12 @@ tools/vision-detect
 
 # CoreML models (generated, large — root level only)
 /models/
+
+# YOLO weights (root-level copy; bundled model is uitag/models/yolo-ui.pt)
+/yolo11s.pt
+
+# Local-only assets
+docs/examples/hero-yolo-composite.png
 
 # Environment variables
 .env

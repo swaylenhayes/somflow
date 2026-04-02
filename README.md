@@ -1,5 +1,3 @@
-
-
 # uitag
 
 [![Tests](https://github.com/swaylenhayes/uitag/actions/workflows/test.yml/badge.svg)](https://github.com/swaylenhayes/uitag/actions/workflows/test.yml)
@@ -12,7 +10,7 @@ _287 elements detected in ~3s — text labels (Apple Vision) + icons and buttons
 
 ## Why This Exists
 
-Screenshots should be machine-readable. Every button, label, and icon should have a bounding box, a label, and coordinates — instantly, on-device, under MIT license.
+Screenshots should be machine-readable. Every button, label, and icon should have a bounding box, a label, and coordinates — in seconds, on-device, under MIT license.
 
 Apple Vision's text recognition and rectangle detection runs natively on macOS and catches most text-based UI elements. But it misses icons, toolbar buttons, and visual controls that have no text label. On ScreenSpot-Pro (1,581 targets across 26 professional applications), Vision-only detection covers 57.3% of targets. The remaining 42.7% are invisible to Vision — predominantly icons.
 

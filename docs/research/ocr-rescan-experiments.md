@@ -1,9 +1,3 @@
----
-title: ocr-rescan-experiments
-type: note
-permalink: uitag/docs/research/ocr-rescan-experiments
----
-
 # OCR Rescan Experiments — Apple Vision Accuracy on Special Characters
 
 > Research supporting the multi-crop ensemble rescan feature shipped in v0.4.0.
@@ -120,7 +114,7 @@ The multi-crop ensemble rescan in `uitag/rescan.py`:
 - Crops low-confidence text at 5 padding values (5, 10, 15, 20, 25px)
 - Runs Apple Vision with `accurate` + `usesLanguageCorrection = false`
 - Selects the reading with the most special characters (raw reading heuristic)
-- Runs on ANE (zero GPU contention with Florence-2)
+- Runs on ANE (zero GPU contention with other inference workloads)
 
 Combined with the light mode advantage, this achieves perfect readings
 on all test elements in the Keyboard Maestro test image.
