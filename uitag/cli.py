@@ -62,14 +62,14 @@ def main():
         help="Enable YOLO detection (adds ~1-2s, trained on GroundCUA — off by default)",
     )
     parser.add_argument(
-        "--classify",
+        "--vlm",
         action="store_true",
         help="Enable VLM element classification (requires a running VLM server)",
     )
     parser.add_argument(
-        "--classify-vocab",
+        "--vlm-vocab",
         default="leith-17",
-        help="Classification vocabulary name or path to JSON (default: leith-17)",
+        help="VLM vocabulary name or path to JSON (default: leith-17)",
     )
     parser.add_argument(
         "--vlm-url",
@@ -121,8 +121,8 @@ def main():
         img_parent = f" in {img_parent}/"
     print(f"Running pipeline on: {Path(image_path).name}{img_parent}")
     yolo_status = "enabled" if args.yolo else "off"
-    classify_status = f"enabled ({args.classify_vocab})" if args.classify else "off"
-    print(f"YOLO: {yolo_status} | Classify: {classify_status} | OCR mode: {ocr_mode}")
+    vlm_status = f"enabled ({args.vlm_vocab})" if args.vlm else "off"
+    print(f"YOLO: {yolo_status} | VLM: {vlm_status} | OCR mode: {ocr_mode}")
     t0 = time.perf_counter()
 
     # Parse rescan ids if provided
@@ -141,8 +141,8 @@ def main():
         rescan_ids=rescan_ids,
         no_florence=True,
         use_yolo=args.yolo,
-        classify=args.classify,
-        classify_vocab=args.classify_vocab,
+        vlm=args.vlm,
+        vlm_vocab=args.vlm_vocab,
         vlm_url=args.vlm_url,
         vlm_model=args.vlm_model,
     )
@@ -162,9 +162,9 @@ def main():
 
     # Punchline
     count = len(result.detections)
-    classified_count = sum(1 for d in result.detections if d.element_type is not None)
-    if classified_count > 0:
-        done_line = f"Done: {count} detections ({classified_count} classified) in {total_s:.1f}s"
+    typed_count = sum(1 for d in result.detections if d.element_type is not None)
+    if typed_count > 0:
+        done_line = f"Done: {count} detections ({typed_count} typed) in {total_s:.1f}s"
     else:
         done_line = f"Done: {count} detections in {total_s:.1f}s"
     if sys.stdout.isatty():

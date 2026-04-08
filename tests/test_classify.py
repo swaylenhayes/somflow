@@ -41,14 +41,14 @@ class TestParseElementType:
         raw = 'Here is my answer: {"element_type": "button"} hope that helps!'
         assert _parse_element_type(raw, vocab) == "button"
 
-    def test_unparseable_returns_fallback(self, vocab):
-        assert _parse_element_type("I think it's a button", vocab) == "other"
+    def test_unparseable_returns_none(self, vocab):
+        assert _parse_element_type("I think it's a button", vocab) is None
 
-    def test_type_not_in_vocab_returns_fallback(self, vocab):
-        assert _parse_element_type('{"element_type": "banana"}', vocab) == "other"
+    def test_type_not_in_vocab_returns_none(self, vocab):
+        assert _parse_element_type('{"element_type": "banana"}', vocab) is None
 
-    def test_empty_response_returns_fallback(self, vocab):
-        assert _parse_element_type("", vocab) == "other"
+    def test_empty_response_returns_none(self, vocab):
+        assert _parse_element_type("", vocab) is None
 
 
 class TestCropDetection:
@@ -114,16 +114,16 @@ class TestClassifyDetections:
 
     @patch("uitag.classify._check_server", return_value=True)
     @patch("uitag.classify.requests.post", side_effect=Exception("connection reset"))
-    def test_request_failure_uses_fallback(
+    def test_request_failure_leaves_none(
         self, mock_post, mock_check, sample_detections, vocab
     ):
         img = Image.new("RGB", (400, 300))
         classified, stats = classify_detections(
             sample_detections, img, vocab, vlm_url="http://fake:8000/v1"
         )
-        # Should not crash — failed crops get fallback
+        # Should not crash — failed elements stay untyped
         rect_det = classified[1]  # vision_rect
-        assert rect_det.element_type == "other"  # fallback
+        assert rect_det.element_type is None
         assert stats["errors"] > 0
 
 

@@ -41,6 +41,7 @@ def classify_detections(
         "total": len(detections),
         "classifiable": 0,
         "classified": 0,
+        "fallback": 0,
         "errors": 0,
         "skipped_reason": None,
     }
@@ -106,11 +107,13 @@ def classify_detections(
             resp.raise_for_status()
             content = resp.json()["choices"][0]["message"]["content"]
             element_type = _parse_element_type(content, vocab)
-            detections[idx].element_type = element_type
-            stats["classified"] += 1
+            if element_type is not None:
+                detections[idx].element_type = element_type
+                stats["classified"] += 1
+            else:
+                stats["fallback"] += 1
 
         except Exception:
-            detections[idx].element_type = vocab.fallback_type
             stats["errors"] += 1
 
         # Progress
@@ -162,13 +165,13 @@ def _image_to_base64(img: Image.Image) -> str:
     return base64.b64encode(buf.getvalue()).decode("ascii")
 
 
-def _parse_element_type(raw: str, vocab: Vocab) -> str:
+def _parse_element_type(raw: str, vocab: Vocab) -> str | None:
     """Extract element_type from VLM response text.
 
     Parsing strategy:
     1. Try json.loads() on full response
     2. Regex for {"element_type": "..."} anywhere in text
-    3. Fall back to vocab.fallback_type
+    3. Return None (caller decides how to handle)
     """
     # Strategy 1: direct JSON parse
     try:
@@ -186,5 +189,4 @@ def _parse_element_type(raw: str, vocab: Vocab) -> str:
         if et in vocab.types:
             return et
 
-    # Strategy 3: fallback
-    return vocab.fallback_type
+    return None

@@ -69,3 +69,8 @@ def _validate(vocab: Vocab) -> None:
             f"Vocabulary '{vocab.name}': fallback_type '{vocab.fallback_type}' "
             f"not in types list"
         )
+    if not isinstance(vocab.padding_pct, int) or not (0 <= vocab.padding_pct <= 100):
+        raise ValueError(
+            f"Vocabulary '{vocab.name}': padding_pct must be an int between 0 and 100, "
+            f"got {vocab.padding_pct!r}"
+        )

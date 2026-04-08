@@ -61,7 +61,7 @@
           },
           "element_type": {
             "type": "string",
-            "description": "Classified UI element type (present only with --classify)"
+            "description": "Classified UI element type (present only with --vlm)"
           }
         },
         "additionalProperties": false
